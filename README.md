@@ -7,7 +7,7 @@ version 0.11.1.
 
 - run "npm install"
 - run "bower install"
-- run "npm install -g grunt-cli" 
+- run "npm install -g grunt-cli" ("sudo" might be needed)
 
 - "grunt serve" to start local server
 
