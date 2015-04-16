@@ -8,7 +8,7 @@ SS15 MI7 Project (rs,mh,mo,pk)
 - run `bower install`
 - run `npm install -g grunt-cli` (`sudo` might be needed)
 
-- "grunt serve" to start local server
+- `grunt serve` to start local server
 
 ## Build & development
 
