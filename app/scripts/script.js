@@ -1,5 +1,6 @@
 var context;
 var clock;
+var beatCount = -1;
 
 var LOADED_SOUNDBANK = {};
 
@@ -37,21 +38,6 @@ function loadBuffers() {
 	  bufferLoader.load();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  try {
-    // Fix up prefixing
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    context = new AudioContext();
-    clock = new WAAClock(context, {toleranceEarly: 0.1});
-  }
-  catch(e) {
-    alert("Web Audio API is not supported in this browser");
-  }
-
-  loadBuffers();
-});
-
-
 var tempo = 120;
 var beatDur = 60 / tempo;
 
@@ -66,13 +52,10 @@ function play() {
 
 	var startTime = context.currentTime;
 
-	clock.start();
-
-	startBeat(kick);
+	//startBeat(kick);
 }
 
-var startBeat = function(buffer) {
-	console.log("HEHEJO");
+var startBeat = function(buffer, index) {
   var event = clock.callbackAtTime(function(event) {
 
 	  var source = context.createBufferSource();
@@ -89,7 +72,7 @@ var startBeat = function(buffer) {
 
 
 //@TODO: HIER MUSS EIGENTLICH NOCH BEATIND MIT REIN!!!!
-var nextBeatTime = function() {
+var nextBeatTime = function(index) {
 	//vergangene zeit seitdem clock gestartet wurde
   var currentTime = context.currentTime;
 
@@ -99,9 +82,58 @@ var nextBeatTime = function() {
   //in welchem beat des aktuellen bars sind wir gerade
   var currentBeat = Math.round(currentTime % barDur);
 
-  console.log((currentBar + 1) * barDur + 1 * beatDur);
-
 	return (currentBar + 1) * barDur + 0 * beatDur;
+}
+
+var generateGrid = function() {
+
+	$('#pattern .track-row').each(function() {
+
+		var row = $(this);
+		var rowName = row.data('sample');
+
+		for(var beatInd = 0; beatInd < 8; beatInd++) {
+
+			var beatWrap = $('<div class="beat-wrap beat_' + beatInd + '"><div class="beat" beatIndex='+ beatInd +'></div></div>');
+			beatWrap.appendTo(row);
+		}
+	});
+}
+
+var beatClickHandler = function() {
+
+	$('.beat').each(function() {
+
+			var beat = $(this);
+			var index = beat.attr('beatIndex');
+			var rowName = beat.parent().parent().attr('data-sample');
+
+			var track = LOADED_SOUNDBANK[rowName];
+
+			beat.click(function() {
+
+				if(!beat.hasClass('active')) {
+
+					beat.addClass('active');
+					startBeat(track, index);
+				}
+				else {
+
+					beat.removeClass('active');
+					//stopBeat(rowName, beatInd);
+				}
+			});
+	})	
+}
+
+var uiNextBeat = function() {
+
+	beatCount = (beatCount + 1) % 8;
+
+	$('#pattern .beat-wrap').removeClass('active');
+	$('#pattern .beat-wrap:nth-child(' + (beatCount + 1) + ')').addClass('active');
+
+
 }
 
 // function playSound(buffer) {
