@@ -1,6 +1,7 @@
 var context;
 var clock;
 var beatCount = -1;
+var event;
 
 var LOADED_SOUNDBANK = {};
 
@@ -38,12 +39,12 @@ function loadBuffers() {
 	  bufferLoader.load();
 }
 
-var tempo = 120;
-var beatDur = 60 / tempo;
+var tempo = 60;
+var beatDur = 60 / tempo / 4;
 
-var sixteenthNoteDur = beatDur / 4;
+var sixteenthNoteDur = beatDur / 16;
 
-var barDur = 4 * beatDur;
+var barDur = 16 * beatDur;
 
 function play() {
 	var kick = LOADED_SOUNDBANK.kick;
@@ -56,7 +57,7 @@ function play() {
 }
 
 var startBeat = function(buffer, index) {
-  var event = clock.callbackAtTime(function(event) {
+  event = clock.callbackAtTime(function(event) {
 
 	  var source = context.createBufferSource();
 	  source.buffer = buffer;
@@ -68,6 +69,12 @@ var startBeat = function(buffer, index) {
 
   event.repeat(barDur);
   event.tolerance({late: 0.01});
+}
+
+//Nur übergangsweise zum stoppen
+var stopBeat = function() {
+
+	clock.stop();
 }
 
 
@@ -92,9 +99,9 @@ var generateGrid = function() {
 		var row = $(this);
 		var rowName = row.data('sample');
 
-		for(var beatInd = 0; beatInd < 8; beatInd++) {
+		for(var beatInd = 0; beatInd < 16; beatInd++) {
 
-			var beatWrap = $('<div class="beat-wrap beat_' + beatInd + '"><div class="beat" beatIndex='+ beatInd +'></div></div>');
+			var beatWrap = $('<div class="beat-wrap beat_' + beatInd + '"><div class="beat" beatIndex='+ beatInd +' flex layout-margin></div></div>');
 			beatWrap.appendTo(row);
 		}
 	});
@@ -128,7 +135,7 @@ var beatClickHandler = function() {
 
 var uiNextBeat = function() {
 
-	beatCount = (beatCount + 1) % 8;
+	beatCount = (beatCount + 1) % 16;
 
 	$('#pattern .beat-wrap').removeClass('active');
 	$('#pattern .beat-wrap:nth-child(' + (beatCount + 1) + ')').addClass('active');

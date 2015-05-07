@@ -22,6 +22,8 @@
 		alert("Web Audio API is not supported in this browser");
 	}
 
+	$scope.tempo = 60;
+
 	loadBuffers();
 
 	generateGrid();
@@ -30,7 +32,7 @@
 
 	clock.callbackAtTime(uiNextBeat, nextBeatTime(0)).repeat(beatDur).tolerance({late:100});
 
-	setTimeout(beatClickHandler, 500)
+	setTimeout(beatClickHandler, 500);
 
 	//beatClickHandler();
 });
