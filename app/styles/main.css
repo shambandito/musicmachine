@@ -1,6 +1,6 @@
 .browsehappy {
   margin: 0.2em 0;
-  background: #ccc;
+  background-color: #ccc;
   color: #000;
   padding: 0.2em 0;
 }
@@ -9,19 +9,56 @@ body {
   padding: 0;
 }
 
-.beat {
+#content {
+	max-width: 1200px;
+	margin: 0 auto;
+}
 
+#pattern {
+	margin-bottom: 30px;
+}
+
+.md-button {
+	padding: 0.57em;
+	margin-right: 12px;
+}
+
+md-slider .md-track-ticks {
+	display: none;
+}
+
+.beat {
 	width: 50px;
 	height: 50px;
-	background: #444;
+	background-color: #222;
+}
+
+.beat-0 .beat,
+.beat-1 .beat,
+.beat-2 .beat,
+.beat-3 .beat {
+	background-color: #888;
+}
+
+.beat-4 .beat,
+.beat-5 .beat,
+.beat-6 .beat,
+.beat-7 .beat  {
+	background-color: #666;
+}
+
+.beat-8 .beat,
+.beat-9 .beat,
+.beat-10 .beat,
+.beat-11 .beat {
+	background-color: #444;
 }
 
 .beat.active {
 
-	background: green;
+	background-color: green;
 }
 
 .beat-wrap.active {
-
-	background: #ccc;
+	background-color: #ccc;
 }

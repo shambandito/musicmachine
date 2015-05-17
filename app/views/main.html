@@ -1,13 +1,14 @@
 <div class="">
 <div>
-  <md-content class="md-padding">
+  <md-content id="content" class="md-padding">
     <section id="pattern">
-      <div class="track-row" data-sample="kick" layout="row"></div>
-      <div class="track-row" data-sample="snare" layout="row"></div>
-      <div class="track-row" data-sample="hihat" layout="row"></div>
+      <div class="track-row" data-sample="kick" layout="row" layout-align="center center"></div>
+      <div class="track-row" data-sample="snare" layout="row" layout-align="center center"></div>
+      <div class="track-row" data-sample="hihat" layout="row" layout-align="center center"></div>
     </section>
-    <md-button onclick="play();">Play</md-button>
-    <md-button onclick="stopBeat();">Stop</md-button>
+    <md-button ng-click="startPlaying();">Play</md-button>
+    <md-button ng-click="stopPlaying();">Stop</md-button>
+    <md-button ng-click="resetGrid();">Reset Grid</md-button>
     <md-slider ng-model="tempo" min="0" max="300" step="1" md-discrete>
 	</md-slider>
   </md-content>
