@@ -31,8 +31,16 @@ md-slider .md-track-ticks {
 	width: 50px;
 	height: 50px;
 	background-color: #222;
+	transition: all 0.04s ease-in-out;
+	transform: scale(1);
 }
 
+.beat.active.playing {
+
+	transform: scale(1.05);
+}
+
+/*
 .beat-0 .beat,
 .beat-1 .beat,
 .beat-2 .beat,
@@ -53,12 +61,47 @@ md-slider .md-track-ticks {
 .beat-11 .beat {
 	background-color: #444;
 }
+*/
 
-.beat.active {
+#content md-slider .md-track.md-track-fill,
+#content md-slider .md-sign {
 
-	background-color: green;
+  background-color: #303f9f;
 }
 
-.beat-wrap.active {
-	background-color: #ccc;
+#content md-slider .md-sign:after {
+	border-top-color: #303f9f;
 }
+
+#content md-slider .md-thumb:after {
+
+  border-color: #303f9f;
+  background-color: #303f9f;
+}
+
+.timer-button {
+
+	height: 5px;
+	width: 50px;
+	background-color: #b6b6b6;
+	margin: 0 12px 0 0;
+	border-radius: 3px;
+}
+
+#pattern .beat.active {
+
+	background-color: #3F51B5;
+}
+
+#timer-row .timer-button.active {
+	background-color: #303f9f;
+}
+
+.dark-primary-color    { background: #303F9F; }
+.default-primary-color { background: #3F51B5; }
+.light-primary-color   { background: #C5CAE9; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #607D8B; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }

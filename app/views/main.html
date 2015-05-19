@@ -2,14 +2,31 @@
 <div>
   <md-content id="content" class="md-padding">
     <section id="pattern">
-      <div class="track-row" data-sample="kick" layout="row" layout-align="center center"></div>
-      <div class="track-row" data-sample="snare" layout="row" layout-align="center center"></div>
-      <div class="track-row" data-sample="hihat" layout="row" layout-align="center center"></div>
+      <div id="timer-row" layout="row" layout-align="center center" layout-margin>
+        <div class="timer-button timer-{{index}}" ng-repeat="index in indexes" layout-margin>
+            
+        </div>
+      </div>
+      <div class="track-row" data-sample="kick" layout="row" layout-align="center center" layout-margin>
+        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
+            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
+        </div>
+      </div>
+      <div class="track-row" data-sample="snare" layout="row" layout-align="center center" layout-margin>
+        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
+            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
+        </div>
+      </div>
+      <div class="track-row" data-sample="hihat" layout="row" layout-align="center center" layout-margin>
+        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
+            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
+        </div>
+      </div>
     </section>
     <md-button ng-click="startPlaying();">Play</md-button>
     <md-button ng-click="stopPlaying();">Stop</md-button>
     <md-button ng-click="resetGrid();">Reset Grid</md-button>
-    <md-slider ng-model="tempo" min="0" max="300" step="1" md-discrete>
+    <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete>
 	</md-slider>
   </md-content>
 </div>

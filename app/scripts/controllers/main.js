@@ -14,6 +14,7 @@
  	var context;
  	var bufferLoader;
 	var activeBeats = {};
+	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
  	// buffers to load {name: path}
 	var SOUNDBANK = {
@@ -65,22 +66,6 @@
 		bufferLoader.load();
 	};
 
-	//erstellt unser track grid
-	$scope.generateGrid = function() {
-
-		angular.element('#pattern .track-row').each(function() {
-
-			var row = angular.element(this);
-			var rowName = row.data('sample');
-
-			for(var beatInd = 0; beatInd < 16; beatInd++) {
-
-				var beatWrap = angular.element('<div class="beat-wrap beat-' + beatInd + '"><div class="beat" beatIndex='+ beatInd +' flex layout-margin></div></div>');
-				beatWrap.appendTo(row);
-			}
-		});
-	};
-
 	//click listener auf beats und verwaltung des activeBeats objects
 	$scope.beatClickHandler = function() {
 
@@ -127,13 +112,16 @@
 		$scope.currentBeatIndex = ($scope.currentBeatIndex + 1) % 16;
 
 		//momentan aktives beat-wrap jQuery object
-		var currentBeatWrap = angular.element('#pattern .beat-wrap:nth-child(' + ($scope.currentBeatIndex + 1) + ')');
+		var currentTimerButton = angular.element('#timer-row .timer-button:nth-child(' + ($scope.currentBeatIndex + 1) + ')');
+		var currentBeat = angular.element('#pattern .beat-wrap:nth-child(' + ($scope.currentBeatIndex + 1) + ') .beat');
 
 		//reset active classes on beats
-		angular.element('#pattern .beat-wrap').removeClass('active');
+		angular.element('#timer-row .timer-button').removeClass('active');
+		angular.element('#pattern .beat-wrap .beat').removeClass('playing');
 
 		//active beat highlighter
-		currentBeatWrap.addClass('active');
+		currentTimerButton.addClass('active');
+		currentBeat.addClass('playing');
 
 		//iterate over activeBeats object
 		for (var obj in activeBeats) {
@@ -145,6 +133,7 @@
 
 		    //wenn der index des gerade betrachteten beat objects in activeBeats und der aktuelle beat index gleich sind -> sound abspielen
 		    if(beat.beatIndex == $scope.currentBeatIndex) {
+
 				$scope.playSound(beat.track);
 			}
 
@@ -159,9 +148,6 @@
 
 	  //in welchem bar wir gerade sind
 	  var currentBar = Math.floor(currentTime / $scope.barDur);
-
-	  //in welchem beat des aktuellen bars sind wir gerade
-	  var currentBeat = Math.round(currentTime % $scope.barDur);
 
 	  return (currentBar + 1) * $scope.barDur;
 	};
@@ -220,9 +206,6 @@
 
 		//laden unserer audio samples
 		$scope.loadBuffers();
-
-		//track grid aufbauen
-		$scope.generateGrid();
 
 		//click handler hinzufügen
 		//@TODO: setTimeout ist hier wahrscheinlich eher unschön
