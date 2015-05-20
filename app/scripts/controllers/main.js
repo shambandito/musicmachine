@@ -86,7 +86,7 @@
 					if(!beat.hasClass('active')) {
 
 						//create beat object mit index und audiobuffer
-						var beatObj = {'beatIndex': index, 'track': track};
+						var beatObj = {'beatIndex': index, 'track': track, 'instrument': rowName};
 
 						//save beatObj in activeBeats
 						activeBeats[rowName + index] = beatObj;
@@ -136,7 +136,7 @@
 		    //wenn der index des gerade betrachteten beat objects in activeBeats und der aktuelle beat index gleich sind -> sound abspielen
 		    if(beat.beatIndex == $scope.currentBeatIndex) {
 
-				$scope.playSound(beat.track);
+				$scope.playSound(beat.track, beat.instrument);
 			}
 
 		   }
@@ -155,7 +155,8 @@
 	};
 
 	//audio buffer abspielen
-	$scope.playSound = function(buffer) {
+
+	$scope.playSound = function(buffer, instrument) {
 
 	  var filterCheck = angular.element('.filterCheckBox');
 	  var source = context.createBufferSource();
@@ -182,6 +183,9 @@
 	    source.start = source.noteOn;
 		}
 
+	  //instrument is der name der trackRow, in der der aktuelle Beat liegt
+	  console.log(instrument);
+	
 	  source.start(0);
 	};
 
