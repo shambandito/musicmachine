@@ -8,8 +8,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "snare", 
@@ -19,8 +18,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "clap", 
@@ -30,8 +28,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "hihatClosed", 
@@ -41,8 +38,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "hihatOpen", 
@@ -52,8 +48,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "cymbal", 
@@ -63,8 +58,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "tom1", 
@@ -74,8 +68,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		},
 		{
 			"id": "tom2", 
@@ -85,8 +78,7 @@
 			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 			"volume": 1,
 			"tune": 1,
-			"filter": "none",
-			"filterFreq": 0
+			"lowPass": false
 		}
 	]
 }
