@@ -12,6 +12,8 @@
 
  	var clock;
  	var context;
+ 	var analyser;
+ 	var biquadFilter;
  	var bufferLoader;
 	var activeBeats = {};
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
@@ -167,20 +169,50 @@
 	};
 
 	//audio buffer abspielen
+
 	$scope.playSound = function(buffer, instrument) {
+
+	  var filterCheck = angular.element('.filterCheckBox');
 	  var source = context.createBufferSource();
-	  source.buffer = buffer;
-	  source.connect(context.destination);
+
+	  	/*
+	  	source.buffer = buffer; 
+	  	source.connect(biquadFilter);
+	  	biquadFilter.connect(context.destination); */
+	  	
+
+	  if(filterCheck.hasClass('md-checked')) {
+	  	source.buffer = buffer; 	  	
+	  	source.connect(biquadFilter);
+	  	biquadFilter.connect(context.destination);
+	  	voiceChange();
+
+	  } else {
+	  	source.buffer = buffer;
+	  	source.connect(context.destination);
+	  } 
 
 	  //fallback, falls source.start nicht existiert
-	  if (!source.start)
+	  if (!source.start) {
 	    source.start = source.noteOn;
+		}
 
 	  //instrument is der name der trackRow, in der der aktuelle Beat liegt
 	  console.log(instrument);
 	
 	  source.start(0);
 	};
+
+	//FILTER FUNCTIONS //
+
+	
+	function voiceChange() {
+
+			biquadFilter.type = "lowshelf";
+    		biquadFilter.frequency.value = 2000;
+    		biquadFilter.gain.value = 25;
+
+	}
 
 	//zurücksetzen des grids
 	$scope.resetGrid = function() {
@@ -216,6 +248,13 @@
 		    window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		    context = new AudioContext();
 		    clock = new WAAClock(context, {toleranceEarly: 0.1});
+		    
+		  
+
+		    biquadFilter = context.createBiquadFilter();
+
+
+
 		}
 		catch(e) {
 			alert("Web Audio API is not supported in this browser");
