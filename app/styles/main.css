@@ -27,6 +27,11 @@ md-slider .md-track-ticks {
 	display: none;
 }
 
+.instrument-name {
+	width: 100px;
+	font-size: 16px;
+}
+
 .beat {
 	width: 50px;
 	height: 50px;
@@ -39,29 +44,6 @@ md-slider .md-track-ticks {
 
 	transform: scale(1.05);
 }
-
-/*
-.beat-0 .beat,
-.beat-1 .beat,
-.beat-2 .beat,
-.beat-3 .beat {
-	background-color: #888;
-}
-
-.beat-4 .beat,
-.beat-5 .beat,
-.beat-6 .beat,
-.beat-7 .beat  {
-	background-color: #666;
-}
-
-.beat-8 .beat,
-.beat-9 .beat,
-.beat-10 .beat,
-.beat-11 .beat {
-	background-color: #444;
-}
-*/
 
 #content md-slider .md-track.md-track-fill,
 #content md-slider .md-sign {
@@ -77,6 +59,10 @@ md-slider .md-track-ticks {
 
   border-color: #303f9f;
   background-color: #303f9f;
+}
+
+#timer-row {
+	padding-left: 100px;
 }
 
 .timer-button {

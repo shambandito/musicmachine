@@ -2,31 +2,22 @@
 <div>
   <md-content id="content" class="md-padding">
     <section id="pattern">
-      <div id="timer-row" layout="row" layout-align="center center" layout-margin>
-        <div class="timer-button timer-{{index}}" ng-repeat="index in indexes" layout-margin>
-            
-        </div>
+      <div id="timer-row" layout="row" layout-align="start center" layout-margin>
+        <div class="timer-button timer-{{index}}" ng-repeat="index in indexes" layout-margin></div>
       </div>
-      <div class="track-row" data-sample="kick" layout="row" layout-align="center center" layout-margin>
+
+      <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument}}" layout="row" layout-align="start center" layout-margin>
+        <p class="instrument-name">{{instrument}}</p>
         <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
-            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
+            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}" aria-label="beat"></md-button>
         </div>
       </div>
-      <div class="track-row" data-sample="snare" layout="row" layout-align="center center" layout-margin>
-        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
-            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
-        </div>
-      </div>
-      <div class="track-row" data-sample="hihat" layout="row" layout-align="center center" layout-margin>
-        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
-            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}"></md-button>
-        </div>
-      </div>
+
     </section>
     <md-button ng-click="startPlaying();">Play</md-button>
     <md-button ng-click="stopPlaying();">Stop</md-button>
     <md-button ng-click="resetGrid();">Reset Grid</md-button>
-    <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete>
+    <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete aria-label="Tempo Slider">
 	</md-slider>
   </md-content>
 </div>

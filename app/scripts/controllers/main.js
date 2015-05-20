@@ -16,11 +16,25 @@
 	var activeBeats = {};
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
+	$scope.instruments = [
+		'kick',
+		'snare',
+		'hihatClosed',
+		'hihatOpen',
+		'tom1',
+		'tom2',
+		'clap'
+	]
+
  	// buffers to load {name: path}
 	var SOUNDBANK = {
 	  kick: 'samples/kickdrum1.wav',
 	  snare: 'samples/snaredrum1.wav',
-	  hihat: 'samples/hihat1.wav',
+	  hihatClosed: 'samples/hihat1.wav',
+	  hihatOpen: 'samples/hihat2.wav',
+	  tom1: 'samples/tom1.wav',
+	  tom2: 'samples/tom2.wav',
+	  clap: 'samples/clap1.wav'
 	};
 
 	var LOADED_SOUNDBANK = {};
