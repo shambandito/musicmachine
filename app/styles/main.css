@@ -5,17 +5,82 @@
   padding: 0.2em 0;
 }
 
-body {
+html, body {
+  height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  margin: 0;
+  background-color: #eee;
+  transition: opacity ease-in 0.1s;
+}
+
+div, section, input {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+  margin: 0;
   padding: 0;
+  font-weight: 400;
 }
 
 #content {
 	max-width: 1200px;
 	margin: 0 auto;
+	background: transparent;
 }
 
 #pattern {
-	margin-bottom: 30px;
+	margin-bottom: 20px;
+}
+
+#timer-row {
+	padding: 0 0 8px 120px;
+}
+
+#timer-row .timer-button {
+	height: 5px;
+	width: 50px;
+	background-color: #b6b6b6;
+	margin: 0 12px 0 0;
+	border-radius: 3px;
+}
+
+#timer-row .timer-button.active {
+	background-color: #303f9f;
+}
+
+.track-row {
+	padding-bottom: 12px;
+}
+
+.instrument-name {
+	font-size: 16px;
+}
+
+.filter-checkbox {
+	margin: 0;
+	font-size: 12px;
+}
+
+#pattern .beat {
+	width: 50px;
+	height: 50px;
+	transition: all 0.04s ease-in-out;
+	transform: scale(1);
+}
+
+#pattern .beat.active {
+	background-color: #3F51B5;
+}
+
+#pattern .beat.active.playing {
+	transform: scale(1.05);
 }
 
 .md-button {
@@ -23,31 +88,16 @@ body {
 	margin-right: 12px;
 }
 
-md-slider .md-track-ticks {
+#content md-slider .md-track-ticks {
 	display: none;
 }
 
-.instrument-name {
-	width: 100px;
-	font-size: 16px;
-}
-
-.beat {
-	width: 50px;
-	height: 50px;
-	background-color: #222;
-	transition: all 0.04s ease-in-out;
-	transform: scale(1);
-}
-
-.beat.active.playing {
-
-	transform: scale(1.05);
+#content md-select {
+	margin: 0 ;
 }
 
 #content md-slider .md-track.md-track-fill,
 #content md-slider .md-sign {
-
   background-color: #303f9f;
 }
 
@@ -56,32 +106,11 @@ md-slider .md-track-ticks {
 }
 
 #content md-slider .md-thumb:after {
-
   border-color: #303f9f;
   background-color: #303f9f;
 }
 
-#timer-row {
-	padding-left: 100px;
-}
 
-.timer-button {
-
-	height: 5px;
-	width: 50px;
-	background-color: #b6b6b6;
-	margin: 0 12px 0 0;
-	border-radius: 3px;
-}
-
-#pattern .beat.active {
-
-	background-color: #3F51B5;
-}
-
-#timer-row .timer-button.active {
-	background-color: #303f9f;
-}
 
 .dark-primary-color    { background: #303F9F; }
 .default-primary-color { background: #3F51B5; }

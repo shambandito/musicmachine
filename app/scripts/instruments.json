@@ -1,0 +1,92 @@
+{
+	"drums": [
+		{
+			"id": "kick", 
+			"name": "Kick", 
+			"path": "kick.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "snare", 
+			"name": "Snare", 
+			"path": "snare.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "clap", 
+			"name": "Clap", 
+			"path": "clap.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "hihatClosed", 
+			"name": "Closed Hihat", 
+			"path": "hihat-closed.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "hihatOpen", 
+			"name": "Open Hihat", 
+			"path": "hihat-open.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "cymbal", 
+			"name": "Cymbal", 
+			"path": "cymbal.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "tom1", 
+			"name": "Tom 1", 
+			"path": "tom1.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		},
+		{
+			"id": "tom2", 
+			"name": "Tom 2", 
+			"path": "tom2.wav", 
+			"sample": null,
+			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"volume": 1,
+			"tune": 1,
+			"filter": "none",
+			"filterFreq": 0
+		}
+	]
+}

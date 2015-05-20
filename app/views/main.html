@@ -1,24 +1,36 @@
-<div class="">
-<div>
-  <md-content id="content" class="md-padding">
-    <section id="pattern">
-      <div id="timer-row" layout="row" layout-align="start center" layout-margin>
-        <div class="timer-button timer-{{index}}" ng-repeat="index in indexes" layout-margin></div>
-      </div>
+<md-content id="content" class="md-padding">
+  <section id="pattern">
+    <div id="timer-row" layout="row" layout-align="end center">
+      <div class="timer-button timer-{{index}}" ng-repeat="index in indexes"></div>
+    </div>
 
-      <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument}}" layout="row" layout-align="start center" layout-margin>
-        <p class="instrument-name">{{instrument}}</p>
-        <div class="beat-wrap beat-{{index}}" ng-repeat="index in indexes">
-            <md-button class="beat light-primary-color md-raised" beatIndex="{{index}}" aria-label="beat"></md-button>
-        </div>
+    <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="start center">
+      <div flex>
+        <p class="instrument-name">{{instrument.name}}</p>
+        <md-checkbox class="filter-checkbox" ng-model="instrument.lowPass">Low-Pass Filter</md-checkbox>
       </div>
+      <div>
+        <md-button class="beat light-primary-color md-raised" 
+                   ng-click="instrument.steps[$index] = !instrument.steps[$index]" 
+                   ng-class="{'active': step}" 
+                   ng-repeat="step in instrument.steps track by $index" 
+                   beatIndex="{{$index}}" aria-label="beat">
+        </md-button>
+      </div>
+    </div>
 
-    </section>
+  </section>
+  <section id="controls" layout="row" layout-align="start center">
     <md-button ng-click="startPlaying();">Play</md-button>
+    <md-button ng-click="pausePlaying();">Pause</md-button>
     <md-button ng-click="stopPlaying();">Stop</md-button>
     <md-button ng-click="resetGrid();">Reset Grid</md-button>
-    <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete aria-label="Tempo Slider"></md-slider>
-    <md-checkbox class="filterCheckBox">Low-Shelf Filter</md-checkbox>
-  </md-content>
-</div>
-</div>
+    <div flex></div>
+    <p style="padding-right: 12px">Drum Kit</p>
+    <md-select placeholder="Select Kit" ng-model="selectedKit">
+      <md-option ng-repeat="kit in kits" value="{{kit.path}}">{{kit.name}}</md-option>
+    </md-select>
+  </section>
+  <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete aria-label="Tempo Slider"></md-slider>
+  
+</md-content>
