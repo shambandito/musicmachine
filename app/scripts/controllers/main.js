@@ -91,7 +91,7 @@
 				var tune = $scope.instruments[i].tune;
 				var lowPass = $scope.instruments[i].lowPass;
 
-		    //wenn das "steps" array des aktuellen "instruments" an der betrachteten stelle "true" als wert hat -> sample abspielen
+		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex]) {
 					sample.playSample(volume, tune, lowPass);
 				}

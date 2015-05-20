@@ -12,6 +12,8 @@ try {
 	alert("Web Audio API is not supported in this browser");
 }
 
+
+//sample objekt konstruktor
 function Sample(path) {
 
 	var mySample = this;
@@ -31,29 +33,41 @@ function Sample(path) {
   request.send();
 }
 
+//"klassenfunktion" zum abspielen der einzelnen sample objekte
 Sample.prototype.playSample = function(volume, tune, lowPass) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
 
 		//set volume
-		var gain = context.createGain();
-		gain.gain.value = volume;
+		var volumeNode = context.createGain();
+		volumeNode.gain.value = volume;
 
 		//set tune
+		//@TODO: wird noch nicht angewandt
 		source.playbackRate.value = tune;
 
+		//sample direkt an volumeNode connecten
+		source.connect(volumeNode);
+
+		//wenn lowPass "true" -> filter aktivieren
 		if(lowPass) {
-			source.connect(biquadFilter);
-	  	biquadFilter.connect(context.destination);
+
+			//volumeNode an filter connecten
+			volumeNode.connect(biquadFilter);
+
+	  	//filter eigenschaften
 			biquadFilter.type = "lowpass";
 	  	biquadFilter.frequency.value = 1000;
 	  	biquadFilter.gain.value = 25;
-		} else {
-			source.connect(gain);
-		}
 
-		gain.connect(context.destination);
+			//filter an context connecten
+	  	biquadFilter.connect(context.destination);
+		} else {
+
+			//volumeNode direkt an context connecten
+			volumeNode.connect(context.destination);
+		}
 
 	  //fallback, falls source.start nicht existiert
 	  if (!source.start) {
