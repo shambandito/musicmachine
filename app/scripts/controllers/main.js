@@ -17,9 +17,18 @@
 
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
+	$scope.filters = [
+		{id: 'lowpass', name: 'Low Pass'},
+		{id: 'highpass', name: 'High Pass'},
+		{id: 'bandpass', name: 'Band Pass'},
+		{id: 'none', name: 'None'}
+	];
+
  	$scope.isPlaying = false;
 
  	$scope.currentBeatIndex = -1;
+
+ 	$scope.selectedRow = -1;
 
 	//drum kits
 	$scope.kits = [
@@ -52,10 +61,17 @@
 	$scope.$watch('selectedKit', function() {
 		if(typeof $scope.selectedKit !== "undefined") {
 			console.log($scope.selectedKit)
-			$scope.stopPlaying();
+			//$scope.stopPlaying();
 			$scope.loadKit();
 		}
 	});
+
+	$scope.selectRow = function (i , $event) {
+		$scope.selectedRow = i;
+		console.log($scope.selectedRow);
+		angular.element('.instrument-name').removeClass('active-row');
+		angular.element($event.target).addClass('active-row');
+	}
 
 	//laden eines kits
  	$scope.loadKit = function() {
@@ -87,13 +103,19 @@
 
 				var steps = $scope.instruments[i].steps;
 				var sample = $scope.instruments[i].sample
-				var volume = $scope.instruments[i].volume;
+				var volume = $scope.instruments[i].volume / 10;
 				var tune = $scope.instruments[i].tune;
-				var lowPass = $scope.instruments[i].lowPass;
+				var filter = $scope.instruments[i].filter;
+				var filterFreq = $scope.instruments[i].filterFreq;
+				var muted = $scope.instruments[i].muted;
+
+				if(muted) {
+					volume = 0;
+				}
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex]) {
-					sample.playSample(volume, tune, lowPass);
+					sample.playSample(volume, tune, filter, filterFreq);
 				}
 		}
 	};

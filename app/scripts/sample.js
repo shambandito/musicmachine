@@ -34,7 +34,7 @@ function Sample(path) {
 }
 
 //"klassenfunktion" zum abspielen der einzelnen sample objekte
-Sample.prototype.playSample = function(volume, tune, lowPass) {
+Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
@@ -51,14 +51,14 @@ Sample.prototype.playSample = function(volume, tune, lowPass) {
 		source.connect(volumeNode);
 
 		//wenn lowPass "true" -> filter aktivieren
-		if(lowPass) {
+		if(filter !== 'none') {
 
 			//volumeNode an filter connecten
 			volumeNode.connect(biquadFilter);
 
 	  	//filter eigenschaften
-			biquadFilter.type = "lowpass";
-	  	biquadFilter.frequency.value = 1000;
+			biquadFilter.type = filter;
+	  	biquadFilter.frequency.value = filterFreq;
 	  	biquadFilter.gain.value = 25;
 
 			//filter an context connecten

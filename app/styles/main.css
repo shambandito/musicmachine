@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 #content {
-	max-width: 1200px;
+	max-width: 1000px;
 	margin: 0 auto;
 	background: transparent;
 }
@@ -45,9 +45,9 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 
 #timer-row .timer-button {
 	height: 5px;
-	width: 50px;
+	width: 40px;
 	background-color: #b6b6b6;
-	margin: 0 12px 0 0;
+	margin: 0 8px 0 0;
 	border-radius: 3px;
 }
 
@@ -56,21 +56,26 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 .track-row {
-	padding-bottom: 12px;
+	padding-bottom: 8px;
 }
 
 .instrument-name {
 	font-size: 16px;
+	cursor: pointer;
 }
 
-.filter-checkbox {
+.instrument-name.active-row {
+	color: red;
+}
+
+.mute-checkbox {
 	margin: 0;
 	font-size: 12px;
 }
 
 #pattern .beat {
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	transition: all 0.04s ease-in-out;
 	transform: scale(1);
 }
@@ -85,7 +90,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 
 .md-button {
 	padding: 0.57em;
-	margin-right: 12px;
+	margin-right: 8px;
 }
 
 #content md-slider .md-track-ticks {
@@ -109,6 +114,24 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   border-color: #303f9f;
   background-color: #303f9f;
 }
+
+.effect-row {
+	width: 100%;
+}
+
+#effects .filter-block {
+	width: 100%;
+}
+
+#effects .filter-select {
+	margin-right: 12px;
+}
+
+#effects md-slider {
+	width: 200px;
+}
+
+
 
 
 

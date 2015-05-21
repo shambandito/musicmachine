@@ -6,8 +6,10 @@
 
     <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="start center">
       <div flex>
-        <p class="instrument-name">{{instrument.name}}</p>
-        <md-checkbox class="filter-checkbox" ng-model="instrument.lowPass">Low-Pass Filter</md-checkbox>
+        <p class="instrument-name" ng-click="selectRow($index, $event)">{{instrument.name}}</p> 
+        <md-checkbox ng-model="instrument.muted" class="mute-checkbox" aria-label="Mute Checkbox">
+          Mute
+        </md-checkbox>
       </div>
       <div>
         <md-button class="beat light-primary-color md-raised" 
@@ -20,6 +22,30 @@
     </div>
 
   </section>
+
+  <section id="effects" >
+    <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
+      <p class="headline"> Effects for {{instrument.name}} </p>
+      <div layout="row">
+        <div flex class="volume-block">
+          <p class="label">Volume</p>
+          <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" md-discrete aria-label="Volume Slider"></md-slider> 
+        </div>
+        <div flex class="filter-block">
+          <p class="label">Filter</p>
+          <div layout="row" layout-align="start center">
+            <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
+              <md-option ng-repeat="filter in filters" value="{{filter.id}}">{{filter.name}}</md-option>
+            </md-select>
+            <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="20000" step="10" md-discrete aria-label="Filter Frequency Slider"></md-slider>
+          </div>
+        </div>
+        <div flex class="delay">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="controls" layout="row" layout-align="start center">
     <md-button ng-click="startPlaying();">Play</md-button>
     <md-button ng-click="pausePlaying();">Pause</md-button>
