@@ -51,6 +51,8 @@
     <md-button ng-click="pausePlaying();">Pause</md-button>
     <md-button ng-click="stopPlaying();">Stop</md-button>
     <md-button ng-click="resetGrid();">Reset Grid</md-button>
+    <md-button ng-click="record();" class="startrecording" ng-disabled="enablestarting">Record</md-button>
+    <md-button ng-click="stoprecord();" class="stoprecording" ng-disabled="enablestoping">Stop Recording</md-button>
     <div flex></div>
     <p style="padding-right: 12px">Drum Kit</p>
     <md-select placeholder="Select Kit" ng-model="selectedKit">

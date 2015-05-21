@@ -29,6 +29,7 @@
  	$scope.currentBeatIndex = -1;
 
  	$scope.selectedRow = -1;
+ 	$scope.isRecording = false;
 
 	//drum kits
 	$scope.kits = [
@@ -147,11 +148,11 @@
 	$scope.startPlaying = function() {
 		//wenn clock schon spielt, nicht nochmal den callback starten
 		if($scope.isPlaying == false) {
+			
 			clock.start();
 			clock.callbackAtTime($scope.onNextBeat, $scope.nextBeatTime()).repeat($scope.beatDur).tolerance({late:100});			
 		}
-
-		$scope.isPlaying = true;			
+		$scope.isPlaying = true;		
 	};
 
 	//Stoppt den loop und fängt von vorne an
@@ -167,12 +168,35 @@
 	//Pausiert den loop und macht da weiter wo man aufgehört hat.
 	$scope.pausePlaying = function() {	
 		$scope.isPlaying = false;
+		
 		clock.stop();
 	};
+	$scope.record = function(){
+		if($scope.isRecording == false){
+			recorder.record();
+			$scope.isRecording = true;
+			$scope.enablestoping = false;
+			$scope.enablestarting = true;
+		}
+	}
+	$scope.stoprecord = function(){
+		if($scope.isRecording != false){
+			recorder.stop();
+			$scope.isRecording = false;
+				$scope.enablestoping = true;
+				$scope.enablestarting = false;
+			recorder.exportWAV(function(e){
+	    	recorder.clear();
 
+	    	Recorder.forceDownload(e, "filename.wav");
+	    	
+	  	});
+		}
+	}
 	var init = function() {
 	 	try {    
 		  clock = new WAAClock(context, {toleranceEarly: 0.1});  
+		  $scope.enablestoping = true;
 		}
 		catch(e) {
 			alert("Web Audio API is not supported in this browser");

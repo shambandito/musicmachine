@@ -1,12 +1,15 @@
 var context;
 var biquadFilter;
-
 //check ob audiocontext verfügbar ist
 try {
     // Fix up prefixing
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
     context = new AudioContext();
+    var recorderNode = context.createGain();
+    recorderNode.gain.value = 0.7;
     biquadFilter = context.createBiquadFilter();
+
 
 } catch(e) {
 	alert("Web Audio API is not supported in this browser");
@@ -38,7 +41,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
-
+		console.log(source);
 		//set volume
 		var volumeNode = context.createGain();
 		volumeNode.gain.value = volume;
@@ -48,6 +51,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 		source.playbackRate.value = tune;
 
 		//sample direkt an volumeNode connecten
+
 		source.connect(volumeNode);
 
 		//wenn lowPass "true" -> filter aktivieren
@@ -66,6 +70,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 		} else {
 
 			//volumeNode direkt an context connecten
+			volumeNode.connect(recorderNode);
 			volumeNode.connect(context.destination);
 		}
 
@@ -73,6 +78,9 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 	  if (!source.start) {
 	    source.start = source.noteOn;
 		}
-	
+		
 	  source.start(0);
 }
+ var recorder = new Recorder(recorderNode, {
+      workerPath: "/scripts/recorderWorker.js"
+    });
