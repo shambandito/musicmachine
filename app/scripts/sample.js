@@ -61,16 +61,17 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 			volumeNode.connect(biquadFilter);
 
 	  	//filter eigenschaften
-			biquadFilter.type = filter;
+		biquadFilter.type = filter;
 	  	biquadFilter.frequency.value = filterFreq;
 	  	biquadFilter.gain.value = 25;
 
-			//filter an context connecten
+		//filter an context connecten
 	  	biquadFilter.connect(context.destination);
 		} else {
 
 			//volumeNode direkt an context connecten
 			volumeNode.connect(recorderNode);
+			volumeNode.connect(analyser);
 			volumeNode.connect(context.destination);
 		}
 
