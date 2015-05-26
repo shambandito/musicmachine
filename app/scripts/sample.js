@@ -41,7 +41,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
-		console.log(source);
+
 		//set volume
 		var volumeNode = context.createGain();
 		volumeNode.gain.value = volume;
@@ -54,7 +54,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 
 		source.connect(volumeNode);
 
-		//wenn lowPass "true" -> filter aktivieren
+		//wenn ein filter ausgewählt wurde -> aktivieren
 		if(filter !== 'none') {
 
 			//volumeNode an filter connecten
