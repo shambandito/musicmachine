@@ -13,52 +13,65 @@
       </div>
       <div>
         <md-button class="beat light-primary-color md-raised" 
-                   ng-click="instrument.steps[$index] = !instrument.steps[$index]" 
+                   ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
                    ng-class="{'active': step}" 
-                   ng-repeat="step in instrument.steps track by $index" 
+                   ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
                    beatIndex="{{$index}}" aria-label="beat">
         </md-button>
       </div>
     </div>
-
   </section>
 
   <section id="effects" >
     <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
       <p class="headline"> Effects for {{instrument.name}} </p>
-      <div layout="row">
-        <div flex class="volume-block">
+      <div layout="row" layout-align="space-between center">
+        <div flex="45" class="volume-block">
           <p class="label">Volume</p>
-          <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" md-discrete aria-label="Volume Slider"></md-slider> 
+          <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider> 
         </div>
-        <div flex class="filter-block">
+        <div flex="45" class="filter-block">
           <p class="label">Filter</p>
           <div layout="row" layout-align="start center">
             <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
-              <md-option ng-repeat="filter in filters" value="{{filter.id}}">{{filter.name}}</md-option>
+              <md-option class="filter-option" ng-repeat="filter in filters" value="{{filter.id}}">{{filter.name}}</md-option>
             </md-select>
-            <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="20000" step="10" md-discrete aria-label="Filter Frequency Slider"></md-slider>
+            <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="100" step="1" aria-label="Filter Frequency Slider"></md-slider>
           </div>
-        </div>
-        <div flex class="delay">
         </div>
       </div>
     </div>
   </section>
 
-  <section id="controls" layout="row" layout-align="start center">
-    <md-button ng-click="startPlaying();">Play</md-button>
-    <md-button ng-click="pausePlaying();">Pause</md-button>
-    <md-button ng-click="stopPlaying();">Stop</md-button>
-    <md-button ng-click="resetGrid();">Reset Grid</md-button>
-    <md-button ng-click="record();" class="startrecording" ng-disabled="enablestarting">Record</md-button>
-    <md-button ng-click="stoprecord();" class="stoprecording" ng-disabled="enablestoping">Stop Recording</md-button>
-    <div flex></div>
-    <p style="padding-right: 12px">Drum Kit</p>
-    <md-select placeholder="Select Kit" ng-model="selectedKit">
-      <md-option ng-repeat="kit in kits" value="{{kit.path}}">{{kit.name}}</md-option>
-    </md-select>
+  <section id="tempo-block">
+    <p class="headline">Tempo</p>
+    <div layout="row" layout-align="start center">
+      <input class="tempo-label" disabled ng-model="tempo"/>
+      <span class="tempo-label">BPM</span>
+      <md-slider flex ng-model="tempo" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
+    </div>
   </section>
-  <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete aria-label="Tempo Slider"></md-slider>
-  
+
+  <section id="controls" layout="row" layout-align="start center">
+    <div class="buttons-wrap">
+      <md-button ng-show="!isPlaying" ng-click="startPlaying();">Play</md-button>
+      <md-button ng-show="isPlaying" ng-click="pausePlaying();">Pause</md-button>
+      <md-button ng-click="stopPlaying();">Stop</md-button>
+      <md-button ng-click="resetGrid();">Reset Grid</md-button>
+      <md-button ng-click="record();" ng-show="!isRecording">Record</md-button>
+      <md-button ng-click="stopRecord();" ng-show="isRecording">Stop Recording</md-button>
+    </div>
+    <div flex></div>
+    <div id="kit-block" layout="row" layout-align="start center">
+      <p>Drum Kit</p>
+      <md-select class="kit-select" placeholder="Select Kit" ng-model="selectedKit">
+        <md-option class="kit-option" ng-repeat="kit in kits" value="{{kit.path}}">{{kit.name}}</md-option>
+      </md-select>
+    </div>
+  </section>
+
+  <section id="pattern-block">
+    <md-button ng-click="selectedPattern = 0">Pattern A</md-button>
+    <md-button ng-click="selectedPattern = 1">Pattern B</md-button>
+  </section>
 </md-content>

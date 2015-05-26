@@ -40,6 +40,9 @@
 	//currently selected kit
 	$scope.selectedKit = $scope.kits[0].path;
 
+	//currently selected pattern
+	$scope.selectedPattern = 0;
+
 	//timing/tempo variablen
  	$scope.tempo = 120;
 	$scope.beatDur = 60 / $scope.tempo / 4;
@@ -102,12 +105,14 @@
 		//iterate over instruments array
 		for (var i = 0; i < $scope.instruments.length; i++) {
 
-				var steps = $scope.instruments[i].steps;
+				var steps = $scope.instruments[i].steps[$scope.selectedPattern];
 				var sample = $scope.instruments[i].sample
 				var volume = $scope.instruments[i].volume / 10;
 				var tune = $scope.instruments[i].tune;
 				var filter = $scope.instruments[i].filter;
-				var filterFreq = $scope.instruments[i].filterFreq;
+
+				var filterFreq = (($scope.instruments[i].filterFreq * 15000) / 100);
+
 				var muted = $scope.instruments[i].muted;
 
 				if(muted) {
@@ -138,8 +143,8 @@
 
 		//bei jedem instrument alle steps auf false setzen
 		for (var i = 0; i < $scope.instruments.length; i++) {
-			for(var j = 0; j < $scope.instruments[i].steps.length; j++) {
-				$scope.instruments[i].steps[j] = false;
+			for(var j = 0; j < $scope.instruments[i].steps[$scope.selectedPattern].length; j++) {
+				$scope.instruments[i].steps[$scope.selectedPattern][j] = false;
 			}
 		}
 	}
@@ -171,20 +176,18 @@
 		
 		clock.stop();
 	};
+
 	$scope.record = function(){
-		if($scope.isRecording == false){
+		if(!$scope.isRecording){
 			recorder.record();
 			$scope.isRecording = true;
-			$scope.enablestoping = false;
-			$scope.enablestarting = true;
 		}
-	}
-	$scope.stoprecord = function(){
-		if($scope.isRecording != false){
+	};
+
+	$scope.stopRecord = function(){
+		if($scope.isRecording){
 			recorder.stop();
 			$scope.isRecording = false;
-				$scope.enablestoping = true;
-				$scope.enablestarting = false;
 			recorder.exportWAV(function(e){
 	    	recorder.clear();
 
@@ -192,16 +195,16 @@
 	    	
 	  	});
 		}
-	}
+	};
+	
 	var init = function() {
 	 	try {    
-		  clock = new WAAClock(context, {toleranceEarly: 0.1});  
-		  $scope.enablestoping = true;
+		  clock = new WAAClock(context, {toleranceEarly: 0.1});
 		}
 		catch(e) {
 			alert("Web Audio API is not supported in this browser");
 		}
-	}
+	};
 
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {

@@ -5,7 +5,11 @@
 			"name": "Kick", 
 			"path": "kick.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -17,7 +21,11 @@
 			"name": "Snare", 
 			"path": "snare.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -29,7 +37,11 @@
 			"name": "Clap", 
 			"path": "clap.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -41,7 +53,11 @@
 			"name": "Closed Hihat", 
 			"path": "hihat-closed.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -53,7 +69,11 @@
 			"name": "Open Hihat", 
 			"path": "hihat-open.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -65,7 +85,11 @@
 			"name": "Cymbal", 
 			"path": "cymbal.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -77,7 +101,11 @@
 			"name": "Tom 1", 
 			"path": "tom1.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
@@ -89,7 +117,11 @@
 			"name": "Tom 2", 
 			"path": "tom2.wav", 
 			"sample": null,
-			"steps": [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+			"steps": 
+			[
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+			],
 			"volume": 10,
 			"tune": 1,
 			"filter": "none", 
