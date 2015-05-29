@@ -1,5 +1,6 @@
 var context;
 var biquadFilter;
+var delayNode; 
 //check ob audiocontext verfügbar ist
 try {
     // Fix up prefixing
@@ -9,6 +10,7 @@ try {
     var recorderNode = context.createGain();
     recorderNode.gain.value = 0.7;
     biquadFilter = context.createBiquadFilter();
+    delayNode = context.createDelay();
 
 
 } catch(e) {
@@ -37,7 +39,7 @@ function Sample(path) {
 }
 
 //"klassenfunktion" zum abspielen der einzelnen sample objekte
-Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
+Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delay) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
@@ -50,9 +52,13 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 		//@TODO: wird noch nicht angewandt
 		source.playbackRate.value = tune;
 
+		//set delay
+		delayNode.delayTime.value = delay;
+
 		//sample direkt an volumeNode connecten
 
-		source.connect(volumeNode);
+		source.connect(delayNode);
+		delayNode.connect(volumeNode);
 
 		//wenn ein filter ausgewählt wurde -> aktivieren
 		if(filter !== 'none') {

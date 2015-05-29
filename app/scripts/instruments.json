@@ -14,7 +14,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "snare", 
@@ -30,7 +31,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "clap", 
@@ -46,7 +48,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "hihatClosed", 
@@ -62,7 +65,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "hihatOpen", 
@@ -78,7 +82,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "cymbal", 
@@ -94,7 +99,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "tom1", 
@@ -110,7 +116,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		},
 		{
 			"id": "tom2", 
@@ -126,7 +133,8 @@
 			"tune": 1,
 			"filter": "none", 
 			"filterFreq": 0,
-			"muted": false 
+			"muted": false,
+			"delay": 0 
 		}
 	]
 }

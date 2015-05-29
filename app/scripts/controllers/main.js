@@ -110,6 +110,7 @@
 				var volume = $scope.instruments[i].volume / 10;
 				var tune = $scope.instruments[i].tune;
 				var filter = $scope.instruments[i].filter;
+				var delay = $scope.instruments[i].delay;
 
 				var filterFreq = (($scope.instruments[i].filterFreq * 15000) / 100);
 
@@ -121,7 +122,7 @@
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex]) {
-					sample.playSample(volume, tune, filter, filterFreq);
+					sample.playSample(volume, tune, filter, filterFreq, delay);
 				}
 		}
 	};

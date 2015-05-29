@@ -26,11 +26,11 @@
     <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
       <p class="headline"> Effects for {{instrument.name}} </p>
       <div layout="row" layout-align="space-between center">
-        <div flex="45" class="volume-block">
+        <div flex="25" class="volume-block">
           <p class="label">Volume</p>
           <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider> 
         </div>
-        <div flex="45" class="filter-block">
+        <div flex="25" class="filter-block">
           <p class="label">Filter</p>
           <div layout="row" layout-align="start center">
             <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
@@ -38,6 +38,10 @@
             </md-select>
             <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="100" step="1" aria-label="Filter Frequency Slider"></md-slider>
           </div>
+        </div>
+        <div flex="25" class="delay-block">
+          <p class="label">Delay</p>
+          <md-slider class="delay-slider" ng-model="instrument.delay" min="0" max="2" step="0.2" aria-label="Delay Slider"></md-slider> 
         </div>
       </div>
     </div>
