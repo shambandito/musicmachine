@@ -1,6 +1,7 @@
 {
 	"drums": [
 		{
+			"index": 0,
 			"id": "kick", 
 			"name": "Kick", 
 			"path": "kick.wav", 
@@ -15,9 +16,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 1,
 			"id": "snare", 
 			"name": "Snare", 
 			"path": "snare.wav", 
@@ -32,9 +37,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 2,
 			"id": "clap", 
 			"name": "Clap", 
 			"path": "clap.wav", 
@@ -49,9 +58,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 3,
 			"id": "hihatClosed", 
 			"name": "Closed Hihat", 
 			"path": "hihat-closed.wav", 
@@ -66,9 +79,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 4,
 			"id": "hihatOpen", 
 			"name": "Open Hihat", 
 			"path": "hihat-open.wav", 
@@ -83,9 +100,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 5,
 			"id": "cymbal", 
 			"name": "Cymbal", 
 			"path": "cymbal.wav", 
@@ -100,9 +121,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 6,
 			"id": "tom1", 
 			"name": "Tom 1", 
 			"path": "tom1.wav", 
@@ -117,9 +142,13 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		},
 		{
+			"index": 7,
 			"id": "tom2", 
 			"name": "Tom 2", 
 			"path": "tom2.wav", 
@@ -134,7 +163,10 @@
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
-			"delay": 0 
+			"delayTime": 0,
+			"delayFeedback": 0.5,
+			"delayCutoff": 10000,
+			"selectedEffect": 0 
 		}
 	]
 }
