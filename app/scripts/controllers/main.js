@@ -11,7 +11,6 @@
  .controller('MainCtrl', function ($scope, $http) {
 
  	var clock;
- 	var analyser;
 
 	$scope.instruments = [];
 
@@ -206,10 +205,13 @@
 			alert("Web Audio API is not supported in this browser");
 		}
 	};
+		initBinCanvas();
+	}
 
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {
 		init();
+		initVisualization();
 	});
 
  });

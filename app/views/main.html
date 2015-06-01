@@ -1,3 +1,4 @@
+<canvas id="canvas"></canvas>
 <md-content id="content" class="md-padding">
   <section id="pattern">
     <div id="timer-row" layout="row" layout-align="end center">
@@ -78,4 +79,7 @@
     <md-button ng-click="selectedPattern = 0">Pattern A</md-button>
     <md-button ng-click="selectedPattern = 1">Pattern B</md-button>
   </section>
+
+  <md-slider ng-model="tempo" min="60" max="240" step="2" md-discrete aria-label="Tempo Slider"></md-slider>
+  
 </md-content>
