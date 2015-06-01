@@ -41,7 +41,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq) {
 
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
-		console.log(source);
+		
 		//set volume
 		var volumeNode = context.createGain();
 		volumeNode.gain.value = volume;
