@@ -204,7 +204,6 @@
 		catch(e) {
 			alert("Web Audio API is not supported in this browser");
 		}
-	};
 		initBinCanvas();
 	}
 
@@ -213,5 +212,4 @@
 		init();
 		initVisualization();
 	});
-
  });
