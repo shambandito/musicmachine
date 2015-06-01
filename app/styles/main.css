@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	width: 100%;
 }
 
-#effects .filter-select,
+#effects md-select,
 #kit-block .kit-select {
 	margin-top: -2px;
 	margin-right: 12px;
@@ -171,7 +171,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	margin-top: 0;
 }
 
-#effects .filter-select .md-select-label span:first-child,
+#effects md-select .md-select-label span:first-child,
 #kit-block .kit-select .md-select-label span:first-child {
 	width: 100%;
 }

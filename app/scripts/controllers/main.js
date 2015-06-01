@@ -16,11 +16,12 @@
 
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
+	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
+		{id: 'none', name: 'None'},
 		{id: 'lowpass', name: 'Low Pass'},
 		{id: 'highpass', name: 'High Pass'},
-		{id: 'bandpass', name: 'Band Pass'},
-		{id: 'none', name: 'None'}
+		{id: 'bandpass', name: 'Band Pass'}	
 	];
 
  	$scope.isPlaying = false;
@@ -34,6 +35,12 @@
 	$scope.kits = [
 		{path: 'TR808', name: 'TR 808'},
 		{path: 'TR909', name: 'TR 909'}
+	];
+
+	$scope.effects = [
+		{id: 'volume', name: 'Volume / Tune'},
+		{id: 'filter', name: 'Filter'},
+		{id: 'delay', name: 'Delay'}
 	];
 
 	//currently selected kit
@@ -107,11 +114,16 @@
 				var steps = $scope.instruments[i].steps[$scope.selectedPattern];
 				var sample = $scope.instruments[i].sample
 				var volume = $scope.instruments[i].volume / 10;
-				var tune = $scope.instruments[i].tune;
-				var filter = $scope.instruments[i].filter;
-				var delay = $scope.instruments[i].delay;
 
-				var filterFreq = (($scope.instruments[i].filterFreq * 15000) / 100);
+				var tune = $scope.instruments[i].tune;
+
+				var filter = $scope.instruments[i].filter;
+
+				var delayTime = $scope.instruments[i].delayTime;
+				var delayFeedback = $scope.instruments[i].delayFeedback;
+				var delayCutoff = $scope.instruments[i].delayCutoff;
+
+				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
 
 				var muted = $scope.instruments[i].muted;
 
@@ -121,7 +133,7 @@
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex]) {
-					sample.playSample(volume, tune, filter, filterFreq, delay);
+					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff);
 				}
 		}
 	};
@@ -167,7 +179,6 @@
 		angular.element('#timer-row .timer-button').removeClass('active');
 		angular.element('#pattern .beat').removeClass('playing');
 		$scope.currentBeatIndex = -1;
-		context.currentTime = 0;
 	};
 
 	//Pausiert den loop und macht da weiter wo man aufgehört hat.
@@ -196,6 +207,12 @@
 	  	});
 		}
 	};
+
+	$scope.resetDelay = function(index) {
+		$scope.instruments[index].delayTime = 0;
+		$scope.instruments[index].delayFeedback = 0.5;
+		$scope.instruments[index].delayCutoff = 10000;
+	}
 	
 	var init = function() {
 	 	try {    
