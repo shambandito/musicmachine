@@ -40,16 +40,6 @@ function initBinCanvas () {
 
 	//get context from canvas for drawing
 	ctx = c.getContext("2d");
-
-	//create gradient for the bins
-	var gradient = ctx.createLinearGradient(0,0,0,300);
-	gradient.addColorStop(1,'#000000'); //black
-	gradient.addColorStop(0.75,'#ff0000'); //red
-	gradient.addColorStop(0.25,'#ffff00'); //yellow
-	gradient.addColorStop(0,'#ffffff'); //white
-
-	//set new gradient as fill style
-	ctx.fillStyle = gradient;
 }
 
 function drawBars (array) {
