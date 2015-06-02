@@ -81,7 +81,7 @@
 
   <section id="controls" layout="row" layout-align="start center">
     <div class="buttons-wrap">
-      <md-button ng-show="!isPlaying" ng-click="startPlaying();">Play</md-button>
+      <md-button ng-show="!isPlaying" ng-click="startPlaying();"><span class="icon-play_arrow"></span></md-button>
       <md-button ng-show="isPlaying" ng-click="pausePlaying();">Pause</md-button>
       <md-button ng-click="stopPlaying();">Stop</md-button>
       <md-button ng-click="resetGrid();">Reset Grid</md-button>
@@ -98,8 +98,8 @@
   </section>
 
   <section id="pattern-block">
-    <md-button ng-click="selectedPattern = 0">Pattern A</md-button>
-    <md-button ng-click="selectedPattern = 1">Pattern B</md-button>
+    <md-button ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
+    <md-button ng-click="addPattern()">+</md-button>
   </section>
 </md-content>
 

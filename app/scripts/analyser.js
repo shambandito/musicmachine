@@ -15,8 +15,6 @@ function updateVisualization () {
 	analyser.getByteFrequencyData(array);
 
 	drawBars(array);		
-
-	//rafID = window.requestAnimationFrame(updateVisualization);
 }
 
 function initBinCanvas () {

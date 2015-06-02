@@ -76,6 +76,21 @@
 		}
 	});
 
+	$scope.addPattern = function() {
+
+		
+
+		for(var i = 0; i < $scope.instruments.length; i++) {
+
+			$scope.instruments[i].steps.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
+
+		}	
+	}
+
+	$scope.selectPattern = function(index) {	
+		$scope.selectedPattern = index;
+	}
+
 	$scope.selectRow = function (i , $event) {
 		$scope.selectedRow = i;
 		console.log($scope.selectedRow);

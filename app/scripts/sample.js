@@ -73,6 +73,11 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 			volumeNode.connect(delayNode.input);
 		} 
 
+		//@TODO: PHASED
+		//if phaser exists
+		//falls delay existiert -> delayNode an phaser node
+		//sonst -> volumeNode an phaser node
+
 		//wenn ein filter ausgewählt wurde
 		if(filter !== 'none') {
 
@@ -84,6 +89,13 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
          filterType: filter,    // 0 to 7, corresponds to the filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
          bypass: 0
       });
+
+			//@TODO:
+			//wenn phaser code vorhanden ist:
+			//wenn phaser vorhanden -> phaserNode an filter connecten
+			//sonst ->
+			//falls delayNode vorhanden -> delayNode an filter connecten
+			//sonst -> volumeNode an filter connecten
 
 			//delayNode an filter connecten, falls delay gesetzt wurde
 			if(delayTime !== 0) {
