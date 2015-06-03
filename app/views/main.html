@@ -86,7 +86,10 @@
       <md-button ng-click="stopPlaying();">Stop</md-button>
       <md-button ng-click="resetGrid();">Reset Grid</md-button>
       <md-button ng-click="record();" ng-show="!isRecording">Record</md-button>
-      <md-button ng-click="stopRecord();" ng-show="isRecording">Stop Recording</md-button>
+      <md-button ng-click="stopRecord($event);" ng-show="isRecording">Stop Recording</md-button>
+      <md-button ng-click="exportPattern()" id="export" >Export Pattern</md-button>
+      <a id="downloadpattern">Download Pattern</a>
+      
     </div>
     <div flex></div>
     <div id="kit-block" layout="row" layout-align="start center">

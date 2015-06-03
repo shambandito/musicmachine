@@ -8,9 +8,11 @@
  * Controller of the musicmachineApp
  */
  angular.module('musicmachineApp')
- .controller('MainCtrl', function ($scope, $http) {
+ .controller('MainCtrl', function ($scope, $http,$mdDialog) {
 
  	var clock;
+	// Für mdDialog
+  $scope.showRecordFileDownloadDialog = showRecordFileDownloadDialog;
 
 	$scope.instruments = [];
 
@@ -77,9 +79,6 @@
 	});
 
 	$scope.addPattern = function() {
-
-		
-
 		for(var i = 0; i < $scope.instruments.length; i++) {
 
 			$scope.instruments[i].steps.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
@@ -93,7 +92,6 @@
 
 	$scope.selectRow = function (i , $event) {
 		$scope.selectedRow = i;
-		console.log($scope.selectedRow);
 		angular.element('.instrument-name').removeClass('active-row');
 		angular.element($event.target).addClass('active-row');
 	}
@@ -199,27 +197,30 @@
 	//Pausiert den loop und macht da weiter wo man aufgehört hat.
 	$scope.pausePlaying = function() {	
 		$scope.isPlaying = false;
-		
 		clock.stop();
 	};
 
 	$scope.record = function(){
 		if(!$scope.isRecording){
-			recorder.record();
-			$scope.isRecording = true;
+			console.log($scope.isPlaying);
+			if($scope.isPlaying == false){
+				console.log("start");
+				recorder.record();
+				$scope.startPlaying();
+				$scope.isRecording = true;
+			}else{
+				console.log("start without playing");
+				recorder.record();
+				$scope.isRecording = true;
+			}
 		}
 	};
 
-	$scope.stopRecord = function(){
+	$scope.stopRecord = function($event){
 		if($scope.isRecording){
 			recorder.stop();
 			$scope.isRecording = false;
-			recorder.exportWAV(function(e){
-	    	recorder.clear();
-
-	    	Recorder.forceDownload(e, "filename.wav");
-	    	
-	  	});
+			showRecordFileDownloadDialog($event);
 		}
 	};
 
@@ -238,7 +239,61 @@
 		}
 		initBinCanvas();
 	}
+	//Export Pattern
+	$scope.exportPattern = function(){
+		$scope.data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($scope.instruments));
 
+	}
+	// Import Pattern
+	$scope.importPattern = function(){
+
+	}
+
+	//Show Dialog
+ 	function showRecordFileDownloadDialog($event) {
+	  var parentEl = angular.element(document.body);
+	   	$mdDialog.show({
+	     	parent: parentEl,
+	     	targetEvent: $event,
+	     	template:
+	       	'<md-dialog aria-label="List dialog">' +
+	       	'  <md-dialog-content id="download">'+
+	       	'		 <h2>Download Recorded File</h2>'+
+	       	'    <md-input-container><label>Filename</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
+		      '  </md-dialog-content>' +
+		      '  <div class="md-actions">' +
+		      '    <md-button ng-click="closeDialog()" class="md-primary">' +
+		      '      Close Dialog' +
+		      '    </md-button>' +
+		      '    <md-button ng-click="downloadRecordedFile()" class="md-primary">' +
+		      '      Download File' +
+		      '    </md-button>' +
+		      '  </div>' +
+		      '</md-dialog>',
+	    	locals: {
+	      	filename : $scope.filename
+	    	},
+	    	controller: DialogController
+	  	});
+	  	
+	  function DialogController(scope, $mdDialog,filename) {
+	    scope.closeDialog = function() {
+	      $mdDialog.hide();
+	    }
+	    scope.filename = filename;
+	    scope.downloadRecordedFile = function(){
+	    	if(scope.filename.length >= 4){
+		    	recorder.exportWAV(function(e){
+  		    	recorder.clear();
+  	
+  		    	Recorder.forceDownload(e, scope.filename +".wav");
+	    		
+    	
+  				});	
+	    	}
+	    }
+	  }
+	}
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {
 		init();
