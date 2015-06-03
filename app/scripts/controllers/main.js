@@ -15,7 +15,7 @@
   $scope.showRecordFileDownloadDialog = showRecordFileDownloadDialog;
 
 	$scope.instruments = [];
-
+	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
@@ -64,10 +64,14 @@
 
  	//get instruments data
  	//.id, .name, .path, .sample, .steps, .volume, .tune
-	$http.get('scripts/instruments.json').success(function(data){
-		$scope.instruments = data.drums;
-		$scope.loadKit();
-	});
+ 	if($scope.wasloaded == false){
+ 		$http.get('scripts/instruments.json').success(function(data){
+ 			$scope.instruments = data.drums;
+ 			$scope.loadKit();
+ 			console.log("Ficke dich");
+ 			$scope.wasloaded = true;
+ 		});
+ 	}
 
 	//wenn kit ausgetauscht wird, samples neu laden
 	$scope.$watch('selectedKit', function() {
@@ -220,6 +224,7 @@
 		if($scope.isRecording){
 			recorder.stop();
 			$scope.isRecording = false;
+			$scope.stopPlaying();
 			showRecordFileDownloadDialog($event);
 		}
 	};
@@ -241,12 +246,23 @@
 	}
 	//Export Pattern
 	$scope.exportPattern = function(){
-		$scope.data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($scope.instruments));
-
+		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
+		$('<a href="data:' + data + '" download="data.json">download JSON</a>').insertAfter( "#export" );
 	}
 	// Import Pattern
 	$scope.importPattern = function(){
-
+		var file = $scope.myFile;
+		var reader = new FileReader();
+		reader.readAsText(file, "UTF-8");
+		reader.onload = function(e){
+			delete $scope.instruments;
+			var neuinst = JSON.parse(e.target.result);
+			for (var i = 0; i < neuinst.length; i++) {
+				$scope.instruments[i] = neuinst[i];
+				$scope.$apply();
+			};
+			
+		}
 	}
 
 	//Show Dialog
@@ -297,4 +313,19 @@
 		init();
 		initVisualization();
 	});
- });
+})
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
