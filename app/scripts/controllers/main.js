@@ -285,10 +285,8 @@
 	    	if(scope.filename.length >= 4){
 		    	recorder.exportWAV(function(e){
   		    	recorder.clear();
-  	
   		    	Recorder.forceDownload(e, scope.filename +".wav");
-	    		
-    	
+  		    	scope.closeDialog();
   				});	
 	    	}
 	    }
