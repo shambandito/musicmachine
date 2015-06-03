@@ -42,7 +42,8 @@
 	$scope.effects = [
 		{id: 'volume', name: 'Volume / Tune'},
 		{id: 'filter', name: 'Filter'},
-		{id: 'delay', name: 'Delay'}
+		{id: 'delay', name: 'Delay'},
+		{id: 'phaser', name: 'Phaser'}
 	];
 
 	//currently selected kit
@@ -140,6 +141,8 @@
 				var delayFeedback = $scope.instruments[i].delayFeedback;
 				var delayCutoff = $scope.instruments[i].delayCutoff;
 
+				var phaserRate = $scope.instruments[i].phaserRate;
+
 				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
 
 				var muted = $scope.instruments[i].muted;
@@ -150,7 +153,7 @@
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex]) {
-					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff);
+					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate);
 				}
 		}
 	};
