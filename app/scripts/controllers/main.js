@@ -36,7 +36,9 @@
 	//drum kits
 	$scope.kits = [
 		{path: 'TR808', name: 'TR 808'},
-		{path: 'TR909', name: 'TR 909'}
+		{path: 'TR909', name: 'TR 909'},
+		{path: 'house', name: 'House'},
+		{path: 'nature', name: 'Nature'}
 	];
 
 	$scope.effects = [
@@ -147,12 +149,8 @@
 
 				var muted = $scope.instruments[i].muted;
 
-				if(muted) {
-					volume = 0;
-				}
-
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
-		    if(steps[$scope.currentBeatIndex]) {
+		    if(steps[$scope.currentBeatIndex] && !muted) {
 					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate);
 				}
 		}
@@ -247,11 +245,13 @@
 		}
 		initBinCanvas();
 	}
+
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
 		$('<a href="data:' + data + '" download="data.json">download JSON</a>').insertAfter( "#export" );
 	}
+
 	// Import Pattern
 	$scope.importPattern = function(){
 		var file = $scope.myFile;
@@ -271,29 +271,30 @@
 	//Show Dialog
  	function showRecordFileDownloadDialog($event) {
 	  var parentEl = angular.element(document.body);
-	   	$mdDialog.show({
-	     	parent: parentEl,
-	     	targetEvent: $event,
-	     	template:
-	       	'<md-dialog aria-label="List dialog">' +
-	       	'  <md-dialog-content id="download">'+
-	       	'		 <h2>Download Recorded File</h2>'+
-	       	'    <md-input-container><label>Filename</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
-		      '  </md-dialog-content>' +
-		      '  <div class="md-actions">' +
-		      '    <md-button ng-click="closeDialog()" class="md-primary">' +
-		      '      Close Dialog' +
-		      '    </md-button>' +
-		      '    <md-button ng-click="downloadRecordedFile()" class="md-primary">' +
-		      '      Download File' +
-		      '    </md-button>' +
-		      '  </div>' +
-		      '</md-dialog>',
-	    	locals: {
-	      	filename : $scope.filename
-	    	},
-	    	controller: DialogController
-	  	});
+	   	
+	  $mdDialog.show({
+     	parent: parentEl,
+     	targetEvent: $event,
+     	template:
+       	'<md-dialog aria-label="List dialog">' +
+       	'  <md-dialog-content id="download">'+
+       	'		 <h2>Download Recorded File</h2>'+
+       	'    <md-input-container><label>Filename</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
+	      '  </md-dialog-content>' +
+	      '  <div class="md-actions">' +
+	      '    <md-button ng-click="closeDialog()" class="md-primary">' +
+	      '      Close Dialog' +
+	      '    </md-button>' +
+	      '    <md-button ng-click="downloadRecordedFile()" class="md-primary">' +
+	      '      Download File' +
+	      '    </md-button>' +
+	      '  </div>' +
+	      '</md-dialog>',
+    	locals: {
+      	filename : $scope.filename
+    	},
+    	controller: DialogController
+	  });
 	  	
 	  function DialogController(scope, $mdDialog,filename) {
 	    scope.closeDialog = function() {
@@ -311,11 +312,13 @@
 	    }
 	  }
 	}
+
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {
 		init();
 		initVisualization();
 	});
+
 })
 .directive('fileModel', ['$parse', function ($parse) {
     return {
