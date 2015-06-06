@@ -52,7 +52,7 @@
         <div class="delay-section" ng-show="instrument.selectedEffect === 2">
           <div flex="30" class="delay-block">
             <p class="label">Delay Time</p>
-            <md-slider flex class="delay-slider" ng-model="instrument.delayTime" min="0" max="2000" step="100" aria-label="Delay Time Slider"></md-slider>
+            <md-slider flex class="delay-slider" ng-model="instrument.delayTime" min="0" max="2000" step="50" aria-label="Delay Time Slider"></md-slider>
           </div>
           <div flex="30" class="delay-block">
             <p class="label">Delay Feedback</p>
@@ -89,22 +89,25 @@
 
   <section id="controls" layout="row" layout-align="start center">
     <div class="buttons-wrap">
-      <md-button ng-show="!isPlaying" ng-click="startPlaying();"><md-icon md-font-icon="icon-play_arrow" /></md-button>
-      <md-button ng-show="isPlaying" ng-click="pausePlaying();">Pause</md-button>
-      <md-button ng-click="stopPlaying();"><md-icon md-font-icon="icon-stop" /></md-button>
-      <md-button ng-click="resetGrid();"><md-icon md-font-icon="icon-replay" /></md-button>
-      <md-button ng-click="record();" ng-show="!isRecording"><md-icon md-font-icon="icon-lens" /></md-button>
-      <md-button ng-click="stopRecord($event);" ng-show="isRecording">Stop Recording</md-button>
-      <md-button ng-click="exportPattern()" id="export" >Export Pattern</md-button>
-      <form ng-submit="importPattern()" ng-controller="MainCtrl">
-        Enter File
-        
-        <md-input-container>
-          <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
-        </md-input-container>
-        <md-button type="submit" id="export" >Import Pattern</md-button>
-  
-      </form>
+      <md-button ng-show="!isPlaying" ng-click="startPlaying();"><md-icon md-font-icon="icon-play_arrow"></md-icon></md-button>
+      <md-button ng-show="isPlaying" ng-click="pausePlaying();"><md-icon md-font-icon="icon-pause"></md-icon></md-button>
+      <md-button ng-click="stopPlaying();"><md-icon md-font-icon="icon-stop"></md-icon></md-button>
+      <md-button ng-click="resetGrid();">
+        <md-icon md-font-icon="icon-replay"></md-icon>
+        <md-tooltip>Reset Grid</md-tooltip>
+      </md-button>
+      <md-button ng-click="record();" ng-show="!isRecording" class="recording">
+        <md-icon md-font-icon="icon-lens"></md-icon>
+        <md-tooltip>Record</md-tooltip>
+      </md-button>
+      <md-button ng-click="stopRecord($event);" ng-show="isRecording" class="recording on">
+        <md-icon md-font-icon="icon-cancel"></md-icon>
+        <md-tooltip>Stop Recording</md-tooltip>      
+      </md-button>
+      <md-button ng-click="exportPattern()" id="export">
+        <md-icon md-font-icon="icon-file_download"></md-icon>
+        <md-tooltip>Export Pattern</md-tooltip>  
+      </md-button>     
     </div>
     <div flex></div>
     <div id="kit-block" layout="row" layout-align="start center">
@@ -116,6 +119,13 @@
   </section>
 
   <section id="pattern-block">
+    <form ng-submit="importPattern()" ng-controller="MainCtrl">
+      <p>Enter File</p>
+      <md-input-container>
+        <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
+      </md-input-container>
+      <md-button type="submit" id="export" style="margin-bottom: 20px">Import Pattern</md-button>
+    </form>
     <md-button ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
     <md-button ng-click="addPattern()">+</md-button>
   </section>
