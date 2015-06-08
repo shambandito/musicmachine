@@ -13,7 +13,7 @@
  	var clock;
 	// Für mdDialog
   $scope.showRecordFileDownloadDialog = showRecordFileDownloadDialog;
-
+  
 	$scope.instruments = [];
 	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
@@ -65,16 +65,33 @@
 		$scope.barDur = 16 * $scope.beatDur;
 	});
 
- 	//get instruments data
- 	//.id, .name, .path, .sample, .steps, .volume, .tune
- 	if($scope.wasloaded == false){
- 		$http.get('scripts/instruments.json').success(function(data){
- 			$scope.instruments = data.drums;
- 			$scope.loadKit();
- 			console.log("Ficke dich");
- 			$scope.wasloaded = true;
- 		});
+	if(localStorage.getItem("session")== null){
+ 		if($scope.wasloaded == false){
+	 		$http.get('scripts/instruments.json').success(function(data){
+	 			$scope.instruments = data.drums;
+	 			$scope.loadKit();
+	 			console.log("Ficke dich");
+	 			$scope.wasloaded = true;
+	 		});
+
+	 	}
+ 	}else{	
+ 		if($scope.wasloaded == false){
+	 		$http.get('scripts/instruments.json').success(function(data){
+	 			$scope.instruments = data.drums;
+	 			$scope.loadKit();
+	 			console.log("Ficke dich");
+	 			$scope.wasloaded = true;
+	 		});
+
+	 	}
+ 		showSessionWindow();
+
  	}
+ 		//get instruments data
+ 	//.id, .name, .path, .sample, .steps, .volume, .tune
+
+ 	
 
 	//wenn kit ausgetauscht wird, samples neu laden
 	$scope.$watch('selectedKit', function() {
@@ -267,7 +284,18 @@
 			
 		}
 	}
-
+	window.onbeforeunload = function (event) {
+	  
+	  if (typeof event == 'undefined') {
+	    event = window.event;
+	  }
+	  if (event) {
+	  	//if($scope.nothingchanged == false){
+	  		console.log("fickedichdoch!!");
+	  		localStorage.setItem("session",JSON.stringify($scope.instruments));
+	  	//}
+	  }
+	}
 	//Show Dialog
  	function showRecordFileDownloadDialog($event) {
 	  var parentEl = angular.element(document.body);
@@ -309,6 +337,51 @@
   		    	scope.closeDialog();
   				});	
 	    	}
+	    }
+	  }
+	}
+
+	function showSessionWindow($event) {
+	  var parentEl = angular.element(document.body);
+	   	$mdDialog.show({
+	     	parent: parentEl,
+	     	targetEvent: $event,
+	     	template:
+	       	'<md-dialog aria-label="List dialog">' +
+	       	'  <md-dialog-content>'+
+	       	'		 <h2>Session</h2>'+
+		      '  </md-dialog-content>' +
+		      '  <div class="md-actions">' +
+		      '    <md-button ng-click="loadDefault()" class="md-primary">' +
+		      '      Create New Session' +
+		      '    </md-button>' +
+		      '    <md-button ng-click="loadSession()" class="md-primary">' +
+		      '      Load Old Session' +
+		      '    </md-button>' +
+		      '  </div>' +
+		      '</md-dialog>',
+	    	controller: DialogController
+	  	});
+	  	
+	  function DialogController(scope, $mdDialog) {
+	    scope.closeDialog = function() {
+	      $mdDialog.hide();
+	    }
+			scope.loadDefault = function(){
+				scope.closeDialog();	
+				localStorage.removeItem("session");
+			}
+	    scope.loadSession = function(){
+	    	delete $scope.instruments;
+	    	var gotthesession = JSON.parse(localStorage.getItem("session"));
+	    	for (var i = 0; i < gotthesession.length; i++) {
+				$scope.instruments[i] = gotthesession[i];
+				console.log(i)
+				};
+	    	scope.closeDialog();
+	    	setTimeout(function(){
+	    		localStorage.removeItem("session");
+	    	},5000)
 	    }
 	  }
 	}
