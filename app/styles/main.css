@@ -47,39 +47,40 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   padding: 0;
 }
 
-#content {
-	max-width: 1000px;
+.content {
+	max-width: 1200px;
 	margin: 0 auto;
+	margin-top: 32px;
 	background: transparent;
 }
 
-#content md-tooltip {
+.content md-tooltip {
 	font-size: 12px;
 	text-transform: uppercase;
 }
 
-#content md-tooltip .md-background {
+.content md-tooltip .md-background {
 	background-color: rgba(0,0,0,0.25);
 }
 
-#content md-slider .md-track-ticks {
+.content md-slider .md-track-ticks {
 	display: none;
 }
 
-#content md-select {
+.content md-select {
 	margin: 0 ;
 }
 
-#content md-slider .md-track.md-track-fill,
-#content md-slider .md-sign {
+.content md-slider .md-track.md-track-fill,
+.content md-slider .md-sign {
   background-color: #303f9f;
 }
 
-#content md-slider .md-sign:after {
+.content md-slider .md-sign:after {
 	border-top-color: #303f9f;
 }
 
-#content md-slider .md-thumb:after {
+.content md-slider .md-thumb:after {
   border-color: #303f9f;
   background-color: #303f9f;
 }
@@ -89,7 +90,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 #timer-row {
-	padding: 0 0 8px 120px;
+	padding: 0 0 16px 0;
 }
 
 #timer-row .timer-button {
@@ -105,13 +106,17 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 .track-row {
+
 	padding-bottom: 8px;
 }
 
 .instrument-name {
 	font-size: 16px;
 	cursor: pointer;
+	float:left;
 }
+
+
 
 .instrument-name.active-row {
 	color: red;
@@ -149,7 +154,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 .effect-row {
   width: 100%;
   padding: 12px 16px;
-  background-color: #fafafa;
+  /*background-color: #fafafa;*/
   border-radius: 3px;
   margin-bottom: 12px;
 }
@@ -213,7 +218,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 #controls {
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 
 .recording md-icon {
@@ -227,7 +232,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 
 #tempo-block {
 	padding: 12px 16px;
-	background-color: #fafafa;
+	/*background-color: #fafafa;*/
 	border-radius: 3px;
 	margin-bottom: 20px;
 }
@@ -240,6 +245,19 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	color: #212121;
 }
 
+@media(max-width: 1060px) {
+
+	#pattern .beat {
+
+		width: 30px;
+		height: 30px;
+	}
+
+	#timer-row .timer-button {
+
+		width: 30px;
+	}
+}
 
 .dark-primary-color    { background: #303F9F; }
 .default-primary-color { background: #3F51B5; }

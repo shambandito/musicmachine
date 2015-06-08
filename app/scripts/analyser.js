@@ -41,7 +41,7 @@ function initBinCanvas () {
 }
 
 function drawBars (array) {
-	analyser.fftSize = 256;
+	analyser.fftSize = 512;
     var bufferLength = analyser.frequencyBinCount;
     var dataArray = new Uint8Array(bufferLength);
 
@@ -59,7 +59,7 @@ function drawBars (array) {
       var x = 0;
 
       for(var i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i];
+        barHeight = dataArray[i] * 2;
 
         ctx.fillStyle = 'rgb(63, 81, ' + (barHeight + 80) + ')';
         ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);

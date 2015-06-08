@@ -1,48 +1,90 @@
-<canvas id="canvas"></canvas>
-<md-content id="content" class="md-padding">
-  <section id="pattern">
-    <div id="timer-row" layout="row" layout-align="end center">
-      <div class="timer-button timer-{{index}}" ng-repeat="index in indexes"></div>
-    </div>
+<md-tabs class="md-accent" md-stretch-tabs>
 
-    <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="start center">
-      <div flex>
-        <p class="instrument-name" ng-click="selectRow($index, $event)">{{instrument.name}}</p> 
-        <md-checkbox ng-model="instrument.muted" class="mute-checkbox" aria-label="Mute Checkbox">
-          Mute
-        </md-checkbox>
-      </div>
-      <div>
-        <md-button class="beat light-primary-color md-raised" 
-                   ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
-                   ng-class="{'active': step}" 
-                   ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
-                   beatIndex="{{$index}}" aria-label="beat">
-        </md-button>
-      </div>
-    </div>
-  </section>
+  <md-tab label="Pattern">
+    <md-content class="content md-padding">
 
-  <section id="effects" >
-    <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
-      <div layout="row" layout-align="start center">
-        <p class="headline" flex>Effects for {{instrument.name}}</p>
-        <md-select class="effect-select" placeholder="Select Effect" ng-model="selectedEffect">
-          <md-option class="effect-option" ng-repeat="effect in effects" ng-click="instrument.selectedEffect = $index" value="{{instrument.id + '' + effect.id}}">{{effect.name}}</md-option>
+      <section id="pattern">
+        <div id="timer-row" layout="row" layout-align="start center">
+          <div flex="25"></div>
+          <div class="timer-button timer-{{index}}" ng-repeat="index in indexes"></div>
+        </div>
+        <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="start center">
+          <div flex="25" layout="row">
+            <div class="instrument-name" ng-click="selectRow($index, $event)" flex="50">{{instrument.name}}</div> 
+            <div class="mute-control" flex="50">
+              <md-switch ng-model="instrument.muted" class="mute-checkbox" ng-click="changeState()">{{instrument.muted ? "mute" : ""}}</md-switch>
+            </div>
+          </div>
+          <div>
+            <md-button class="beat light-primary-color md-raised" 
+            ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
+            ng-class="{'active': step}" 
+            ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
+            beatIndex="{{$index}}" aria-label="beat">
+          </md-button>
+        </div>
+      </div>
+      </section>
+
+      <section id="controls" layout="row" layout-align="start center">
+        <div class="buttons-wrap">
+          <md-button class="md-raised" ng-show="!isPlaying" ng-click="startPlaying();"><md-icon md-font-icon="icon-play_arrow"></md-icon></md-button>
+          <md-button class="md-raised" ng-show="isPlaying" ng-click="pausePlaying();"><md-icon md-font-icon="icon-pause"></md-icon></md-button>
+          <md-button class="md-raised" ng-click="stopPlaying();"><md-icon md-font-icon="icon-stop"></md-icon></md-button>
+          <md-button class="md-raised" ng-click="resetGrid();">
+          <md-icon md-font-icon="icon-replay"></md-icon>
+          <md-tooltip>Reset Grid</md-tooltip></md-button>
+          <md-button class="md-raised" ng-click="record();" ng-show="!isRecording" class="recording">
+          <md-icon md-font-icon="icon-lens"></md-icon>
+          <md-tooltip>Record</md-tooltip></md-button>
+          <md-button class="md-raised" ng-click="stopRecord($event);" ng-show="isRecording" class="recording on">
+          <md-icon md-font-icon="icon-cancel"></md-icon>
+          <md-tooltip>Stop Recording</md-tooltip></md-button>
+          <md-button class="md-raised" ng-click="exportPattern()" id="export">
+          <md-icon md-font-icon="icon-file_download"></md-icon>
+          <md-tooltip>Export Pattern</md-tooltip></md-button>     
+        </div>
+        <div flex></div>
+        <div id="kit-block" layout="row" layout-align="start center">
+          <p>Drum Kit</p>
+          <md-select class="kit-select" placeholder="Select Kit" ng-model="selectedKit">
+          <md-option class="kit-option" ng-repeat="kit in kits" value="{{kit.path}}">{{kit.name}}</md-option>
         </md-select>
       </div>
-      <div>
-        <div class="volume-block" ng-show="instrument.selectedEffect === 0">
-          <p class="label">Volume</p>
-          <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider>
-          <p class="label">Tune</p>
-          <md-slider class="tune-slider" ng-model="instrument.tune" min="0.5" max="1.5" step="0.05" aria-label="Tune Slider"></md-slider>         
-        </div>
+      </section>
 
-        <div class="filter-block" ng-show="instrument.selectedEffect === 1">
-          <p class="label">Filter</p>
+      <section id="pattern-block">
+        <md-button class="md-raised" ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
+        <md-button class="md-raised" ng-click="addPattern()">+</md-button>
+      </section>
+
+    </md-content>
+  </md-tab>
+
+
+  <md-tab label="Settings">
+    <md-content class="content md-padding">
+
+      <section id="effects" >
+        <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
           <div layout="row" layout-align="start center">
-            <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
+            <p class="headline" flex>Effects for {{instrument.name}}</p>
+            <md-select class="effect-select" placeholder="Select Effect" ng-model="selectedEffect">
+            <md-option class="effect-option" ng-repeat="effect in effects" ng-click="instrument.selectedEffect = $index" value="{{instrument.id + '' + effect.id}}">{{effect.name}}</md-option>
+          </md-select>
+        </div>
+        <div>
+          <div class="volume-block" ng-show="instrument.selectedEffect === 0">
+            <p class="label">Volume</p>
+            <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider>
+            <p class="label">Tune</p>
+            <md-slider class="tune-slider" ng-model="instrument.tune" min="0.5" max="1.5" step="0.05" aria-label="Tune Slider"></md-slider>         
+          </div>
+
+          <div class="filter-block" ng-show="instrument.selectedEffect === 1">
+            <p class="label">Filter</p>
+            <div layout="row" layout-align="start center">
+              <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
               <md-option class="filter-option" ng-repeat="filter in filters" value="{{filter.id}}">{{filter.name}}</md-option>
             </md-select>
             <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="100" step="1" aria-label="Filter Frequency Slider"></md-slider>
@@ -73,61 +115,33 @@
             <md-slider flex class="phaser-slider" ng-model="instrument.phaserRate" min="0" max="8" step="0.5" aria-label="Phaser Rate Slider"></md-slider>
           </div>  
         </div>
-
       </div>
-    </div>
-  </section>
-
-  <section id="tempo-block">
-    <p class="headline">Tempo</p>
-    <div layout="row" layout-align="start center">
-      <input class="tempo-label" disabled ng-model="tempo"/>
-      <span class="tempo-label">BPM</span>
-      <md-slider flex ng-model="tempo" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
-    </div>
-  </section>
-
-  <section id="controls" layout="row" layout-align="start center">
-    <div class="buttons-wrap">
-      <md-button ng-show="!isPlaying" ng-click="startPlaying();"><md-icon md-font-icon="icon-play_arrow"></md-icon></md-button>
-      <md-button ng-show="isPlaying" ng-click="pausePlaying();"><md-icon md-font-icon="icon-pause"></md-icon></md-button>
-      <md-button ng-click="stopPlaying();"><md-icon md-font-icon="icon-stop"></md-icon></md-button>
-      <md-button ng-click="resetGrid();">
-        <md-icon md-font-icon="icon-replay"></md-icon>
-        <md-tooltip>Reset Grid</md-tooltip>
-      </md-button>
-      <md-button ng-click="record();" ng-show="!isRecording" class="recording">
-        <md-icon md-font-icon="icon-lens"></md-icon>
-        <md-tooltip>Record</md-tooltip>
-      </md-button>
-      <md-button ng-click="stopRecord($event);" ng-show="isRecording" class="recording on">
-        <md-icon md-font-icon="icon-cancel"></md-icon>
-        <md-tooltip>Stop Recording</md-tooltip>      
-      </md-button>
-      <md-button ng-click="exportPattern()" id="export">
-        <md-icon md-font-icon="icon-file_download"></md-icon>
-        <md-tooltip>Export Pattern</md-tooltip>  
-      </md-button>     
-    </div>
-    <div flex></div>
-    <div id="kit-block" layout="row" layout-align="start center">
-      <p>Drum Kit</p>
-      <md-select class="kit-select" placeholder="Select Kit" ng-model="selectedKit">
-        <md-option class="kit-option" ng-repeat="kit in kits" value="{{kit.path}}">{{kit.name}}</md-option>
-      </md-select>
-    </div>
-  </section>
-
-  <section id="pattern-block">
-    <form ng-submit="importPattern()" ng-controller="MainCtrl">
-      <p>Enter File</p>
-      <md-input-container>
+      </div>
+      <form ng-submit="importPattern()" ng-controller="MainCtrl">
+        <md-input-container>
         <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
       </md-input-container>
-      <md-button type="submit" id="export" style="margin-bottom: 20px">Import Pattern</md-button>
-    </form>
-    <md-button ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
-    <md-button ng-click="addPattern()">+</md-button>
-  </section>
-</md-content>
+      <md-button class="md-raised" type="submit" id="export" style="margin-bottom: 20px">Import Pattern</md-button>
+      </form>
+      </section>
+
+      <section id="tempo-block">
+        <p class="headline">Tempo</p>
+        <div layout="row" layout-align="start center">
+          <input class="tempo-label" disabled ng-model="tempo"/>
+          <span class="tempo-label">BPM</span>
+          <md-slider flex ng-model="tempo" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
+        </div>
+      </section>
+
+    </md-content>
+  </md-tab>
+
+
+  <md-tab label="Visualizer"></md-tab>
+
+</md-tabs>
+
+<canvas id="canvas"></canvas>
+
 

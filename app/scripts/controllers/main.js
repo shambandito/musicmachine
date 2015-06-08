@@ -17,6 +17,7 @@
 	$scope.instruments = [];
 	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+	$scope.muteMessage = ""
 
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
@@ -92,7 +93,6 @@
 
 		}	
 	}
-
 	$scope.selectPattern = function(index) {	
 		$scope.selectedPattern = index;
 	}
@@ -249,7 +249,7 @@
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
-		$('<a href="data:' + data + '" download="data.json">download JSON</a>').insertAfter( "#export" );
+		$('<a href="data:' + data + '" download="data.json">download pattern</a>').insertAfter( "#export" );
 	}
 
 	// Import Pattern
