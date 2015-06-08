@@ -266,7 +266,8 @@
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
-		$('<a href="data:' + data + '" download="data.json">download JSON</a>').insertAfter( "#export" );
+		$("#exportjson").remove();
+		$('<a id="exportjson" href="data:' + data + '" download="data.json">download JSON</a>').insertAfter( "#export" );
 	}
 
 	// Import Pattern
@@ -290,11 +291,12 @@
 	    event = window.event;
 	  }
 	  if (event) {
-	  	//if($scope.nothingchanged == false){
-	  		console.log("fickedichdoch!!");
-	  		localStorage.setItem("session",JSON.stringify($scope.instruments));
-	  	//}
+	  	$scope.$apply();
+	  	delete $scope.instruments;
+	  	console.log(JSON.stringify(angular.toJson($scope.instruments)));
+  		localStorage.setItem("session",JSON.stringify($scope.instruments));
 	  }
+	  return true;
 	}
 	//Show Dialog
  	function showRecordFileDownloadDialog($event) {
@@ -376,12 +378,8 @@
 	    	var gotthesession = JSON.parse(localStorage.getItem("session"));
 	    	for (var i = 0; i < gotthesession.length; i++) {
 				$scope.instruments[i] = gotthesession[i];
-				console.log(i)
 				};
 	    	scope.closeDialog();
-	    	setTimeout(function(){
-	    		localStorage.removeItem("session");
-	    	},5000)
 	    }
 	  }
 	}
