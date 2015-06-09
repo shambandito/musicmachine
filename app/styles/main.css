@@ -71,6 +71,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	margin: 0 ;
 }
 
+/*
 .content md-slider .md-track.md-track-fill,
 .content md-slider .md-sign {
   background-color: #303f9f;
@@ -84,6 +85,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   border-color: #303f9f;
   background-color: #303f9f;
 }
+*/
 
 #pattern {
 	margin-bottom: 20px;
@@ -116,10 +118,13 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	float:left;
 }
 
-
+.mute, .solo {
+	color: #b6b6b6;
+  	font-size: 14px;
+}
 
 .instrument-name.active-row {
-	color: red;
+	color: rgb(244,67,54);
 }
 
 .mute-checkbox {
@@ -191,10 +196,14 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 #kit-block .kit-select {
 	margin-top: -2px;
 	margin-right: 12px;
-  color: #727272;
-  font-size: 12px;
-  text-transform: uppercase;
-  width: 120px;
+  	color: #fff;
+  	font-size: 12px;
+  	text-transform: uppercase;
+  	width: 120px;
+}
+
+md-select-label > span {
+	color: #fff;
 }
 
 #kit-block .kit-select {
@@ -226,7 +235,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	font-size: 14px;
 	margin-right: 12px;
 	text-transform: uppercase;
-	color: #727272;
+	color: #fff;
 }
 
 #controls {
@@ -255,6 +264,10 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	font-size: 14px;
 	width: 40px;
 	color: #212121;
+}
+
+md-dialog {
+	padding: 20px;
 }
 
 @media(max-width: 1060px) {

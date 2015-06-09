@@ -17,7 +17,6 @@
 	$scope.instruments = [];
 	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-	$scope.muteMessage = ""
 
 	$scope.tabIndex = 0;
 
@@ -151,6 +150,7 @@
 				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
 
 				var muted = $scope.instruments[i].muted;
+				var solo = $scope.instruments[i].solo;
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex] && !muted) {
@@ -158,6 +158,23 @@
 				}
 		}
 	};
+
+	$scope.changeSolo = function(instrument) {
+
+		for (var i = 0; i < $scope.instruments.length; i++) {
+			if($scope.instruments[instrument].solo) {
+				console.log('hallo');
+				
+				$scope.instruments[i].muted = false;
+
+			} else {
+				$scope.instruments[instrument].solo = false;
+				$scope.instruments[instrument].muted = false;
+				$scope.instruments[i].solo = false;
+				$scope.instruments[i].muted = true;
+			}
+		}
+	}
 
 	$scope.nextBeatTime = function() {
 
@@ -285,10 +302,10 @@
        	'    <md-input-container><label>Filename</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
 	      '  </md-dialog-content>' +
 	      '  <div class="md-actions">' +
-	      '    <md-button ng-click="closeDialog()" class="md-primary">' +
+	      '    <md-button ng-click="closeDialog()" class="md-primary md-raised">' +
 	      '      Close Dialog' +
 	      '    </md-button>' +
-	      '    <md-button ng-click="downloadRecordedFile()" class="md-primary">' +
+	      '    <md-button ng-click="downloadRecordedFile()" class="md-raised">' +
 	      '      Download File' +
 	      '    </md-button>' +
 	      '  </div>' +
