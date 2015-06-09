@@ -19,6 +19,8 @@
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 	$scope.muteMessage = ""
 
+	$scope.tabIndex = 0;
+
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
 		{id: 'none', name: 'None'},
@@ -99,6 +101,7 @@
 
 	$scope.selectRow = function (i , $event) {
 		$scope.selectedRow = i;
+		$scope.tabIndex = 1;
 		angular.element('.instrument-name').removeClass('active-row');
 		angular.element($event.target).addClass('active-row');
 	}

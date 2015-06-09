@@ -171,6 +171,18 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	color: #727272;
 }
 
+#effects {
+	background-color: transparent;
+	margin-top: 0;
+}
+
+#effects .effect-row > div {
+	background-color: #fff;
+	margin-bottom: 20px;
+	padding: 20px;
+	border-radius: 3px;
+}
+
 #effects .filter-block {
 	width: 100%;
 }
@@ -234,7 +246,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	padding: 12px 16px;
 	/*background-color: #fafafa;*/
 	border-radius: 3px;
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 
 #tempo-block .tempo-label {
