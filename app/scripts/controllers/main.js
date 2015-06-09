@@ -162,9 +162,7 @@
 	$scope.changeSolo = function(instrument) {
 
 		for (var i = 0; i < $scope.instruments.length; i++) {
-			if($scope.instruments[instrument].solo) {
-				console.log('hallo');
-				
+			if($scope.instruments[instrument].solo) {				
 				$scope.instruments[i].muted = false;
 
 			} else {
@@ -283,6 +281,7 @@
 			for (var i = 0; i < neuinst.length; i++) {
 				$scope.instruments[i] = neuinst[i];
 				$scope.$apply();
+				$scope.loadKit();
 			};
 			
 		}
@@ -319,6 +318,7 @@
 	  function DialogController(scope, $mdDialog,filename) {
 	    scope.closeDialog = function() {
 	      $mdDialog.hide();
+	      $scope.loadKit();
 	    }
 	    scope.filename = filename;
 	    scope.downloadRecordedFile = function(){
