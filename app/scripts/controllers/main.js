@@ -281,6 +281,7 @@
 			for (var i = 0; i < neuinst.length; i++) {
 				$scope.instruments[i] = neuinst[i];
 				$scope.$apply();
+				$scope.loadKit();
 			};
 			
 		}
@@ -368,6 +369,7 @@
 	  function DialogController(scope, $mdDialog) {
 	    scope.closeDialog = function() {
 	      $mdDialog.hide();
+	      $scope.loadKit();
 	    }
 			scope.loadDefault = function(){
 				scope.closeDialog();	
