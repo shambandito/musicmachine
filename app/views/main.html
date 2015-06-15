@@ -1,30 +1,30 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <div class="buttons-wrap" flex layout="row" layout-align="start center">
-      <md-button ng-click="exportPattern()" id="export">
+      <md-button ng-click="exportPattern()" id="export" aria-label="Export Pattern">
         <md-icon md-font-icon="icon-file_download"></md-icon>
         <md-tooltip md-direction="right">Export Pattern</md-tooltip>
       </md-button>
     </div>
     <div class="buttons-wrap" flex layout="row" layout-align="center center">
-      <md-button ng-click="resetGrid();">
+      <md-button ng-click="resetGrid();" aria-label="Reset Grid">
         <md-icon md-font-icon="icon-replay"></md-icon>
         <md-tooltip md-direction="left">Reset Grid</md-tooltip>
       </md-button>
-      <md-button ng-show="!isPlaying" ng-click="startPlaying();">
+      <md-button ng-show="!isPlaying" ng-click="startPlaying();" aria-label="Play">
         <md-icon md-font-icon="icon-play_arrow"></md-icon>
       </md-button>
-      <md-button ng-show="isPlaying" ng-click="pausePlaying();">
+      <md-button ng-show="isPlaying" ng-click="pausePlaying();" aria-label="Pause">
         <md-icon md-font-icon="icon-pause"></md-icon>
       </md-button>
-      <md-button ng-click="stopPlaying();">
+      <md-button ng-click="stopPlaying();" aria-label="Stop">
         <md-icon md-font-icon="icon-stop"></md-icon>
       </md-button>
-      <md-button ng-click="record();" ng-show="!isRecording" class="recording">
+      <md-button ng-click="record();" ng-show="!isRecording" class="recording" aria-label="Record">
         <md-icon md-font-icon="icon-lens"></md-icon>
         <md-tooltip md-direction="right">Record</md-tooltip>
       </md-button>
-      <md-button ng-click="stopRecord($event);" ng-show="isRecording" class="recording on">
+      <md-button ng-click="stopRecord($event);" ng-show="isRecording" class="recording on" aria-label="Stop Recording">
         <md-icon md-font-icon="icon-cancel"></md-icon>
         <md-tooltip md-direction="right">Stop Recording</md-tooltip>
       </md-button>    
@@ -50,10 +50,10 @@
             <div flex="25" layout="row">
               <div class="instrument-name" ng-click="selectRow($index, $event);" flex="50">{{instrument.name}}</div> 
               <div class="mute-control" flex="25">
-                <md-switch ng-model="instrument.muted" class="mute-checkbox" ng-click="changeState()"></md-switch><span class="mute">mute</span>
+                <md-switch ng-model="instrument.muted" class="mute-checkbox" ng-click="changeState()" aria-label="Mute"></md-switch><span class="mute">mute</span>
               </div>
               <div class="solo-control" flex="25">
-                <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-click="changeSolo($index)"></md-switch><span class="solo">solo</span>
+                <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-click="changeSolo($index)" aria-label="Solo"></md-switch><span class="solo">solo</span>
               </div>
             </div>
             <div>
