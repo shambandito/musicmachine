@@ -77,7 +77,7 @@
           <div layout="row" layout-align="start center">
             <input class="tempo-label" disabled ng-model="tempo"/>
             <span class="tempo-label">BPM</span>
-            <md-slider flex ng-model="tempo" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
+            <md-slider flex ng-model="tempo" ng-change="updateTempo(tempo)" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
           </div>
         </section>
 

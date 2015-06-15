@@ -40,7 +40,9 @@
 		{path: 'TR808', name: 'TR 808'},
 		{path: 'TR909', name: 'TR 909'},
 		{path: 'house', name: 'House'},
-		{path: 'nature', name: 'Nature'}
+		{path: 'nature', name: 'Nature'},
+		{path: 'acoustic', name: 'Acoustic'},
+		{path: 'reggae', name: 'Reggae'}
 	];
 
 	$scope.effects = [
@@ -62,14 +64,20 @@
 	$scope.barDur = 16 * $scope.beatDur;
 
 	//wenn tempo vom user updated wird, auch die davon abhängigen variablen updaten
-	$scope.$watch('tempo', function() {
+	// $scope.$watch('tempo', function() {
+
+	// });
+
+	$scope.updateTempo = function(tempo) {
+		console.log("HEHEJO");
+		$scope.tempo = tempo;
 		$scope.beatDur = 60 / $scope.tempo / 4;
 		$scope.barDur = 16 * $scope.beatDur;
-	});
+	};
 
  	//get instruments data
  	//.id, .name, .path, .sample, .steps, .volume, .tune
- 	if($scope.wasloaded == false){
+ 	if($scope.wasloaded == false) {
  		$http.get('scripts/instruments.json').success(function(data){
  			$scope.instruments = data.drums;
  			$scope.loadKit();
@@ -94,6 +102,7 @@
 
 		}	
 	}
+
 	$scope.selectPattern = function(index) {	
 		$scope.selectedPattern = index;
 	}
