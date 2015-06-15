@@ -1,4 +1,4 @@
-<md-toolbar>
+<md-toolbar id="toolbar">
   <div class="md-toolbar-tools">
     <div class="buttons-wrap" flex layout="row" layout-align="start center">
       <md-button ng-click="exportPattern()" id="export" aria-label="Export Pattern">
@@ -71,22 +71,26 @@
           <md-button class="md-raised" ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
           <md-button class="md-raised" ng-click="addPattern()">+</md-button>
         </section>
-
-        <section id="tempo-block">
-          <p class="headline">Tempo</p>
-          <div layout="row" layout-align="start center">
-            <input class="tempo-label" disabled ng-model="tempo"/>
-            <span class="tempo-label">BPM</span>
-            <md-slider flex ng-model="tempo" ng-change="updateTempo(tempo)" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
-          </div>
-        </section>
-
       </md-content>
+	
+			<md-content class="content md-padding">
+	      <section id="tempo-block">
+	        <p class="headline">Tempo</p>
+	        <div layout="row" layout-align="start center">
+	          <input class="tempo-label" disabled ng-model="tempo"/>
+	          <span class="tempo-label">BPM</span>
+	          <md-slider flex ng-model="tempo" ng-change="updateTempo(tempo)" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
+	        </div>
+	      </section>
+	    </md-content>
     </md-tab>
 
 
     <md-tab label="Settings">
       <md-content id="effects" class="content md-padding">
+      		<div class="no-instrument-selected" ng-show="selectedRow == -1">
+      			<h2>No instrument has been selected</h2>
+      		</div>
           <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
             <p class="headline" flex>Effects for {{instrument.name}}</p>
             <div class="volume-block">
@@ -131,12 +135,12 @@
               </div>  
             </div>
           </div>
-        <form ng-submit="importPattern()" ng-controller="MainCtrl">
-          <md-input-container>
-            <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
-          </md-input-container>
-          <md-button class="md-raised" type="submit" id="import" style="margin-bottom: 20px">Import Pattern</md-button>
-        </form>
+	        <form ng-submit="importPattern()" ng-controller="MainCtrl">
+	          <md-input-container>
+	            <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
+	          </md-input-container>
+	          <md-button class="md-raised" type="submit" id="import" style="margin-bottom: 20px">Import Pattern</md-button>
+	        </form>
       </md-content>
     </md-tab>
 
