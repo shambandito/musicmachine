@@ -50,10 +50,10 @@
             <div flex="25" layout="row">
               <div class="instrument-name" ng-click="selectRow($index, $event);" flex="50">{{instrument.name}}</div> 
               <div class="mute-control" flex="25">
-                <md-switch ng-model="instrument.muted" class="mute-checkbox" ng-click="changeState()" aria-label="Mute"></md-switch><span class="mute">mute</span>
+                <md-switch ng-model="instrument.muted" class="mute-checkbox" aria-label="Mute" ng-disabled="muteDisabled"></md-switch><span class="mute">mute</span>
               </div>
               <div class="solo-control" flex="25">
-                <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-click="changeSolo($index)" aria-label="Solo"></md-switch><span class="solo">solo</span>
+                <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-change="changeSolo($index)" aria-label="Solo"></md-switch><span class="solo">solo</span>
               </div>
             </div>
             <div>
@@ -139,7 +139,10 @@
               <div flex="30" class="panner-block">
                 <p class="label"> Panner Rate</p>
                 <span>L</span> <span style="float: right">R</span> 
-                <md-slider flex class="panner-slider" ng-model="instrument.pannerRate" min="-10" max="10" step="0.5" aria-label="Panner Rate Slider"></md-slider> 
+                <md-slider flex class="panner-slider" ng-model="instrument.pannerRate" min="-1" max="1" step="0.05" aria-label="Panner Rate Slider"></md-slider>
+                <div>
+                  <md-button class="reset-panner" ng-click="instrument.pannerRate = 0;">Reset Panning</md-button>
+                </div>
               </div>  
             </div>
 

@@ -20,6 +20,8 @@
 
 	$scope.tabIndex = 0;
 
+	$scope.muteDisabled = false;
+
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
 		{id: 'none', name: 'None'},
@@ -168,21 +170,33 @@
 		}
 	};
 
+	//solo instrument switchen
 	$scope.changeSolo = function(instrument) {
-
+		
 		for (var i = 0; i < $scope.instruments.length; i++) {
-			if($scope.instruments[instrument].solo) {				
-				$scope.instruments[i].muted = false;
 
+			//wenn solo auf false gesetzt wird -> alle unmuten und mute switch wieder freischalten
+			if(!$scope.instruments[instrument].solo) {
+				$scope.instruments[i].muted = false;
+				$scope.muteDisabled = false;
 			} else {
-				$scope.instruments[instrument].solo = false;
+
+				//wenn momentan betrachtetes instrument NICHT unser solo instrument ist -> muten und solo wegmachen
+				if(i !== instrument) {
+					$scope.instruments[i].muted = true;
+					$scope.instruments[i].solo = false;
+				}
+
+				//alle mute switches disablen während solo an ist
+				$scope.muteDisabled = true;
+
+				//solo instrument immer unmuten
 				$scope.instruments[instrument].muted = false;
-				$scope.instruments[i].solo = false;
-				$scope.instruments[i].muted = true;
 			}
-		}
+		};
 	}
 
+	//wann der nächste beat ausgelöst wird
 	$scope.nextBeatTime = function() {
 
 	  //vergangene zeit seitdem clock gestartet wurde
@@ -232,6 +246,7 @@
 		clock.stop();
 	};
 
+	//aufnehmen eines wav files
 	$scope.record = function(){
 		if(!$scope.isRecording){
 			console.log($scope.isPlaying);
@@ -248,6 +263,7 @@
 		}
 	};
 
+	//aufnahme stoppen und download dialog zeigen
 	$scope.stopRecord = function($event){
 		if($scope.isRecording){
 			recorder.stop();
@@ -257,22 +273,13 @@
 		}
 	};
 
+	//delay auf standardwerte zurücksetzen
 	$scope.resetDelay = function(index) {
 		$scope.instruments[index].delayTime = 0;
 		$scope.instruments[index].delayFeedback = 0.5;
 		$scope.instruments[index].delayCutoff = 10000;
 	}
 	
-	var init = function() {
-	 	try {    
-		  clock = new WAAClock(context, {toleranceEarly: 0.1});
-		}
-		catch(e) {
-			alert("Web Audio API is not supported in this browser");
-		}
-		initBinCanvas();
-	}
-
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
@@ -300,7 +307,7 @@
 		}
 	}
 
-	//Show Dialog
+	//show dialog zum herunterladen des aufgenommenen wav files
  	function showRecordFileDownloadDialog($event) {
 	  var parentEl = angular.element(document.body);
 	   	
@@ -345,6 +352,16 @@
 	    }
 	  }
 	}
+
+	var init = function() {
+	 	try {    
+		  clock = new WAAClock(context, {toleranceEarly: 0.1});
+		}
+		catch(e) {
+			alert("Web Audio API is not supported in this browser");
+		}
+		initBinCanvas();
+	}	
 
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {

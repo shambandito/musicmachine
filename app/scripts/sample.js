@@ -83,8 +83,9 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 		source.buffer = this.buffer;
 
 		//pannerNode erstellen und Wert setzen
-		 var pannerNode = context.createPanner();
-		 pannerNode.setPosition(pannerRate, 0, 0);
+		var pannerNode = context.createPanner();
+		pannerNode.panningModel = "equalpower";
+		pannerNode.setPosition(pannerRate, 0, 1 - Math.abs(pannerRate));
 		
 		//volumeNode erstellen und wert setzen
 		var volumeNode = context.createGain();
