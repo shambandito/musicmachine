@@ -69,7 +69,6 @@
 	// });
 
 	$scope.updateTempo = function(tempo) {
-		console.log("HEHEJO");
 		$scope.tempo = tempo;
 		$scope.beatDur = 60 / $scope.tempo / 4;
 		$scope.barDur = 16 * $scope.beatDur;
@@ -81,7 +80,6 @@
  		$http.get('scripts/instruments.json').success(function(data){
  			$scope.instruments = data.drums;
  			$scope.loadKit();
- 			console.log("Ficke dich");
  			$scope.wasloaded = true;
  		});
  	}
@@ -276,7 +274,11 @@
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
-		$('<a href="data:' + data + '" download="data.json">download pattern</a>').insertAfter( "#export" );
+		$('<a href="data:' + data + '" download="data.json" id="downloadexportpattern"></a>').insertAfter( "#export" );
+		$('#downloadexportpattern').get(0).click();
+
+		
+		return false;
 	}
 
 	// Import Pattern
