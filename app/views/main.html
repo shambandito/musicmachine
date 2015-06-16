@@ -134,6 +134,15 @@
                 <md-slider flex class="phaser-slider" ng-model="instrument.phaserRate" min="0" max="8" step="0.5" aria-label="Phaser Rate Slider"></md-slider>
               </div>  
             </div>
+
+            <div class="panner-section">
+              <div flex="30" class="panner-block">
+                <p class="label"> Panner Rate</p>
+                <span>L</span> <span style="float: right">R</span> 
+                <md-slider flex class="panner-slider" ng-model="instrument.pannerRate" min="-10" max="10" step="0.5" aria-label="Panner Rate Slider"></md-slider> 
+              </div>  
+            </div>
+
           </div>
 	        <form ng-submit="importPattern()" ng-controller="MainCtrl">
 	          <md-input-container>

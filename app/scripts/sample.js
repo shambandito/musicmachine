@@ -40,7 +40,7 @@ function Sample(path) {
 }
 
 //"klassenfunktion" zum abspielen der einzelnen sample objekte
-Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate) {
+Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate, pannerRate) {
 
 		var hasDelay = (delayTime !== 0);
 		var hasPhaser = (phaserRate !== 0);
@@ -81,6 +81,10 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 		//audio source node erstellen
 		var source = context.createBufferSource();
 		source.buffer = this.buffer;
+
+		//pannerNode erstellen und Wert setzen
+		 var pannerNode = context.createPanner();
+		 pannerNode.setPosition(pannerRate, 0, 0);
 		
 		//volumeNode erstellen und wert setzen
 		var volumeNode = context.createGain();
@@ -89,8 +93,9 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 		//set tune
 		source.playbackRate.value = tune;
 
-		//sample direkt an volumeNode connecten
-		source.connect(volumeNode);
+		//sample direkt an pannerNode und dann volumeNode connecten
+		source.connect(pannerNode);
+		pannerNode.connect(volumeNode);
 
 		if (hasDelay && hasPhaser && hasFilter) { // ALLES AN
 

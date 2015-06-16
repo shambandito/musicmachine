@@ -159,9 +159,11 @@
 				var muted = $scope.instruments[i].muted;
 				var solo = $scope.instruments[i].solo;
 
+				var pannerRate = $scope.instruments[i].pannerRate;
+
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex] && !muted) {
-					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate);
+					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate, pannerRate);
 				}
 		}
 	};
