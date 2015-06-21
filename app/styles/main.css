@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 
 #canvas {
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 112px);
 	position: absolute;
 	z-index: 0;
 }
