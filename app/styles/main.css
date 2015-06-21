@@ -1,3 +1,22 @@
+.dark-primary-color    { background: #303F9F; }
+.default-primary-color { background: #3F51B5; }
+.light-primary-color   { background: #C5CAE9; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #607D8B; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }
+
+.orange { color: #FF9800;}
+
+/**********
+*
+*
+* BASICS
+*
+*
+**********/
+
 .browsehappy {
   margin: 0.2em 0;
   background-color: #ccc;
@@ -9,19 +28,6 @@
 	font-family: 'Droid Sans', sans-serif;
 }
 
-md-icon {
-
-	font-size: 24px;
-}
-
-#canvas {
-
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: 0;
-}
-
 html, body {
   height: 100%;
   text-rendering: optimizeLegibility;
@@ -29,12 +35,13 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   line-height: normal;
+  letter-spacing: 0.025em;
   margin: 0;
-  color: #212121;
-  background-color: #eee;
+  color: #222;
+  background-color: #F5F5F5;
   transition: opacity ease-in 0.1s;
 }
 
@@ -47,11 +54,25 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   padding: 0;
 }
 
+#canvas {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 0;
+}
+
+#toolbar,
+#tabs,
+.content {
+	min-width: 900px;
+}
+
 .content {
 	max-width: 1200px;
-	margin: 32px auto 0;
+	margin: 16px auto;
 	background-color: transparent;
 	border-radius: 3px;
+	background-color: #fafafa;
 }
 
 .content md-tooltip {
@@ -60,7 +81,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 .content md-tooltip .md-background {
-	background-color: rgba(0,0,0,0.25);
+	background-color: rgba(182,182,182,.5);
 }
 
 .content md-slider .md-track-ticks {
@@ -68,63 +89,127 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 }
 
 .content md-select {
-	margin: 0 ;
+	margin: 0;
 }
 
-/*
-.content md-slider .md-track.md-track-fill,
-.content md-slider .md-sign {
-  background-color: #303f9f;
+md-icon {
+	font-size: 24px;
 }
 
-.content md-slider .md-sign:after {
-	border-top-color: #303f9f;
+#app .md-button {
+	padding: 0.57em;
+	margin-right: 8px;
 }
 
-.content md-slider .md-thumb:after {
-  border-color: #303f9f;
-  background-color: #303f9f;
+#app .md-button.md-icon-button {
+	border-radius: 50%;
 }
-*/
+
+#app .md-button.md-icon-button:hover {
+	background-color: transparent;
+	color: #FF9800;
+}
+
+#app .md-button.md-icon-button .md-ripple-container {
+	border-radius: 50%;
+}
+
+.headline {
+	font-size: 20px;
+  margin-bottom: 8px;
+  color: #b6b6b6;
+}
+
+md-select-label > span {
+	color: #fff;
+}
+
+md-dialog {
+	padding: 16px;
+}
+
+.content md-slider.md-min .md-thumb:after {
+  background-color: rgb(83,109,254);
+}
+
+/**********
+*
+*
+* TOOLBAR
+*
+*
+**********/
+
+#app .record-button md-icon {
+	font-size: 18px;
+	padding: 3px;
+}
+
+#app .record-button.on md-icon {
+	color: #FF9800;
+}
+
+#app .pause-button {
+	color: #FF9800;
+}
+
+/**********
+*
+*
+* PATTERN AREA
+*
+*
+**********/
+
+#app .pattern-wrap {
+	padding: 16px 0;
+}
 
 #pattern {
-	margin-bottom: 20px;
+	margin-bottom: 16px;
 }
 
 #timer-row {
-	padding: 0 0 16px 0;
+	padding: 0 16px 8px;
 }
 
 #timer-row .timer-button {
 	height: 5px;
 	width: 40px;
-	background-color: #b6b6b6;
+	background-color: #ECEFF1;
 	margin: 0 8px 0 0;
 	border-radius: 3px;
 }
 
 #timer-row .timer-button.active {
-	background-color: #303f9f;
+	background-color: #536DFE;
 }
 
 .track-row {
-
-	padding-bottom: 8px;
+	margin-bottom: 8px;
+	padding: 0 16px;
 }
 
-.instrument-name {
-	font-size: 16px;
+.track-row.active {
+	border-left: 3px solid #536DFE;
+}
+
+.track-row .instrument-name {
+	font-size: 15px;
 	cursor: pointer;
-	float:left;
+	float: left;
 }
 
-.mute, .solo {
-	color: #b6b6b6;
-  	font-size: 14px;
+.track-row.active .instrument-name {
+	color: #536DFE;
 }
 
-.instrument-name.active-row {
-	color: rgb(244,67,54);
+.mute, 
+.solo {
+  color: #b6b6b6;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding-left: 4px;
 }
 
 .mute-checkbox {
@@ -137,10 +222,11 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	height: 40px;
 	transition: all 0.04s ease-in-out;
 	transform: scale(1);
+	background-color: #ECEFF1;
 }
 
 #pattern .beat:nth-child(4n+1) {
-	background: #ECEFF1;
+	background: #CFD8DC;
 }
 
 #pattern .beat.active {
@@ -151,59 +237,69 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	transform: scale(1.05);
 }
 
-.md-button {
-	padding: 0.57em;
-	margin-right: 8px;
+#pattern-switch-block .pattern-button.active {
+	color: #FF9800;
 }
 
-.effect-row {
-  width: 100%;
-  padding: 12px 16px;
-  /*background-color: #fafafa;*/
-  border-radius: 3px;
-  margin-bottom: 12px;
+#pattern-switch-block .pattern-button:hover {
+	background-color: rgba(182,182,182,.2);
 }
 
-.headline {
-	font-size: 16px;
-  margin-bottom: 8px;
-  color: #b6b6b6;
-}
-
-.effect-row .label {
-	font-size: 12px;
-	text-transform: uppercase;
-	color: #727272;
-}
+/**********
+*
+* INSTRUMENT EFFECTS AREA & KIT SELECTION
+*
+**********/
 
 #effects {
 	background-color: transparent;
 	margin-top: 0;
 }
 
-#effects .effect-row > div {
-	background-color: #fff;
-	margin-bottom: 20px;
-	padding: 20px;
-	border-radius: 3px;
+.no-instrument-selected {
+	margin-top: 42px;
+	text-align: center;
 }
 
-#effects .filter-block {
-	width: 100%;
+.effect-wrap {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+
+.effect-wrap .label,
+#tempo-block .label,
+#pattern-switch-block .label {
+	font-size: 15px;
+	text-transform: uppercase;
+	color: #727272;
+	margin-bottom: 4px;
+}
+
+.effect-wrap .effect-section {
+	margin-bottom: 16px;
+}
+
+.effect-block {
+	padding: 16px;
+	border-radius: 3px;
+	background-color: #fafafa;
+	position: relative;
+}
+
+.effect-section .effect-block:first-child {
+	margin-right: 16px;
 }
 
 #effects md-select,
 #kit-block .kit-select {
 	margin-top: -2px;
 	margin-right: 12px;
-  	color: #fff;
-  	font-size: 12px;
-  	text-transform: uppercase;
-  	width: 120px;
-}
-
-md-select-label > span {
 	color: #fff;
+	font-size: 12px;
+	text-transform: uppercase;
+	width: 120px;
 }
 
 .filter-select md-select-label > span {
@@ -214,9 +310,20 @@ md-select-label > span {
 	margin-top: 0;
 }
 
+#kit-block p {
+	font-size: 14px;
+	margin-right: 12px;
+	text-transform: uppercase;
+	color: #fff;
+}
+
 #effects md-select .md-select-label span:first-child,
 #kit-block .kit-select .md-select-label span:first-child {
 	width: 100%;
+}
+
+#effects md-slider {
+	width: calc(100% - 8px);
 }
 
 .filter-option,
@@ -231,32 +338,46 @@ md-select-label > span {
 	color: #212121;
 }
 
-#effects md-slider {
-	width: calc(100% - 8px);
-}
-
-#kit-block p {
+.effect-slider-label {
+	padding-right: 16px;
 	font-size: 14px;
-	margin-right: 12px;
 	text-transform: uppercase;
-	color: #fff;
+	color: #b6b6b6;
 }
 
-#controls {
-	margin-bottom: 50px;
+.effect-slider-label.right {
+	padding-right: 0;
+	padding-left: 16px;
+	text-align: right;
 }
 
-.recording md-icon {
-	font-size: 18px;
-	padding: 3px;
+.effect-block .reset-delay {
+	position: absolute;
+  top: 8px;
+  right: 0;
+  color: #b6b6b6;
 }
 
-.recording.on md-icon {
-	color: #D32F2F;
+.effect-block .reset-delay:hover {
+	color: #727272;
 }
+
+.delay-block .effect-slider-label {
+	width: 75px;
+}
+
+/**********
+*
+* TEMPO
+*
+**********/
 
 #tempo-block {
 
+}
+
+#tempo-block .tempo-slider {
+	padding: 0 8px;
 }
 
 #tempo-block .tempo-label {
@@ -264,37 +385,22 @@ md-select-label > span {
 	border: none;
 	font-size: 14px;
 	width: 40px;
-	color: #212121;
+	color: #b6b6b6;
 }
 
-md-dialog {
-	padding: 20px;
-}
+/**********
+*
+* RESPONSIVENESS
+*
+**********/
 
 @media(max-width: 1060px) {
-
 	#pattern .beat {
-
 		width: 30px;
 		height: 30px;
 	}
 
 	#timer-row .timer-button {
-
 		width: 30px;
 	}
 }
-
-.no-instrument-selected {
-	margin-top: 42px;
-	text-align: center;
-}
-
-.dark-primary-color    { background: #303F9F; }
-.default-primary-color { background: #3F51B5; }
-.light-primary-color   { background: #C5CAE9; }
-.text-primary-color    { color: #FFFFFF; }
-.accent-color          { background: #607D8B; }
-.primary-text-color    { color: #212121; }
-.secondary-text-color  { color: #727272; }
-.divider-color         { border-color: #B6B6B6; }

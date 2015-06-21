@@ -1,30 +1,30 @@
 <md-toolbar id="toolbar">
   <div class="md-toolbar-tools">
     <div class="buttons-wrap" flex layout="row" layout-align="start center">
-      <md-button ng-click="exportPattern()" id="export" aria-label="Export Pattern">
+      <md-button id="export" class="md-icon-button "ng-click="exportPattern()" aria-label="Export Pattern">
         <md-icon md-font-icon="icon-file_download"></md-icon>
         <md-tooltip md-direction="right">Export Pattern</md-tooltip>
       </md-button>
     </div>
     <div class="buttons-wrap" flex layout="row" layout-align="center center">
-      <md-button ng-click="resetGrid();" aria-label="Reset Grid">
+      <md-button class="md-icon-button" ng-click="resetGrid();" aria-label="Reset Grid">
         <md-icon md-font-icon="icon-replay"></md-icon>
         <md-tooltip md-direction="left">Reset Grid</md-tooltip>
       </md-button>
-      <md-button ng-show="!isPlaying" ng-click="startPlaying();" aria-label="Play">
+      <md-button class="md-icon-button play-button" ng-show="!isPlaying" ng-click="startPlaying();" aria-label="Play">
         <md-icon md-font-icon="icon-play_arrow"></md-icon>
       </md-button>
-      <md-button ng-show="isPlaying" ng-click="pausePlaying();" aria-label="Pause">
+      <md-button class="md-icon-button pause-button" ng-show="isPlaying" ng-click="pausePlaying();" aria-label="Pause">
         <md-icon md-font-icon="icon-pause"></md-icon>
       </md-button>
-      <md-button ng-click="stopPlaying();" aria-label="Stop">
+      <md-button class="md-icon-button" ng-click="stopPlaying();" aria-label="Stop">
         <md-icon md-font-icon="icon-stop"></md-icon>
       </md-button>
-      <md-button ng-click="record();" ng-show="!isRecording" class="recording" aria-label="Record">
+      <md-button class="md-icon-button record-button" ng-click="record();" ng-show="!isRecording" aria-label="Record">
         <md-icon md-font-icon="icon-lens"></md-icon>
         <md-tooltip md-direction="right">Record</md-tooltip>
       </md-button>
-      <md-button ng-click="stopRecord($event);" ng-show="isRecording" class="recording on" aria-label="Stop Recording">
+      <md-button class="md-icon-button record-button on" ng-click="stopRecord($event);" ng-show="isRecording" aria-label="Stop Recording">
         <md-icon md-font-icon="icon-cancel"></md-icon>
         <md-tooltip md-direction="right">Stop Recording</md-tooltip>
       </md-button>    
@@ -37,70 +37,87 @@
     </div>
   </div>
 </md-toolbar>
-  <md-tabs class="md-accent" md-stretch-tabs md-selected="tabIndex">
-    <md-tab label="Pattern">
-      <md-content class="content md-padding">
-
-        <section id="pattern">
-          <div id="timer-row" layout="row" layout-align="start center">
-            <div flex="25"></div>
+<md-tabs id="tabs" class="md-accent" md-stretch-tabs md-selected="tabIndex">
+  <md-tab label="Pattern">
+    <md-content class="pattern-wrap content md-padding md-whiteframe-z1">
+      <section id="pattern">
+        <div id="timer-row" layout="row" layout-align="space-between center">
+          <div flex="25"></div>
+          <div layout="row">
             <div class="timer-button timer-{{index}}" ng-repeat="index in indexes"></div>
           </div>
-          <div class="track-row" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="start center">
-            <div flex="25" layout="row">
-              <div class="instrument-name" ng-click="selectRow($index, $event);" flex="50">{{instrument.name}}</div> 
-              <div class="mute-control" flex="25">
-                <md-switch ng-model="instrument.muted" class="mute-checkbox" aria-label="Mute" ng-disabled="muteDisabled"></md-switch><span class="mute">mute</span>
-              </div>
-              <div class="solo-control" flex="25">
-                <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-change="changeSolo($index)" aria-label="Solo"></md-switch><span class="solo">solo</span>
-              </div>
-            </div>
-            <div>
-              <md-button class="beat light-primary-color md-raised" 
-              ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
-              ng-class="{'active': step}" 
-              ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
-              beatIndex="{{$index}}" aria-label="beat">
-            </md-button>
-          </div>
         </div>
-        </section>
-
-        <section id="pattern-block">
-          <md-button class="md-raised" ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
-          <md-button class="md-raised" ng-click="addPattern()">+</md-button>
-        </section>
-      </md-content>
-	
-			<md-content class="content md-padding">
-	      <section id="tempo-block">
-	        <p class="headline">Tempo</p>
-	        <div layout="row" layout-align="start center">
-	          <input class="tempo-label" disabled ng-model="tempo"/>
-	          <span class="tempo-label">BPM</span>
-	          <md-slider flex ng-model="tempo" ng-change="updateTempo(tempo)" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
-	        </div>
-	      </section>
-	    </md-content>
-    </md-tab>
-
-
-    <md-tab label="Settings">
-      <md-content id="effects" class="content md-padding">
-      		<div class="no-instrument-selected" ng-show="selectedRow == -1">
-      			<h2>No instrument has been selected</h2>
-      		</div>
-          <div class="effect-row" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
-            <p class="headline" flex>Effects for {{instrument.name}}</p>
-            <div class="volume-block">
-              <p class="label">Volume</p>
-              <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider>
-              <p class="label">Tune</p>
-              <md-slider class="tune-slider" ng-model="instrument.tune" min="0.5" max="1.5" step="0.05" aria-label="Tune Slider"></md-slider>         
+        <div class="track-row" ng-class="{'active': $index==selectedRow}" ng-repeat="instrument in instruments" data-sample="{{instrument.id}}" layout="row" layout-align="space-between start">
+          <div flex="25" layout="row">
+            <p class="instrument-name" ng-click="selectRow($index, $event);" flex="50" layout="row" layout-align="start center">{{instrument.name}}</p> 
+            <div class="mute-control" flex="25">
+              <md-switch ng-model="instrument.muted" class="mute-checkbox" aria-label="Mute" ng-disabled="muteDisabled"></md-switch><span class="mute">mute</span>
             </div>
+            <div class="solo-control" flex="25">
+              <md-switch ng-model="instrument.solo" class="mute-checkbox" ng-change="changeSolo($index)" aria-label="Solo"></md-switch><span class="solo">solo</span>
+            </div>
+          </div>
+          <div>
+            <md-button class="beat light-primary-color md-raised" 
+            ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
+            ng-class="{'active': step}" 
+            ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
+            beatIndex="{{$index}}" aria-label="beat">
+          </md-button>
+        </div>
+      </div>
+      </section>
+    </md-content>
 
-            <div class="filter-block">
+    <md-content class="pattern-switch-wrap content md-padding md-whiteframe-z1">
+      <section id="pattern-switch-block">
+        <p class="label">Switch Patterns</p>
+        <md-button class="pattern-button" ng-class="{'active': $index == selectedPattern}" ng-click="selectPattern($index)" ng-repeat="pattern in instruments[0].steps">Pattern {{$index+1}}</md-button>
+        <md-button class="pattern-button" ng-click="addPattern()">+</md-button>
+      </section>
+    </md-content>
+
+		<md-content class="tempo-wrap content md-padding md-whiteframe-z1">
+      <section id="tempo-block">
+        <p class="label">Tempo</p>
+        <div layout="row" layout-align="start center">
+          <input class="tempo-label" disabled ng-model="tempo"/>
+          <span class="tempo-label">BPM</span>
+          <md-slider flex class="tempo-slider" ng-model="tempo" ng-change="updateTempo(tempo)" min="60" max="240" step="2" aria-label="Tempo Slider"></md-slider>
+        </div>
+      </section>
+    </md-content>
+  </md-tab>
+
+  <md-tab label="Instrument Effects">
+    <md-content id="effects" class="content md-padding">
+    		<div class="no-instrument-selected" ng-show="selectedRow == -1">
+    			<h2>No instrument has been selected</h2>
+    		</div>
+        <div class="effect-wrap" ng-repeat="instrument in instruments" ng-show="selectedRow == $index">
+          <p class="headline" flex>Effects for {{instrument.name}}</p>
+
+          <div class="effect-section volume-tune-section" layout="row" layout-align="space-between center">
+            <div class="effect-block volume-block md-whiteframe-z1" flex>
+              <p class="label">Volume</p>
+              <div layout="row" layout-align="start center">
+                <p class="effect-slider-label">0</p>              
+                <md-slider class="volume-slider" ng-model="instrument.volume" min="0" max="10" step="1" aria-label="Volume Slider"></md-slider>
+                <p class="effect-slider-label right">10</p> 
+              </div>              
+            </div>
+            <div class="effect-block pitch-block md-whiteframe-z1" flex>
+              <p class="label">Pitch</p>
+              <div layout="row" layout-align="start center">
+                <p class="effect-slider-label">-</p>              
+              <md-slider class="pitch-slider" ng-model="instrument.pitch" min="0.5" max="1.5" step="0.1" aria-label="Pitch Slider"></md-slider>
+                <p class="effect-slider-label right">+</p> 
+              </div>              
+            </div>
+          </div>
+
+          <div class="effect-section filter-panner-section" layout="row" layout-align="space-between center">
+            <div class="effect-block filter-block md-whiteframe-z1" flex>
               <p class="label">Filter</p>
               <div layout="row" layout-align="start center">
                 <md-select class="filter-select" placeholder="Select Filter" ng-model="instrument.filter">
@@ -109,57 +126,69 @@
                 <md-slider class="filter-slider" ng-model="instrument.filterFreq" min="0" max="100" step="1" aria-label="Filter Frequency Slider"></md-slider>
               </div>
             </div>
-
-            <div class="delay-section">
-              <div flex="30" class="delay-block">
-                <p class="label">Delay Time</p>
-                <md-slider flex class="delay-slider" ng-model="instrument.delayTime" min="0" max="2000" step="50" aria-label="Delay Time Slider"></md-slider>
-              </div>
-              <div flex="30" class="delay-block">
-                <p class="label">Delay Feedback</p>
-                <md-slider flex class="delay-slider" ng-model="instrument.delayFeedback" min="0" max="0.9" step="0.1" aria-label="Delay Feedback Slider"></md-slider>
-              </div>
-              <div flex="30" class="delay-block">
-                <p class="label">Delay Cutoff</p>
-                <md-slider flex class="delay-slider" ng-model="instrument.delayCutoff" min="100" max="10000" step="100" aria-label="Delay Cutoff Frequency Slider"></md-slider>
-              </div>
-              <div>
-                <md-button class="reset-delay" ng-click="resetDelay(instrument.index);">Reset Delay</md-button>
-              </div>
-            </div>
-
-            <div class="phaser-section">
-              <div flex="30" class="phaser-block">
-                <p class="label"> Phaser Rate</p>
-                <md-slider flex class="phaser-slider" ng-model="instrument.phaserRate" min="0" max="8" step="0.5" aria-label="Phaser Rate Slider"></md-slider>
-              </div>  
-            </div>
-
-            <div class="panner-section">
-              <div flex="30" class="panner-block">
-                <p class="label"> Panner Rate</p>
-                <span>L</span> <span style="float: right">R</span> 
+            <div class="effect-block panner-block md-whiteframe-z1" flex>
+              <p class="label">Panning</p>
+              <div layout="row" layout-align="start center">
+                <p class="effect-slider-label">L</p>
                 <md-slider flex class="panner-slider" ng-model="instrument.pannerRate" min="-1" max="1" step="0.05" aria-label="Panner Rate Slider"></md-slider>
-                <div>
-                  <md-button class="reset-panner" ng-click="instrument.pannerRate = 0;">Reset Panning</md-button>
-                </div>
-              </div>  
+                <p class="effect-slider-label right">R</p> 
+              </div>
             </div>
-
           </div>
-	        <form ng-submit="importPattern()" ng-controller="MainCtrl">
-	          <md-input-container>
-	            <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
-	          </md-input-container>
-	          <md-button class="md-raised" type="submit" id="import" style="margin-bottom: 20px">Import Pattern</md-button>
-	        </form>
-      </md-content>
-    </md-tab>
+
+          <div class="effect-section delay-section effect-block md-whiteframe-z1">
+            <p class="label">Delay</p>
+            <div class="delay-block" layout="row" layout-align="start center">
+              <p flex="15" class="effect-slider-label">Delay Time</p>
+              <div flex layout="row" layout-align="start center">
+                <p class="effect-slider-label">0ms</p>              
+                <md-slider flex class="delay-slider" ng-model="instrument.delayTime" min="0" max="1000" step="20" aria-label="Delay Time Slider"></md-slider>
+                <p class="effect-slider-label right">1000ms</p> 
+              </div>              
+            </div>
+            <div class="delay-block" layout="row" layout-align="start center">
+              <p flex="15" class="effect-slider-label">Delay Feedback</p>
+              <div flex layout="row" layout-align="start center">
+                <p class="effect-slider-label">0</p>                
+                  <md-slider flex class="delay-slider" ng-model="instrument.delayFeedback" min="0.01" max="0.8" step="0.05" aria-label="Delay Feedback Slider"></md-slider>
+                <p class="effect-slider-label right">0.8</p> 
+              </div>               
+            </div>
+            <div class="delay-block" layout="row" layout-align="start center">
+              <p flex="15" class="effect-slider-label">Delay Cutoff</p>
+              <div flex layout="row" layout-align="start center">
+                <p class="effect-slider-label">20hz</p>                
+                  <md-slider flex class="delay-slider" ng-model="instrument.delayCutoff" min="20" max="20000" step="200" aria-label="Delay Cutoff Frequency Slider"></md-slider>
+                <p class="effect-slider-label right">20khz</p> 
+              </div>               
+            </div>
+            <md-button class="md-icon-button reset-delay" ng-click="resetDelay(instrument.index);" aria-label="Reset Delay">
+              <md-icon md-font-icon="icon-settings_backup_restore"></md-icon>
+              <md-tooltip md-direction="left">Reset Delay</md-tooltip>
+            </md-button>
+          </div>
+
+          <div class="effect-section reverb-section">
+            <div flex="30" class="reverb-block">
+              <p class="label">Reverb</p>
+              <md-slider flex class="reverb-slider" ng-model="instrument.reverbLevel" min="0" max="1" step="0.05" aria-label="Reverb Level"></md-slider>
+            </div>  
+          </div>
 
 
-    <md-tab label="Visualizer"></md-tab>
 
-  </md-tabs>
-  <canvas style="display: none" id="canvas"></canvas>
+        </div>
+        <form ng-submit="importPattern()" ng-controller="MainCtrl">
+          <md-input-container>
+            <input name="jsonfile" ng-model="jsonfile" file-model="myFile" class="md-raised" type="file">
+          </md-input-container>
+          <md-button class="md-raised" type="submit" id="import" style="margin-bottom: 20px">Import Pattern</md-button>
+        </form>
+    </md-content>
+  </md-tab>
+
+  <md-tab label="Visualizer"></md-tab>
+</md-tabs>
+<canvas style="display: none" id="canvas"></canvas>
 
 

@@ -28,6 +28,6 @@ angular
         redirectTo: '/'
       });
     $mdThemingProvider.theme('default')
-    .primaryPalette('red')
+    .primaryPalette('indigo')
     .accentPalette('indigo');
   });

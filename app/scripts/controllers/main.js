@@ -47,11 +47,18 @@
 		{path: 'reggae', name: 'Reggae'}
 	];
 
+	//effects
 	$scope.effects = [
-		{id: 'volume', name: 'Volume / Tune'},
+		{id: 'volume', name: 'Volume / Pitch'},
 		{id: 'filter', name: 'Filter'},
 		{id: 'delay', name: 'Delay'},
 		{id: 'phaser', name: 'Phaser'}
+	];
+
+	//reverb impulses
+	$scope.impulses = [
+		{id: 'bright-hall', name: 'Bright Hall'},
+		{id: 'living-bathroom', name: 'Living Bathroom'}
 	];
 
 	//currently selected kit
@@ -77,8 +84,8 @@
 	};
 
  	//get instruments data
- 	//.id, .name, .path, .sample, .steps, .volume, .tune
- 	if($scope.wasloaded == false) {
+ 	//.id, .name, .path, .sample, .steps, .volume, .pitch
+ 	if($scope.wasloaded === false) {
  		$http.get('scripts/instruments.json').success(function(data){
  			$scope.instruments = data.drums;
  			$scope.loadKit();
@@ -88,11 +95,10 @@
 
 	//wenn kit ausgetauscht wird, samples neu laden
 	$scope.$watch('selectedKit', function() {
-		if(typeof $scope.selectedKit !== "undefined") {
-			console.log($scope.selectedKit)
+		if(typeof $scope.selectedKit !== 'undefined') {
 			//$scope.stopPlaying();
 			$scope.loadKit();
-		}
+		};
 	});
 
 	$scope.addPattern = function() {
@@ -100,26 +106,27 @@
 
 			$scope.instruments[i].steps.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
 
-		}	
-	}
+		};
+	};
 
 	$scope.selectPattern = function(index) {	
 		$scope.selectedPattern = index;
-	}
+	};
 
 	$scope.selectRow = function (i , $event) {
 		$scope.selectedRow = i;
 		$scope.tabIndex = 1;
-		angular.element('.instrument-name').removeClass('active-row');
-		angular.element($event.target).addClass('active-row');
-	}
+		//angular.element('.instrument-name').removeClass('active-row');
+		//angular.element($event.target).addClass('active-row');
+	};
 
 	//laden eines kits
  	$scope.loadKit = function() {
+ 		$scope.stopPlaying();
 		for (var i = 0; i < $scope.instruments.length; i++) {
 			$scope.instruments[i].sample = new Sample('samples/' + $scope.selectedKit + '/' + $scope.instruments[i].path);
 		}; 		
- 	}
+ 	};
 
 	//wird bei jedem neuen beat aufgerufen
 	$scope.onNextBeat = function() {
@@ -128,7 +135,7 @@
 		$scope.currentBeatIndex = ($scope.currentBeatIndex + 1) % 16;
 
 		//momentan aktive timer und beat jQuery objects
-		var currentTimerButton = angular.element('#timer-row .timer-button:nth-child(' + ($scope.currentBeatIndex + 1) + ')');
+		var currentTimerButton = angular.element('#timer-row .timer-button.timer-' + ($scope.currentBeatIndex));
 		var currentBeat = angular.element('#pattern .beat:nth-child(' + ($scope.currentBeatIndex + 1) + ')');
 
 		//reset active classes on beats
@@ -143,10 +150,10 @@
 		for (var i = 0; i < $scope.instruments.length; i++) {
 
 				var steps = $scope.instruments[i].steps[$scope.selectedPattern];
-				var sample = $scope.instruments[i].sample
+				var sample = $scope.instruments[i].sample;
 				var volume = $scope.instruments[i].volume / 10;
 
-				var tune = $scope.instruments[i].tune;
+				var pitch = $scope.instruments[i].pitch;
 
 				var filter = $scope.instruments[i].filter;
 
@@ -154,7 +161,7 @@
 				var delayFeedback = $scope.instruments[i].delayFeedback;
 				var delayCutoff = $scope.instruments[i].delayCutoff;
 
-				var phaserRate = $scope.instruments[i].phaserRate;
+				var reverbLevel = $scope.instruments[i].reverbLevel;
 
 				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
 
@@ -165,7 +172,7 @@
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex] && !muted) {
-					sample.playSample(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, phaserRate, pannerRate);
+					sample.playSample(volume, pitch, filter, filterFreq, delayTime, delayFeedback, delayCutoff, reverbLevel, pannerRate);
 				}
 		}
 	};
@@ -194,7 +201,7 @@
 				$scope.instruments[instrument].muted = false;
 			}
 		};
-	}
+	};
 
 	//wann der nächste beat ausgelöst wird
 	$scope.nextBeatTime = function() {
@@ -216,14 +223,14 @@
 		for (var i = 0; i < $scope.instruments.length; i++) {
 			for(var j = 0; j < $scope.instruments[i].steps[$scope.selectedPattern].length; j++) {
 				$scope.instruments[i].steps[$scope.selectedPattern][j] = false;
-			}
-		}
-	}
+			};
+		};
+	};
 
 	//startet die clock und den loop
 	$scope.startPlaying = function() {
 		//wenn clock schon spielt, nicht nochmal den callback starten
-		if($scope.isPlaying == false) {
+		if($scope.isPlaying === false) {
 			
 			clock.start();
 			clock.callbackAtTime($scope.onNextBeat, $scope.nextBeatTime()).repeat($scope.beatDur).tolerance({late:100});			
@@ -250,13 +257,13 @@
 	$scope.record = function(){
 		if(!$scope.isRecording){
 			console.log($scope.isPlaying);
-			if($scope.isPlaying == false){
-				console.log("start");
+			if($scope.isPlaying === false){
+				console.log('start');
 				recorder.record();
 				$scope.startPlaying();
 				$scope.isRecording = true;
-			}else{
-				console.log("start without playing");
+			} else{
+				console.log('start without playing');
 				recorder.record();
 				$scope.isRecording = true;
 			}
@@ -278,23 +285,22 @@
 		$scope.instruments[index].delayTime = 0;
 		$scope.instruments[index].delayFeedback = 0.5;
 		$scope.instruments[index].delayCutoff = 10000;
-	}
+	};
 	
 	//Export Pattern
 	$scope.exportPattern = function(){
-		var data = "text/json;charset=utf-8," + encodeURIComponent(angular.toJson($scope.instruments,true));
-		$('<a href="data:' + data + '" download="data.json" id="downloadexportpattern"></a>').insertAfter( "#export" );
+		var data = 'text/json;charset=utf-8,' + encodeURIComponent(angular.toJson($scope.instruments,true));
+		$('<a href="data:' + data + '" download="data.json" id="downloadexportpattern"></a>').insertAfter( '#export' );
 		$('#downloadexportpattern').get(0).click();
 
-		
 		return false;
-	}
+	};
 
 	// Import Pattern
 	$scope.importPattern = function(){
 		var file = $scope.myFile;
 		var reader = new FileReader();
-		reader.readAsText(file, "UTF-8");
+		reader.readAsText(file, 'UTF-8');
 		reader.onload = function(e){
 			delete $scope.instruments;
 			var neuinst = JSON.parse(e.target.result);
@@ -302,10 +308,9 @@
 				$scope.instruments[i] = neuinst[i];
 				$scope.$apply();
 				$scope.loadKit();
-			};
-			
-		}
-	}
+			};		
+		};
+	};
 
 	//show dialog zum herunterladen des aufgenommenen wav files
  	function showRecordFileDownloadDialog($event) {
@@ -339,29 +344,24 @@
 	    scope.closeDialog = function() {
 	      $mdDialog.hide();
 	      $scope.loadKit();
-	    }
+	    };
 	    scope.filename = filename;
 	    scope.downloadRecordedFile = function(){
 	    	if(scope.filename.length >= 4){
 		    	recorder.exportWAV(function(e){
   		    	recorder.clear();
-  		    	Recorder.forceDownload(e, scope.filename +".wav");
+  		    	Recorder.forceDownload(e, scope.filename + '.wav');
   		    	scope.closeDialog();
   				});	
 	    	}
-	    }
-	  }
-	}
+	    };
+	  };
+	};
 
-	var init = function() {
-	 	try {    
-		  clock = new WAAClock(context, {toleranceEarly: 0.1});
-		}
-		catch(e) {
-			alert("Web Audio API is not supported in this browser");
-		}
+	var init = function() {   
+		clock = new WAAClock(context, {toleranceEarly: 0.1});
 		initBinCanvas();
-	}	
+	};
 
 	//bei document.ready init funktion aufrufen
 	angular.element(document).ready(function() {

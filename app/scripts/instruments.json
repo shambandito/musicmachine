@@ -12,7 +12,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -20,7 +20,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -36,7 +36,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -44,7 +44,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -60,7 +60,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -68,7 +68,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -84,7 +84,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -92,7 +92,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -108,7 +108,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -116,7 +116,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -132,7 +132,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -140,7 +140,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -156,7 +156,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -164,7 +164,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		},
@@ -180,7 +180,7 @@
 				[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 			],
 			"volume": 10,
-			"tune": 1,
+			"pitch": 1,
 			"filter": "none", 
 			"filterFreq": 0,
 			"muted": false,
@@ -188,7 +188,7 @@
 			"delayTime": 0,
 			"delayFeedback": 0.5,
 			"delayCutoff": 10000,
-			"phaserRate": 0,
+			"reverbLevel": 0,
 			"pannerRate": 0,
 			"selectedEffect": 0 
 		}
