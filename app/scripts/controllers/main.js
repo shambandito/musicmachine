@@ -282,8 +282,8 @@
 	//delay auf standardwerte zurücksetzen
 	$scope.resetDelay = function(index) {
 		$scope.instruments[index].delayTime = 0;
-		$scope.instruments[index].delayFeedback = 0.5;
-		$scope.instruments[index].delayCutoff = 10000;
+		$scope.instruments[index].delayFeedback = 0.4;
+		$scope.instruments[index].delayCutoff = 20000;
 	};
 	
 	//Export Pattern
@@ -308,7 +308,7 @@
      	parent: parentEl,
      	targetEvent: $event,
      	template:
-       	'<md-dialog aria-label="List dialog">' +
+       	'<md-dialog aria-label="Download Recording Dialog">' +
        	'  <md-dialog-content id="download">'+
        	'		 <h2>Download Recording</h2>'+
        	'    <md-input-container class="md-primary"><label>File name</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
@@ -354,9 +354,9 @@
      	parent: parentEl,
      	targetEvent: $event,
      	template:
-       	'<md-dialog aria-label="List dialog">' +
+       	'<md-dialog aria-label="Import Dialod">' +
        	'  <md-dialog-content id="import-pattern">'+
-       	'		 <h2>Import Pattern</h2>'+
+       	'		 <h2>Import</h2>'+
         '		 <md-input-container>'+
         '			<input id="json-file" name="json-file" file-model="myFile" type="file">'+
         '		 </md-input-container>'+
