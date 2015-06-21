@@ -1,13 +1,18 @@
-.dark-primary-color    { background: #303F9F; }
+/*.dark-primary-color    { background: #303F9F; }
 .default-primary-color { background: #3F51B5; }
 .light-primary-color   { background: #C5CAE9; }
 .text-primary-color    { color: #FFFFFF; }
 .accent-color          { background: #607D8B; }
 .primary-text-color    { color: #212121; }
 .secondary-text-color  { color: #727272; }
-.divider-color         { border-color: #B6B6B6; }
+.divider-color         { border-color: #B6B6B6; }*/
 
-.orange { color: #FF9800;}
+.highlight-weiss	{ color: #f5f5f5;}
+.orange 					{ color: #ff9800;}
+.dunkel-blau 			{ color: #283593;}
+.primary-blau			{ color: #3f51b5;}
+.grau 						{ color: #b6b6b6;}
+.highlight-grau 	{ color: #e5e5e5;}
 
 /**********
 *
@@ -40,8 +45,8 @@ html, body {
   line-height: normal;
   letter-spacing: 0.025em;
   margin: 0;
-  color: #222;
-  background-color: #F5F5F5;
+  color: #727272;
+  background-color: #f5f5f5;
   transition: opacity ease-in 0.1s;
 }
 
@@ -67,38 +72,35 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	min-width: 900px;
 }
 
-.content {
+#app .content {
 	max-width: 1200px;
 	margin: 16px auto;
 	background-color: transparent;
-	border-radius: 3px;
-	background-color: #fafafa;
 }
 
-.content md-tooltip {
+#app md-tooltip {
 	font-size: 12px;
 	text-transform: uppercase;
 }
 
-.content md-tooltip .md-background {
+#app md-tooltip .md-background {
 	background-color: rgba(182,182,182,.5);
 }
 
-.content md-slider .md-track-ticks {
+#app md-slider .md-track-ticks {
 	display: none;
 }
 
-.content md-select {
+#app md-select {
 	margin: 0;
 }
 
-md-icon {
+#app md-icon {
 	font-size: 24px;
 }
 
 #app .md-button {
 	padding: 0.57em;
-	margin-right: 8px;
 }
 
 #app .md-button.md-icon-button {
@@ -107,29 +109,54 @@ md-icon {
 
 #app .md-button.md-icon-button:hover {
 	background-color: transparent;
-	color: #FF9800;
+	color: #ff9800;
 }
 
 #app .md-button.md-icon-button .md-ripple-container {
 	border-radius: 50%;
 }
 
-.headline {
+#app .headline {
 	font-size: 20px;
   margin-bottom: 8px;
   color: #b6b6b6;
 }
 
-md-select-label > span {
+#app md-select-label > span {
 	color: #fff;
 }
 
-md-dialog {
-	padding: 16px;
+#app md-select-menu md-option[selected] {
+  background-color: #f5f5f5;
+  color: #ff9800;
 }
 
-.content md-slider.md-min .md-thumb:after {
-  background-color: rgb(83,109,254);
+#app md-dialog {
+	padding: 16px;
+	max-width: 620px;
+	width: 100%;
+}
+
+#app md-dialog .md-actions {
+	padding: 0;
+	margin-top: 20px;
+}
+
+#app md-dialog h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #b6b6b6;
+}
+
+#app md-dialog #json-file {
+	padding: 0;
+	margin-top: 20px;
+}
+
+/* wenn slider auf minimal wert ist trotzdem den kreis ausfüllen */
+#app .content md-slider.md-min .md-thumb:after {
+  background-color: #3f51b5;
+  border-color: #3f51b5;
 }
 
 /**********
@@ -140,17 +167,30 @@ md-dialog {
 *
 **********/
 
-#app .record-button md-icon {
+#toolbar .md-button {
+	margin-right: 8px;
+}
+
+#toolbar .record-button {
+	margin-right: 0;
+}
+
+#toolbar .record-button md-icon {
 	font-size: 18px;
 	padding: 3px;
 }
 
-#app .record-button.on md-icon {
-	color: #FF9800;
+#toolbar .record-button.on md-icon {
+	color: #ff9800;
 }
 
-#app .pause-button {
-	color: #FF9800;
+#toolbar .pause-button {
+	color: #ff9800;
+}
+
+#tabs md-tabs-ink-bar {
+  color: #283593;
+  background: #283593;	
 }
 
 /**********
@@ -163,10 +203,10 @@ md-dialog {
 
 #app .pattern-wrap {
 	padding: 16px 0;
-}
-
-#pattern {
+	margin-top: 0;
 	margin-bottom: 16px;
+	border-radius: 3px;
+	background-color: #fff;
 }
 
 #timer-row {
@@ -176,13 +216,13 @@ md-dialog {
 #timer-row .timer-button {
 	height: 5px;
 	width: 40px;
-	background-color: #ECEFF1;
+	background-color: #e5e5e5;
 	margin: 0 8px 0 0;
 	border-radius: 3px;
 }
 
 #timer-row .timer-button.active {
-	background-color: #536DFE;
+	background-color: #ff9800;
 }
 
 .track-row {
@@ -191,7 +231,7 @@ md-dialog {
 }
 
 .track-row.active {
-	border-left: 3px solid #536DFE;
+	border-left: 3px solid #ff9800;
 }
 
 .track-row .instrument-name {
@@ -201,7 +241,7 @@ md-dialog {
 }
 
 .track-row.active .instrument-name {
-	color: #536DFE;
+	color: #ff9800;
 }
 
 .mute, 
@@ -222,27 +262,39 @@ md-dialog {
 	height: 40px;
 	transition: all 0.04s ease-in-out;
 	transform: scale(1);
-	background-color: #ECEFF1;
+	background-color: #f5f5f5;
+	margin-right: 8px;
 }
 
 #pattern .beat:nth-child(4n+1) {
-	background: #CFD8DC;
+	background-color: #e5e5e5;
 }
 
 #pattern .beat.active {
-	background-color: #536DFE;
+	background-color: #ff9800;
 }
 
 #pattern .beat.active.playing {
 	transform: scale(1.05);
 }
 
+.pattern-switch-wrap {
+	padding: 16px;
+	margin-bottom: 16px;
+	border-radius: 3px;
+	background-color: #fff;
+}
+
 #pattern-switch-block .pattern-button.active {
-	color: #FF9800;
+	color: #ff9800;
 }
 
 #pattern-switch-block .pattern-button:hover {
 	background-color: rgba(182,182,182,.2);
+}
+
+#pattern-switch-block .add-pattern {
+	width: 35px;
 }
 
 /**********
@@ -251,9 +303,9 @@ md-dialog {
 *
 **********/
 
-#effects {
-	background-color: transparent;
+#app #effects {
 	margin-top: 0;
+	margin-bottom: 40px;
 }
 
 .no-instrument-selected {
@@ -263,13 +315,10 @@ md-dialog {
 
 .effect-wrap {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: 3px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.effect-wrap .label,
-#tempo-block .label,
+.effect-block .label,
 #pattern-switch-block .label {
 	font-size: 15px;
 	text-transform: uppercase;
@@ -284,7 +333,7 @@ md-dialog {
 .effect-block {
 	padding: 16px;
 	border-radius: 3px;
-	background-color: #fafafa;
+	background-color: #fff;
 	position: relative;
 }
 
@@ -292,26 +341,30 @@ md-dialog {
 	margin-right: 16px;
 }
 
-#effects md-select,
-#kit-block .kit-select {
+#effects md-select {
 	margin-top: -2px;
 	margin-right: 12px;
-	color: #fff;
+	color: #727272;
 	font-size: 12px;
 	text-transform: uppercase;
 	width: 120px;
 }
 
-.filter-select md-select-label > span {
+#effects md-select-label > span {
 	color: #727272;
 }
 
 #kit-block .kit-select {
 	margin-top: 0;
+	margin-right: 12px;
+	color: #fff;
+	font-size: 15px;
+	text-transform: uppercase;
+	width: 150px;
 }
 
 #kit-block p {
-	font-size: 14px;
+	font-size: 15px;
 	margin-right: 12px;
 	text-transform: uppercase;
 	color: #fff;
@@ -320,10 +373,6 @@ md-dialog {
 #effects md-select .md-select-label span:first-child,
 #kit-block .kit-select .md-select-label span:first-child {
 	width: 100%;
-}
-
-#effects md-slider {
-	width: calc(100% - 8px);
 }
 
 .filter-option,
@@ -354,12 +403,8 @@ md-dialog {
 .effect-block .reset-delay {
 	position: absolute;
   top: 8px;
-  right: 0;
+  right: 8px;
   color: #b6b6b6;
-}
-
-.effect-block .reset-delay:hover {
-	color: #727272;
 }
 
 .delay-block .effect-slider-label {
@@ -394,7 +439,7 @@ md-dialog {
 *
 **********/
 
-@media(max-width: 1060px) {
+@media(max-width: 1100px) {
 	#pattern .beat {
 		width: 30px;
 		height: 30px;

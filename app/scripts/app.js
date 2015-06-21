@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ngMaterial'
+    'ngMaterial',
+    'file-model'
   ])
   .config(function ($routeProvider, $mdThemingProvider) {
     $routeProvider
@@ -29,5 +30,5 @@ angular
       });
     $mdThemingProvider.theme('default')
     .primaryPalette('indigo')
-    .accentPalette('indigo');
+    .accentPalette('orange');
   });

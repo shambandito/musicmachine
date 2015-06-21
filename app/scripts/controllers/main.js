@@ -8,17 +8,18 @@
  * Controller of the musicmachineApp
  */
  angular.module('musicmachineApp')
- .controller('MainCtrl', function ($scope, $http,$mdDialog) {
+ .controller('MainCtrl', function ($scope, $http, $mdDialog) {
 
  	var clock;
-	// Für mdDialog
-  $scope.showRecordFileDownloadDialog = showRecordFileDownloadDialog;
 
 	$scope.instruments = [];
 	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
 	$scope.tabIndex = 0;
+
+	var masterVolume = 1;
+	$scope.masterVolume = 10;
 
 	$scope.muteDisabled = false;
 
@@ -51,8 +52,7 @@
 	$scope.effects = [
 		{id: 'volume', name: 'Volume / Pitch'},
 		{id: 'filter', name: 'Filter'},
-		{id: 'delay', name: 'Delay'},
-		{id: 'phaser', name: 'Phaser'}
+		{id: 'delay', name: 'Delay'}
 	];
 
 	//reverb impulses
@@ -73,14 +73,16 @@
 	$scope.barDur = 16 * $scope.beatDur;
 
 	//wenn tempo vom user updated wird, auch die davon abhängigen variablen updaten
-	// $scope.$watch('tempo', function() {
-
-	// });
-
 	$scope.updateTempo = function(tempo) {
 		$scope.tempo = tempo;
 		$scope.beatDur = 60 / $scope.tempo / 4;
 		$scope.barDur = 16 * $scope.beatDur;
+	};
+
+	//wenn masterVolume vom user updated wird, variablen updaten
+	$scope.updateMasterVolume = function(vol) {
+		$scope.masterVolume = vol;
+		masterVolume = $scope.masterVolume / 10;
 	};
 
  	//get instruments data
@@ -94,12 +96,13 @@
  	}
 
 	//wenn kit ausgetauscht wird, samples neu laden
-	$scope.$watch('selectedKit', function() {
+	$scope.updateKit = function(kit) {
+		$scope.selectedKit = kit;
 		if(typeof $scope.selectedKit !== 'undefined') {
 			//$scope.stopPlaying();
 			$scope.loadKit();
-		};
-	});
+		};	
+	}
 
 	$scope.addPattern = function() {
 		for(var i = 0; i < $scope.instruments.length; i++) {
@@ -151,17 +154,14 @@
 
 				var steps = $scope.instruments[i].steps[$scope.selectedPattern];
 				var sample = $scope.instruments[i].sample;
-				var volume = $scope.instruments[i].volume / 10;
 
+				var volume = ($scope.instruments[i].volume / 10) * masterVolume;
 				var pitch = $scope.instruments[i].pitch;
-
 				var filter = $scope.instruments[i].filter;
 
 				var delayTime = $scope.instruments[i].delayTime;
 				var delayFeedback = $scope.instruments[i].delayFeedback;
 				var delayCutoff = $scope.instruments[i].delayCutoff;
-
-				var reverbLevel = $scope.instruments[i].reverbLevel;
 
 				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
 
@@ -172,7 +172,7 @@
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
 		    if(steps[$scope.currentBeatIndex] && !muted) {
-					sample.playSample(volume, pitch, filter, filterFreq, delayTime, delayFeedback, delayCutoff, reverbLevel, pannerRate);
+					sample.playSample(volume, pitch, filter, filterFreq, delayTime, delayFeedback, delayCutoff, pannerRate);
 				}
 		}
 	};
@@ -256,7 +256,6 @@
 	//aufnehmen eines wav files
 	$scope.record = function(){
 		if(!$scope.isRecording){
-			console.log($scope.isPlaying);
 			if($scope.isPlaying === false){
 				console.log('start');
 				recorder.record();
@@ -276,7 +275,7 @@
 			recorder.stop();
 			$scope.isRecording = false;
 			$scope.stopPlaying();
-			showRecordFileDownloadDialog($event);
+			$scope.showRecordFileDownloadDialog($event);
 		}
 	};
 
@@ -290,30 +289,19 @@
 	//Export Pattern
 	$scope.exportPattern = function(){
 		var data = 'text/json;charset=utf-8,' + encodeURIComponent(angular.toJson($scope.instruments,true));
-		$('<a href="data:' + data + '" download="data.json" id="downloadexportpattern"></a>').insertAfter( '#export' );
+
+		//neuen button machen wenn nicht schon einer existiert, sonst nur href ändern
+		if($('#downloadexportpattern').length) {
+			$('#downloadexportpattern').attr('href', 'data:' + data);
+		} else {
+			$('<a href="data:' + data + '" download="data.json" id="downloadexportpattern"></a>').insertAfter( '#export' );
+		}
+		
 		$('#downloadexportpattern').get(0).click();
-
-		return false;
-	};
-
-	// Import Pattern
-	$scope.importPattern = function(){
-		var file = $scope.myFile;
-		var reader = new FileReader();
-		reader.readAsText(file, 'UTF-8');
-		reader.onload = function(e){
-			delete $scope.instruments;
-			var neuinst = JSON.parse(e.target.result);
-			for (var i = 0; i < neuinst.length; i++) {
-				$scope.instruments[i] = neuinst[i];
-				$scope.$apply();
-				$scope.loadKit();
-			};		
-		};
 	};
 
 	//show dialog zum herunterladen des aufgenommenen wav files
- 	function showRecordFileDownloadDialog($event) {
+ 	$scope.showRecordFileDownloadDialog = function($event) {
 	  var parentEl = angular.element(document.body);
 	   	
 	  $mdDialog.show({
@@ -322,15 +310,15 @@
      	template:
        	'<md-dialog aria-label="List dialog">' +
        	'  <md-dialog-content id="download">'+
-       	'		 <h2>Download Recorded File</h2>'+
-       	'    <md-input-container><label>Filename</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
+       	'		 <h2>Download Recording</h2>'+
+       	'    <md-input-container class="md-primary"><label>File name</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
 	      '  </md-dialog-content>' +
 	      '  <div class="md-actions">' +
-	      '    <md-button ng-click="closeDialog()" class="md-primary md-raised">' +
-	      '      Close Dialog' +
+	      '    <md-button ng-click="closeDialog()" class="">' +
+	      '      Cancel' +
 	      '    </md-button>' +
-	      '    <md-button ng-click="downloadRecordedFile()" class="md-raised">' +
-	      '      Download File' +
+	      '    <md-button ng-click="downloadRecordedFile()" class="md-accent">' +
+	      '      Download' +
 	      '    </md-button>' +
 	      '  </div>' +
 	      '</md-dialog>',
@@ -358,6 +346,62 @@
 	  };
 	};
 
+	//show dialog zum importen eines patterns
+ 	$scope.showImportPatternDialog = function($event) {
+	  var parentEl = angular.element(document.body);
+	   	
+	  $mdDialog.show({
+     	parent: parentEl,
+     	targetEvent: $event,
+     	template:
+       	'<md-dialog aria-label="List dialog">' +
+       	'  <md-dialog-content id="import-pattern">'+
+       	'		 <h2>Import Pattern</h2>'+
+        '		 <md-input-container>'+
+        '			<input id="json-file" name="json-file" file-model="myFile" type="file">'+
+        '		 </md-input-container>'+
+	      '  </md-dialog-content>' +
+	      '  <div class="md-actions">' +
+	      '    <md-button ng-click="closeDialog()" class="">Cancel</md-button>' +
+	      '    <md-button ng-click="importPattern()" class="md-accent">Import</md-button>' +
+	      '  </div>' +
+	      '</md-dialog>',
+    	locals: {
+      	filename : $scope.filename
+    	},
+    	controller: DialogController
+	  });
+	  	
+	  function DialogController(scope, $mdDialog,filename) {
+	    scope.closeDialog = function() {
+	      $mdDialog.hide();
+	    };
+			// Import Pattern
+			scope.importPattern = function(){
+				var file = document.getElementById('json-file').files[0];
+				var reader = new FileReader();
+
+				//nur importen wenn auch wirklich etwas ausgewählt wurde.
+				if(typeof file !== 'undefined') {
+					reader.onload = function(e){
+						$scope.instruments = [];
+						var neuinst = JSON.parse(e.target.result);
+						for (var i = 0; i < neuinst.length; i++) {
+							$scope.instruments[i] = neuinst[i];
+						};
+						$scope.$apply();
+						$scope.loadKit();
+						scope.closeDialog();
+					};
+
+					reader.readAsText(file, 'UTF-8');
+				} else {
+
+				}
+			};
+	  };
+	};
+
 	var init = function() {   
 		clock = new WAAClock(context, {toleranceEarly: 0.1});
 		initBinCanvas();
@@ -369,19 +413,4 @@
 		initVisualization();
 	});
 
-})
-.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-}]);
+});

@@ -44,14 +44,12 @@ function Sample(path) {
 }
 
 //"klassenfunktion" zum abspielen der einzelnen sample objekte
-Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, reverbLevel, pannerRate) {
+Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTime, delayFeedback, delayCutoff, pannerRate) {
 
 		var hasDelay = (delayTime !== 0);
-		//var hasReverb = (reverbLevel !== 0);
-		var hasReverb = false;
 		var hasFilter = (filter !== 'none');
 
-		var delayNode, reverbNode, filterNode;
+		var delayNode, filterNode;
 
 		if(hasDelay) {
 			delayNode = new tuna.Delay({
@@ -61,18 +59,6 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 					dryLevel: 0,       			 // 0 to 1+
 					cutoff: delayCutoff,     // cutoff frequency of the built in lowpass-filter. 20 to 22050
 					bypass: 0
-	    });
-		}
-
-		if(hasReverb) {
-			reverbNode = new tuna.Convolver({
-        highCut: 22050,                         //20 to 22050
-        lowCut: 20,                             //20 to 22050
-        dryLevel: 1,                            //0 to 1+
-        wetLevel: reverbLevel,                  //0 to 1+
-        level: 1,                               //0 to 1+, adjusts total output of both wet and dry
-        impulse: "samples/impulses/bright-hall.wav",    //the path to your impulse response
-        bypass: 0
 	    });
 		}
 
@@ -106,59 +92,27 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 		source.connect(pannerNode);
 		pannerNode.connect(volumeNode);
 
-		if (hasDelay && hasReverb && hasFilter) { // ALLES AN
+		if (hasDelay && hasFilter) { // FILTER & DELAY
 
 			volumeNode.connect(delayNode.input);
 
-			delayNode.connect(reverbNode.input);
-
-      reverbNode.connect(filterNode.input);
+			delayNode.connect(filterNode.input);
 
       filterNode.connect(analyser);
 
-		} else if (hasDelay && hasReverb && !hasFilter) { // DELAY UND PHASER
-
-			volumeNode.connect(delayNode.input);
-
-			delayNode.connect(reverbNode.input);
-
-			reverbNode.connect(analyser);
-
-		} else if (hasDelay && !hasReverb && hasFilter) { // DELAY UND FILTER
-
-			volumeNode.connect(delayNode.input);
-
-      delayNode.connect(filterNode.input);
-
-      filterNode.connect(analyser);
-
-		} else if (hasDelay && !hasReverb && !hasFilter) { // NUR DELAY
+		} else if (hasDelay && !hasFilter) { // DELAY
 
 			volumeNode.connect(delayNode.input);
 
 			delayNode.connect(analyser);
 
-		} else if (!hasDelay && hasReverb && hasFilter) { // PHASER UND FILTER
+		} else if (!hasDelay && hasFilter) { // FILTER
 
-			volumeNode.connect(reverbNode.input);
-
-      reverbNode.connect(filterNode.input);
+			volumeNode.connect(filterNode.input);
 
       filterNode.connect(analyser);
  
-		} else if (!hasDelay && hasReverb && !hasFilter) { // NUR PHASER
-
-			volumeNode.connect(reverbNode.input);
-
-			reverbNode.connect(analyser);
-
-		} else if (!hasDelay && !hasReverb && hasFilter) { // NUR FILTER
-
-      volumeNode.connect(filterNode.input);
-
-      filterNode.connect(analyser);
-
-		} else if (!hasDelay && !hasReverb && !hasFilter) { // NICHTS
+		} else if (!hasDelay && !hasFilter) { // NICHTS
 
 			volumeNode.connect(analyser);
 
@@ -179,5 +133,5 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 };
 
 var recorder = new Recorder(recorderNode, {
-  workerPath: '/scripts/recorderWorker.js'
+  workerPath: '/scripts/helpers/recorderWorker.js'
 });
