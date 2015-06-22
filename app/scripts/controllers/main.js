@@ -41,8 +41,10 @@
 		{path: 'TR808', name: 'TR 808'},
 		{path: 'TR909', name: 'TR 909'},
 		{path: 'house', name: 'House'},
-		{path: 'nature', name: 'Nature'},
 		{path: 'acoustic', name: 'Acoustic'},
+		{path: 'linn', name: 'Linn Drum'},
+		{path: 'nature', name: 'Nature'},
+		{path: 'korg', name: 'Korg Volca'},
 		{path: 'reggae', name: 'Reggae'}
 	];
 
@@ -300,6 +302,7 @@
        	'<md-dialog aria-label="Download Recording Dialog">' +
        	'  <md-dialog-content id="download">'+
        	'		 <h2>Download Recording</h2>'+
+       	'		 <p>Choose a file name (min. 4 characters) and download your beat in ".wav" format.</p>'+       	
        	'    <md-input-container class="md-primary"><label>File name</label><input name="filename" ng-model="filename" required md-maxlength="20" minlength="4"></md-input-container>'+
 	      '  </md-dialog-content>' +
 	      '  <div class="md-actions">' +
@@ -343,9 +346,10 @@
      	parent: parentEl,
      	targetEvent: $event,
      	template:
-       	'<md-dialog aria-label="Import Dialod">' +
+       	'<md-dialog aria-label="Import Dialog">' +
        	'  <md-dialog-content id="import-pattern">'+
        	'		 <h2>Import</h2>'+
+       	'		 <p>You can restore a previously saved beat by importing the "data.json" file which is generated when exporting a beat.</p>'+
         '		 <md-input-container>'+
         '			<input id="json-file" name="json-file" file-model="myFile" type="file">'+
         '		 </md-input-container>'+
