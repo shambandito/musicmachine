@@ -1,13 +1,13 @@
 <md-toolbar id="toolbar">
   <div class="md-toolbar-tools">
-    <div class="buttons-wrap" flex layout="row" layout-align="start center">
-      <md-button class="md-icon-button" ng-click="showImportPatternDialog($event);" aria-label="Export Pattern">
+    <div class="buttons-wrap import-export" flex layout="row" layout-align="start center">
+      <md-button class="md-icon-button" ng-click="showImportPatternDialog($event);" aria-label="Export Pattern" layout="row" layout-align="start center">
         <md-icon md-font-icon="icon-publish"></md-icon>
-        <md-tooltip md-direction="bottom">Import</md-tooltip>
+        <span>Import</span>
       </md-button>    
-      <md-button id="export" class="md-icon-button "ng-click="exportPattern()" aria-label="Export Pattern">
+      <md-button id="export" class="md-icon-button "ng-click="exportPattern()" aria-label="Export Pattern" layout="row" layout-align="start center">
         <md-icon md-font-icon="icon-file_download"></md-icon>
-        <md-tooltip md-direction="bottom">Export</md-tooltip>
+        <span>Export</span>
       </md-button>      
     </div>
     <div class="buttons-wrap" flex layout="row" layout-align="center center">
