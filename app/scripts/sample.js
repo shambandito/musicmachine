@@ -56,7 +56,7 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 					feedback: delayFeedback, // 0 to 1+
 					delayTime: delayTime,    // how many milliseconds should the wet signal be delayed? 
 					wetLevel: 0.5,    			 // 0 to 1+
-					dryLevel: 0,       			 // 0 to 1+
+					dryLevel: 1,       			 // 0 to 1+
 					cutoff: delayCutoff,     // cutoff frequency of the built in lowpass-filter. 20 to 22050
 					bypass: 0
 	    });
