@@ -17,11 +17,16 @@
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
 	$scope.tabIndex = 0;
+	$scope.selectedRow = -1;
+ 	$scope.currentBeatIndex = -1;
 
 	var masterVolume = 1;
 	$scope.masterVolume = 10;
 
 	$scope.muteDisabled = false;
+
+ 	$scope.isPlaying = false;
+ 	$scope.isRecording = false;
 
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
@@ -29,14 +34,7 @@
 		{id: 'lowpass', name: 'Low Pass'},
 		{id: 'highpass', name: 'High Pass'},
 		{id: 'bandpass', name: 'Band Pass'}	
-	];
-
- 	$scope.isPlaying = false;
-
- 	$scope.currentBeatIndex = -1;
-
- 	$scope.selectedRow = -1;
- 	$scope.isRecording = false;
+	]; 	
 
 	//drum kits
 	$scope.kits = [
@@ -53,12 +51,6 @@
 		{id: 'volume', name: 'Volume / Pitch'},
 		{id: 'filter', name: 'Filter'},
 		{id: 'delay', name: 'Delay'}
-	];
-
-	//reverb impulses
-	$scope.impulses = [
-		{id: 'bright-hall', name: 'Bright Hall'},
-		{id: 'living-bathroom', name: 'Living Bathroom'}
 	];
 
 	//currently selected kit
@@ -106,9 +98,7 @@
 
 	$scope.addPattern = function() {
 		for(var i = 0; i < $scope.instruments.length; i++) {
-
 			$scope.instruments[i].steps.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
-
 		};
 	};
 
@@ -116,11 +106,10 @@
 		$scope.selectedPattern = index;
 	};
 
+	//select an instrument row and move to instrument effects tab
 	$scope.selectRow = function (i , $event) {
 		$scope.selectedRow = i;
 		$scope.tabIndex = 1;
-		//angular.element('.instrument-name').removeClass('active-row');
-		//angular.element($event.target).addClass('active-row');
 	};
 
 	//laden eines kits
