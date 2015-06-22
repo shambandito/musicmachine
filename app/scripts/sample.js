@@ -133,5 +133,5 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 };
 
 var recorder = new Recorder(recorderNode, {
-  workerPath: '/scripts/helpers/recorderWorker.js'
+  workerPath: 'scripts/recorderWorker.js'
 });
