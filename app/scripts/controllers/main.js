@@ -28,6 +28,9 @@
  	$scope.isPlaying = false;
  	$scope.isRecording = false;
 
+ 	$scope.showAnalyser = false;
+
+
 	//filter types in the native filter node: lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass in that order
 	$scope.filters = [
 		{id: 'none', name: 'None'},

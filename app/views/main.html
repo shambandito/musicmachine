@@ -9,6 +9,10 @@
         <md-icon md-font-icon="icon-file_download"></md-icon>
         <span>Export</span>
       </md-button>      
+      <md-button class="md-icon-button analyser" ng-click="showAnalyser =! showAnalyser">
+        <md-icon md-font-icon="icon-equalizer"></md-icon>
+        <md-tooltip md-direction="right">Spectrum Analyser</md-tooltip>
+      </md-button>
     </div>
     <div class="buttons-wrap" flex layout="row" layout-align="center center">
       <md-button class="md-icon-button" ng-click="resetGrid();" aria-label="Reset Grid">
@@ -186,9 +190,7 @@
         </div>
     </md-content>
   </md-tab>
-
-  <md-tab label="Visualizer"></md-tab>
 </md-tabs>
-<canvas style="display: none" id="canvas"></canvas>
+<canvas id="canvas" ng-show="showAnalyser"></canvas>
 
 
