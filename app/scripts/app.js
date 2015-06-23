@@ -19,7 +19,7 @@ angular
     'ngMaterial',
     'file-model'
   ])
-  .config(function ($routeProvider, $mdThemingProvider) {
+  .config(function ($routeProvider, $mdThemingProvider,$locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -28,6 +28,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+    $locationProvider.html5Mode(true);
     $mdThemingProvider.theme('default')
     .primaryPalette('indigo')
     .accentPalette('orange');
