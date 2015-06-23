@@ -68,7 +68,7 @@
             </div>
             <div>
               <md-button class="beat light-primary-color md-raised" 
-              ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]" 
+              ng-click="instrument.steps[selectedPattern][$index] = !instrument.steps[selectedPattern][$index]; setdefaulttofalse()" 
               ng-class="{'active': step}" 
               ng-repeat="step in instrument.steps[selectedPattern] track by $index" 
               beatIndex="{{$index}}" aria-label="beat">

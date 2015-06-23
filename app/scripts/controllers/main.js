@@ -12,6 +12,7 @@
 
  	var clock;
 
+ 	$scope.defaultsettings;
 	$scope.instruments = [];
 	$scope.wasloaded = false;
 	$scope.indexes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
@@ -81,17 +82,38 @@
 		$scope.masterVolume = vol;
 		masterVolume = $scope.masterVolume / 10;
 	};
+	
+	if(localStorage.getItem("session") == null || typeof localStorage.getItem("session") == "undefined" || localStorage.getItem("session") == "undefined" ){
+ 		if($scope.wasloaded == false){
+	 		$http.get('scripts/instruments.json').success(function(data){
+	 			$scope.instruments = data.drums;
+	 			$scope.defaultsettings = true;
+	 			$scope.loadKit();
+	 			$scope.wasloaded = true;
+	 		});
+	 	}
+ 	}else{	
+ 		/*if($scope.wasloaded == false){
+	 		$http.get('scripts/instruments.json').success(function(data){
+	 			$scope.instruments = data.drums;
+	 			defaultsettings = JSON.stringify($scope.instruments);
+	 			$scope.loadKit();
+	 			$scope.wasloaded = true;
+	 		});
 
+	 	}*/
+ 		showSessionWindow();
+ 	}
  	//get instruments data
  	//.id, .name, .path, .sample, .steps, .volume, .pitch
- 	if($scope.wasloaded === false) {
+ 	/*if($scope.wasloaded === false) {
  		$http.get('scripts/instruments.json').success(function(data){
  			$scope.instruments = data.drums;
  			$scope.loadKit();
  			$scope.wasloaded = true;
  		});
  	}
-
+*/
 	//wenn kit ausgetauscht wird, samples neu laden
 	$scope.updateKit = function(kit) {
 		$scope.selectedKit = kit;
@@ -99,6 +121,9 @@
 			//$scope.stopPlaying();
 			$scope.loadKit();
 		};	
+	}
+	$scope.setdefaulttofalse = function() {
+		$scope.defaultsettings = false; 
 	}
 
 	$scope.addPattern = function() {
@@ -309,6 +334,66 @@
 		$('#downloadexportpattern').get(0).click();
 	};
 
+	window.onbeforeunload = function (event) {
+		  
+	  if (typeof event == 'undefined') {
+	    event = window.event;
+	  }
+	  if (event) {
+	  	if($scope.defaultsettings){
+	  		return true;
+	  	} else {
+	  		localStorage.setItem("session",angular.toJson($scope.instruments));
+	  	}
+	  }
+	  return true;
+	}
+	function showSessionWindow($event) {
+	  var parentEl = angular.element(document.body);
+	   	$mdDialog.show({
+	     	parent: parentEl,
+	     	targetEvent: $event,
+	     	template:
+	       	'<md-dialog aria-label="List dialog">' +
+	       	'  <md-dialog-content>'+
+	       	'		 <h2>Session</h2>'+
+		      '  </md-dialog-content>' +
+		      '  <div class="md-actions">' +
+		      '    <md-button ng-click="loadDefault()" class="md-primary">' +
+		      '      Create New Session' +
+		      '    </md-button>' +
+		      '    <md-button ng-click="loadSession()" class="md-primary">' +
+		      '      Load Old Session' +
+		      '    </md-button>' +
+		      '  </div>' +
+		      '</md-dialog>',
+	    	controller: DialogController
+	  	});
+	  	
+	  function DialogController(scope, $mdDialog) {
+	    scope.closeDialog = function() {
+	      $mdDialog.hide();
+	      $scope.loadKit();
+	    }
+			scope.loadDefault = function(){
+				scope.closeDialog();	
+				$http.get('scripts/instruments.json').success(function(data){
+		 			$scope.instruments = data.drums;
+		 			$scope.defaultsettings = true;
+		 			$scope.loadKit();
+		 			$scope.wasloaded = true;
+	 			});
+				localStorage.removeItem("session");
+			}
+	    scope.loadSession = function(){
+	    	delete $scope.instruments;
+	    	var gotthesession = JSON.parse(localStorage.getItem("session"));
+				$scope.instruments= gotthesession;
+				$scope.defaultsettings = false;
+	    	scope.closeDialog();
+	    }
+	  }
+	}
 	//show dialog zum herunterladen des aufgenommenen wav files
  	$scope.showRecordFileDownloadDialog = function($event) {
 	  var parentEl = angular.element(document.body);
