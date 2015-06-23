@@ -146,7 +146,9 @@
 		//iterate over instruments array
 		for (var i = 0; i < $scope.instruments.length; i++) {
 
-				var steps = $scope.instruments[i].steps[$scope.selectedPattern];
+			var steps = $scope.instruments[i].steps[$scope.selectedPattern];
+
+			if(steps[$scope.currentBeatIndex]) {
 				var sample = $scope.instruments[i].sample;
 
 				var volume = ($scope.instruments[i].volume / 10) * masterVolume;
@@ -157,7 +159,19 @@
 				var delayFeedback = $scope.instruments[i].delayFeedback;
 				var delayCutoff = $scope.instruments[i].delayCutoff;
 
-				var filterFreq = (($scope.instruments[i].filterFreq * 22030) / 100) + 20;
+				//		NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+
+				var filterFreq;
+
+				if($scope.instruments[i].filterFreq <= 20) {
+					filterFreq = ((($scope.instruments[i].filterFreq - 1) * (500 - 20)) / (20 - 1)) + 20;
+				} else if(20 < $scope.instruments[i].filterFreq <= 40) {
+					filterFreq = ((($scope.instruments[i].filterFreq - 21) * (2500 - 500)) / (40 - 21)) + 500;
+				} else if(40 < $scope.instruments[i].filterFreq <= 60) {
+					filterFreq = ((($scope.instruments[i].filterFreq - 41) * (10000 - 2500)) / (60 - 41)) + 2500;
+				} else if(80 < $scope.instruments[i].filterFreq <= 100) {
+					filterFreq = ((($scope.instruments[i].filterFreq - 81) * (20000 - 10000)) / (100 - 81)) + 10000;
+				}
 
 				var muted = $scope.instruments[i].muted;
 				var solo = $scope.instruments[i].solo;
@@ -165,9 +179,10 @@
 				var pannerRate = $scope.instruments[i].pannerRate;
 
 		    //wenn das "steps" array des aktuellen "instruments" an der stelle des aktiven beatIndex "true" als wert hat -> sample abspielen
-		    if(steps[$scope.currentBeatIndex] && !muted) {
+		    if(!muted) {
 					sample.playSample(volume, pitch, filter, filterFreq, delayTime, delayFeedback, delayCutoff, pannerRate);
 				}
+			}
 		}
 	};
 
