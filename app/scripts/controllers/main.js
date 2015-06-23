@@ -425,6 +425,7 @@
 	  	
 	  function DialogController(scope, $mdDialog,filename) {
 	    scope.closeDialog = function() {
+	    	recorder.clear();
 	      $mdDialog.hide();
 	      $scope.loadKit();
 	    };
@@ -432,7 +433,6 @@
 	    scope.downloadRecordedFile = function(){
 	    	if(scope.filename.length >= 4){
 		    	recorder.exportWAV(function(e){
-  		    	recorder.clear();
   		    	Recorder.forceDownload(e, scope.filename + '.wav');
   		    	scope.closeDialog();
   				});	
