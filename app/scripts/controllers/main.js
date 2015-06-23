@@ -354,7 +354,7 @@
        	'		 <h2>Import</h2>'+
        	'		 <p>You can restore a previously saved beat by importing the "data.json" file which is generated when exporting a beat.</p>'+
         '		 <md-input-container>'+
-        '			<input id="json-file" name="json-file" file-model="myFile" type="file">'+
+        '			<input id="json-file" name="json-file" file-model="myFile" type="file" accept=".json">'+
         '		 </md-input-container>'+
 	      '  </md-dialog-content>' +
 	      '  <div class="md-actions">' +

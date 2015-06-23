@@ -59,9 +59,9 @@ function drawBars (array) {
       var x = 0;
 
       for(var i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] * 2;
+        barHeight = dataArray[i] * 4;
 
-        ctx.fillStyle = 'rgb(63, 81, ' + (barHeight + 80) + ')';
+        ctx.fillStyle = 'rgb(255,' + barHeight / 4 + ', 0)';
         ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
 
         x += barWidth + 1;

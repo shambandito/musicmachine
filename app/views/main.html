@@ -9,9 +9,9 @@
         <md-icon md-font-icon="icon-file_download"></md-icon>
         <span>Export</span>
       </md-button>      
-      <md-button class="md-icon-button analyser" ng-click="showAnalyser =! showAnalyser">
+      <md-button class="md-icon-button analyser" ng-click="showAnalyser = !showAnalyser" aria-label="Spectrum Analyser" layout="row" layout-align="start center">
         <md-icon md-font-icon="icon-equalizer"></md-icon>
-        <md-tooltip md-direction="right">Spectrum Analyser</md-tooltip>
+        <span>Spectrum Analyser</span>
       </md-button>
     </div>
     <div class="buttons-wrap" flex layout="row" layout-align="center center">
@@ -132,7 +132,11 @@
                 <p class="effect-slider-label">-</p>              
                 <md-slider flex class="pitch-slider md-primary" ng-model="instrument.pitch" min="0.5" max="1.5" step="0.1" aria-label="Pitch Slider"></md-slider>
                 <p class="effect-slider-label right">+</p> 
-              </div>              
+              </div>
+              <md-button class="md-icon-button reset-delay" ng-click="instrument.pitch = 1" aria-label="Reset Panning">
+                  <md-icon md-font-icon="icon-settings_backup_restore"></md-icon>
+                  <md-tooltip md-direction="left">Reset Pitch</md-tooltip>
+              </md-button>              
             </div>
           </div>
 
@@ -153,6 +157,10 @@
                 <md-slider flex class="panner-slider md-primary" ng-model="instrument.pannerRate" min="-1" max="1" step="0.05" aria-label="Panner Rate Slider"></md-slider>
                 <p class="effect-slider-label right">R</p> 
               </div>
+              <md-button class="md-icon-button reset-delay" ng-click="instrument.pannerRate = 0" aria-label="Reset Panning">
+                <md-icon md-font-icon="icon-settings_backup_restore"></md-icon>
+                <md-tooltip md-direction="left">Reset Panning</md-tooltip>
+              </md-button>
             </div>
           </div>
 
@@ -191,6 +199,10 @@
     </md-content>
   </md-tab>
 </md-tabs>
-<canvas id="canvas" ng-show="showAnalyser"></canvas>
+<canvas id="canvas" ng-class="{'active' : showAnalyser}">
+</canvas>
+<md-button ng-class="{'active': showAnalyser}" class="md-icon-button close-analyser" ng-click="showAnalyser = false" aria-label="Hide Spectrum Analyser">
+  <md-icon md-font-icon="icon-close"></md-icon>
+</md-button>
 
 
