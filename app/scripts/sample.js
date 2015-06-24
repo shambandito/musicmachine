@@ -49,17 +49,22 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 		var hasDelay = (delayTime !== 0);
 		var hasFilter = (filter !== 'none');
 
-		var delayNode, filterNode;
+		var delayNode, delayFb, delayCut, filterNode;
 
 		if(hasDelay) {
-			delayNode = new tuna.Delay({
-					feedback: delayFeedback, // 0 to 1+
-					delayTime: delayTime,    // how many milliseconds should the wet signal be delayed? 
-					wetLevel: 0.5,    			 // 0 to 1+
-					dryLevel: 1,       			 // 0 to 1+
-					cutoff: delayCutoff,     // cutoff frequency of the built in lowpass-filter. 20 to 22050
-					bypass: 0
-	    });
+	    delayNode = context.createDelay();
+	    delayNode.delayTime.value = delayTime;
+
+	    delayFb = context.createGain();
+	    delayFb.gain.value = delayFeedback;
+
+	    delayCut = context.createBiquadFilter();
+	    delayCut.frequency.value = delayCutoff;
+
+	    delayNode.connect(delayFb);
+	    delayFb.connect(delayCut);
+	    delayCut.connect(delayNode);
+	    console.log("IN HAS DELAY");
 		}
 
 		if(hasFilter) {
@@ -94,16 +99,16 @@ Sample.prototype.playSample = function(volume, tune, filter, filterFreq, delayTi
 
 		if (hasDelay && hasFilter) { // FILTER & DELAY
 
-			volumeNode.connect(delayNode.input);
-
+			volumeNode.connect(delayNode);
+			volumeNode.connect(filterNode.input);
 			delayNode.connect(filterNode.input);
 
       filterNode.connect(analyser);
 
 		} else if (hasDelay && !hasFilter) { // DELAY
 
-			volumeNode.connect(delayNode.input);
-
+			volumeNode.connect(delayNode);
+			volumeNode.connect(analyser);
 			delayNode.connect(analyser);
 
 		} else if (!hasDelay && hasFilter) { // FILTER
