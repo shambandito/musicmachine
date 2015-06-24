@@ -144,7 +144,10 @@
 
 	//laden eines kits
  	$scope.loadKit = function() {
- 		$scope.stopPlaying();
+ 		if($scope.isPlaying) {
+		 	$scope.stopPlaying(); 			
+ 		}
+
 		for (var i = 0; i < $scope.instruments.length; i++) {
 			$scope.instruments[i].sample = new Sample('samples/' + $scope.selectedKit + '/' + $scope.instruments[i].path);
 		}; 		
@@ -264,10 +267,10 @@
 	//startet die clock und den loop
 	$scope.startPlaying = function() {
 		//wenn clock schon spielt, nicht nochmal den callback starten
-		if($scope.isPlaying === false) {
+		if(!$scope.isPlaying) {
 			
 			clock.start();
-			clock.callbackAtTime($scope.onNextBeat, $scope.nextBeatTime()).repeat($scope.beatDur).tolerance({late:100});			
+			clock.callbackAtTime($scope.onNextBeat, $scope.nextBeatTime()).repeat($scope.beatDur).tolerance({early: 0.1,late:100});			
 		}
 		$scope.isPlaying = true;		
 	};
