@@ -344,12 +344,11 @@
 	  }
 	  if (event) {
 	  	if($scope.defaultsettings){
-	  		return true;
+	  		
 	  	} else {
 	  		localStorage.setItem("session",angular.toJson($scope.instruments));
 	  	}
 	  }
-	  return true;
 	}
 	function showSessionWindow($event) {
 	  var parentEl = angular.element(document.body);
