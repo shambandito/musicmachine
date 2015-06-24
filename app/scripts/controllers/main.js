@@ -357,16 +357,17 @@
 	     	parent: parentEl,
 	     	targetEvent: $event,
 	     	template:
-	       	'<md-dialog aria-label="List dialog">' +
+	       	'<md-dialog aria-label="Session Recover Dialog">' +
 	       	'  <md-dialog-content>'+
 	       	'		 <h2>Session</h2>'+
+       		'		 <p>You can recover your last session or start a new session.</p>'+       	       	
 		      '  </md-dialog-content>' +
 		      '  <div class="md-actions">' +
-		      '    <md-button ng-click="loadDefault()" class="md-primary">' +
+		      '    <md-button ng-click="loadDefault()" class="">' +
 		      '      Create New Session' +
 		      '    </md-button>' +
-		      '    <md-button ng-click="loadSession()" class="md-primary">' +
-		      '      Load Old Session' +
+		      '    <md-button ng-click="loadSession()" class="md-accent">' +
+		      '      Load Last Session' +
 		      '    </md-button>' +
 		      '  </div>' +
 		      '</md-dialog>',
