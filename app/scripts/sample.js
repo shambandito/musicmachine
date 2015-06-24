@@ -5,10 +5,8 @@ var context;
 //check ob audiocontext verfügbar ist
 try {
     // Fix up prefixing
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
     context = new AudioContext();
-
+    
     //recorderNode erstellen
     var recorderNode = context.createGain();
     recorderNode.gain.value = 0.7;
@@ -17,7 +15,7 @@ try {
     var tuna = new Tuna(context); 
 
 } catch(e) {
-	alert('Web Audio API is not supported in this browser');
+	alert('Web Audio API is not supported in this browser. Please use Google Chrome to fully experience this app.');
 }
 
 
