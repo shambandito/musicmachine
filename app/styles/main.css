@@ -1,3 +1,27 @@
+/*.dark-primary-color    { background: #303F9F; }
+.default-primary-color { background: #3F51B5; }
+.light-primary-color   { background: #C5CAE9; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #607D8B; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }*/
+
+.highlight-weiss	{ color: #f5f5f5;}
+.orange 					{ color: #ff9800;}
+.dunkel-blau 			{ color: #283593;}
+.primary-blau			{ color: #3f51b5;}
+.grau 						{ color: #b6b6b6;}
+.highlight-grau 	{ color: #e5e5e5;}
+
+/**********
+*
+*
+* BASICS
+*
+*
+**********/
+
 .browsehappy {
   margin: 0.2em 0;
   background-color: #ccc;
@@ -9,19 +33,6 @@
 	font-family: 'Droid Sans', sans-serif;
 }
 
-md-icon {
-
-	font-size: 24px;
-}
-
-#canvas {
-
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: 0;
-}
-
 html, body {
   height: 100%;
   text-rendering: optimizeLegibility;
@@ -29,12 +40,13 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   line-height: normal;
+  letter-spacing: 0.025em;
   margin: 0;
-  color: #212121;
-  background-color: #eee;
+  color: #727272;
+  background-color: #f5f5f5;
   transition: opacity ease-in 0.1s;
 }
 
@@ -47,74 +59,256 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   padding: 0;
 }
 
-#content {
-	max-width: 1000px;
-	margin: 0 auto;
-	background: transparent;
+#canvas {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	opacity: 0;
+	-webkit-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 
-#content md-tooltip {
+#canvas.active {
+	z-index: 1;
+	opacity: .8;
+}
+
+#toolbar,
+#tabs,
+.content {
+	min-width: 900px;
+}
+
+#app .content {
+	max-width: 1200px;
+	margin: 16px auto;
+	background-color: transparent;
+}
+
+#app md-tooltip {
 	font-size: 12px;
 	text-transform: uppercase;
 }
 
-#content md-tooltip .md-background {
-	background-color: rgba(0,0,0,0.25);
+#app md-tooltip .md-background {
+	background-color: rgba(182,182,182,.5);
 }
 
-#content md-slider .md-track-ticks {
+#app md-slider .md-track-ticks {
 	display: none;
 }
 
-#content md-select {
-	margin: 0 ;
+#app md-select {
+	margin: 0;
 }
 
-#content md-slider .md-track.md-track-fill,
-#content md-slider .md-sign {
-  background-color: #303f9f;
+#app md-icon {
+	font-size: 24px;
 }
 
-#content md-slider .md-sign:after {
-	border-top-color: #303f9f;
+#app .md-button {
+	padding: 0.57em;
 }
 
-#content md-slider .md-thumb:after {
-  border-color: #303f9f;
-  background-color: #303f9f;
+#app .md-button.md-icon-button {
+	border-radius: 50%;
 }
 
-#pattern {
-	margin-bottom: 20px;
+#app .md-button.md-icon-button:hover {
+	background-color: transparent;
+	color: #ff9800;
+}
+
+#app .md-button.md-icon-button .md-ripple-container {
+	border-radius: 50%;
+}
+
+#app .headline {
+	font-size: 20px;
+  margin-bottom: 8px;
+  color: #b6b6b6;
+}
+
+#app md-select-label > span {
+	color: #fff;
+}
+
+#app md-select-menu,
+#app md-select-menu md-content {
+	max-height: 400px;
+}
+
+#app md-select-menu md-option[selected] {
+  background-color: #f5f5f5;
+  color: #ff9800;
+}
+
+#app md-dialog {
+	padding: 16px;
+	max-width: 620px;
+	width: 100%;
+}
+
+#app md-dialog .md-actions {
+	padding: 0;
+	margin-top: 20px;
+}
+
+#app md-dialog h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #b6b6b6;
+  margin-bottom: 12px;
+}
+
+#app md-dialog p {
+	padding-bottom: 12px;
+}
+
+#app md-dialog #json-file {
+	padding: 0;
+}
+
+/* wenn slider auf minimal wert ist trotzdem den kreis ausfüllen */
+#app .content md-slider.md-min .md-thumb:after {
+  background-color: #3f51b5;
+  border-color: #3f51b5;
+}
+
+/**********
+*
+*
+* TOOLBAR
+*
+*
+**********/
+
+#toolbar .md-button {
+	margin-right: 8px;
+}
+
+#toolbar .import-export .md-button {
+	border-radius: 3px;
+}
+
+#toolbar .import-export .md-button > span {
+	font-size: 15px;
+}
+
+#toolbar .import-export .md-button md-icon {
+	margin-right: 8px;
+}
+
+#toolbar .record-button {
+	margin-right: 0;
+}
+
+#toolbar .record-button md-icon {
+	font-size: 18px;
+	padding: 3px;
+}
+
+#toolbar .record-button.on md-icon {
+	color: #ff9800;
+}
+
+#toolbar .pause-button {
+	color: #ff9800;
+}
+
+#tabs md-tabs-ink-bar {
+  color: #283593;
+  background: #283593;	
+}
+
+#app .close-analyser {
+	position: absolute;
+	top: 114px;
+	right: 8px;
+	color: #727272;
+	border-radius: 50%;
+	z-index: -1;
+	opacity: 0;
+	transition: all .3s ease-in-out;
+	-webkit-transition: all .3s ease-in-out;
+}
+
+#app .close-analyser.active {
+	opacity: 1;
+	z-index: 3;
+}
+
+#app .close-analyser md-icon {
+	font-size: 48px;
+	height: 48px;
+	width: 48px;
+}
+
+/**********
+*
+*
+* PATTERN AREA
+*
+*
+**********/
+
+#app .pattern-wrap {
+	padding: 16px 0;
+	margin-top: 0;
+	margin-bottom: 16px;
+	border-radius: 3px;
+	background-color: #fff;
 }
 
 #timer-row {
-	padding: 0 0 8px 120px;
+	padding: 0 16px 8px;
 }
 
 #timer-row .timer-button {
 	height: 5px;
 	width: 40px;
-	background-color: #b6b6b6;
+	background-color: #e5e5e5;
 	margin: 0 8px 0 0;
 	border-radius: 3px;
 }
 
 #timer-row .timer-button.active {
-	background-color: #303f9f;
+	background-color: #ff9800;
 }
 
 .track-row {
-	padding-bottom: 8px;
+	margin-bottom: 8px;
+	padding: 0 16px;
 }
 
-.instrument-name {
-	font-size: 16px;
+.track-row.active {
+	border-left: 3px solid #ff9800;
+}
+
+.track-row .instrument-name {
+	font-size: 15px;
 	cursor: pointer;
+	float: left;
 }
 
-.instrument-name.active-row {
-	color: red;
+.track-row.active .instrument-name {
+	color: #ff9800;
+}
+
+.mute, 
+.solo {
+  color: #b6b6b6;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding-left: 4px;
 }
 
 .mute-checkbox {
@@ -127,61 +321,112 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	height: 40px;
 	transition: all 0.04s ease-in-out;
 	transform: scale(1);
+	background-color: #f5f5f5;
+	margin-right: 8px;
 }
 
 #pattern .beat:nth-child(4n+1) {
-	background: #ECEFF1;
+	background-color: #e5e5e5;
 }
 
 #pattern .beat.active {
-	background-color: #3F51B5;
+	background-color: #ff9800;
 }
 
 #pattern .beat.active.playing {
 	transform: scale(1.05);
 }
 
-.md-button {
-	padding: 0.57em;
-	margin-right: 8px;
+.pattern-switch-wrap {
+	padding: 16px;
+	margin-bottom: 16px;
+	border-radius: 3px;
+	background-color: #fff;
 }
 
-.effect-row {
+#pattern-switch-block .pattern-button.active {
+	color: #ff9800;
+}
+
+#pattern-switch-block .pattern-button:hover {
+	background-color: rgba(182,182,182,.2);
+}
+
+#pattern-switch-block .add-pattern {
+	width: 35px;
+}
+
+/**********
+*
+* INSTRUMENT EFFECTS AREA & KIT SELECTION
+*
+**********/
+
+#app #effects {
+	margin-top: 0;
+	margin-bottom: 40px;
+}
+
+.no-instrument-selected {
+	margin-top: 42px;
+	text-align: center;
+}
+
+.effect-wrap {
   width: 100%;
-  padding: 12px 16px;
-  background-color: #fafafa;
-  border-radius: 3px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.headline {
-	font-size: 16px;
-  margin-bottom: 8px;
-  color: #b6b6b6;
-}
-
-.effect-row .label {
-	font-size: 12px;
+.effect-block .label,
+#pattern-switch-block .label {
+	font-size: 15px;
 	text-transform: uppercase;
 	color: #727272;
+	margin-bottom: 4px;
 }
 
-#effects .filter-block {
-	width: 100%;
+.effect-wrap .effect-section {
+	margin-bottom: 16px;
 }
 
-#effects md-select,
-#kit-block .kit-select {
+.effect-block {
+	padding: 16px;
+	border-radius: 3px;
+	background-color: #fff;
+	position: relative;
+}
+
+.effect-section .effect-block:first-child {
+	margin-right: 16px;
+}
+
+#effects md-select {
 	margin-top: -2px;
 	margin-right: 12px;
-  color: #727272;
-  font-size: 12px;
-  text-transform: uppercase;
-  width: 120px;
+	color: #727272;
+	font-size: 12px;
+	text-transform: uppercase;
+	width: 120px;
+}
+
+#effects md-select-label > span {
+	color: #727272;
 }
 
 #kit-block .kit-select {
 	margin-top: 0;
+	margin-right: 12px;
+	color: #fff;
+	font-size: 15px;
+	text-transform: uppercase;
+	width: 150px;
+}
+
+#kit-block p {
+	font-size: 15px;
+	margin-right: 12px;
+	text-transform: uppercase;
+	color: #fff;
 }
 
 #effects md-select .md-select-label span:first-child,
@@ -201,35 +446,56 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	color: #212121;
 }
 
-#effects md-slider {
-	width: calc(100% - 8px);
-}
-
-#kit-block p {
+.effect-slider-label {
+	padding-right: 16px;
 	font-size: 14px;
-	margin-right: 12px;
 	text-transform: uppercase;
-	color: #727272;
+	color: #b6b6b6;
 }
 
-#controls {
-	margin-bottom: 20px;
+.effect-slider-label.right {
+	padding-right: 0;
+	padding-left: 16px;
+	text-align: right;
 }
 
-.recording md-icon {
-	font-size: 18px;
-	padding: 3px;
+.effect-block .reset-delay {
+	position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #b6b6b6;
 }
 
-.recording.on md-icon {
-	color: #D32F2F;
+.delay-block .effect-slider-label {
+	width: 75px;
 }
+
+.delay-warning {
+	border-top: 1px solid #e5e5e5;
+	padding-top: 16px;
+	margin-top: 20px;
+}
+
+#app .delay-warning md-icon {
+	margin: 0;
+}
+
+.delay-warning > span {
+	margin-left: 8px;
+}
+
+/**********
+*
+* TEMPO
+*
+**********/
 
 #tempo-block {
-	padding: 12px 16px;
-	background-color: #fafafa;
-	border-radius: 3px;
-	margin-bottom: 20px;
+
+}
+
+#tempo-block .tempo-slider {
+	padding: 0 8px;
 }
 
 #tempo-block .tempo-label {
@@ -237,15 +503,22 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
 	border: none;
 	font-size: 14px;
 	width: 40px;
-	color: #212121;
+	color: #b6b6b6;
 }
 
+/**********
+*
+* RESPONSIVENESS
+*
+**********/
 
-.dark-primary-color    { background: #303F9F; }
-.default-primary-color { background: #3F51B5; }
-.light-primary-color   { background: #C5CAE9; }
-.text-primary-color    { color: #FFFFFF; }
-.accent-color          { background: #607D8B; }
-.primary-text-color    { color: #212121; }
-.secondary-text-color  { color: #727272; }
-.divider-color         { border-color: #B6B6B6; }
+@media(max-width: 1100px) {
+	#pattern .beat {
+		width: 30px;
+		height: 30px;
+	}
+
+	#timer-row .timer-button {
+		width: 30px;
+	}
+}
