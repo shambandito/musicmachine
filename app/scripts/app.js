@@ -16,9 +16,10 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ngMaterial'
+    'ngMaterial',
+    'file-model'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $mdThemingProvider,$locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -27,4 +28,8 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+    $locationProvider.html5Mode(true);
+    $mdThemingProvider.theme('default')
+    .primaryPalette('indigo')
+    .accentPalette('orange');
   });
